@@ -1,0 +1,865 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum UserRole {
+  SUPER_ADMIN
+  SALON_OWNER
+  MANAGER
+  RECEPTIONIST
+  STAFF
+}
+
+enum SalonStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+  INACTIVE
+}
+
+enum BranchStatus {
+  ACTIVE
+  INACTIVE
+  CLOSED
+}
+
+enum StaffStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+  CANCELLED
+  CHECKED_IN
+  IN_PROGRESS
+  COMPLETED
+  NO_SHOW
+}
+
+enum BookingSource {
+  ONLINE
+  ADMIN
+  WALK_IN
+  PHONE
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+  REFUNDED
+}
+
+enum LeaveType {
+  ANNUAL
+  SICK
+  PERSONAL
+  EMERGENCY
+  OTHER
+}
+
+enum ClosureType {
+  WEEKLY_OFF
+  PUBLIC_HOLIDAY
+  SPECIAL_HOLIDAY
+  EMERGENCY_CLOSURE
+  MAINTENANCE
+  OTHER
+}
+
+enum NotificationType {
+  BOOKING_CREATED
+  BOOKING_CONFIRMED
+  BOOKING_REJECTED
+  BOOKING_CANCELLED
+  BOOKING_RESCHEDULED
+  APPOINTMENT_REMINDER
+  BRANCH_CLOSURE
+  APPOINTMENT_COMPLETED
+  GENERAL
+}
+
+enum SubscriptionPlan {
+  FREE
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  TRIAL
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+// ============================================================
+// CORE USER MODELS
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  phone         String?
+  role          UserRole  @default(STAFF)
+  image         String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  ownedSalons   Salon[]         @relation("SalonOwner")
+  staffProfile  Staff?
+  notifications Notification[]  @relation("UserNotifications")
+  auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([role])
+}
+
+// ============================================================
+// SALON MODELS
+// ============================================================
+
+model Salon {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  description   String?
+  logo          String?
+  website       String?
+  email         String?
+  phone         String?
+  address       String?
+  province      String?
+  district      String?
+  city          String?
+  area          String?
+  postalCode    String?
+  country       String      @default("Sri Lanka")
+  timezone      String      @default("Asia/Colombo")
+  currency      String      @default("LKR")
+  status        SalonStatus @default(PENDING)
+  
+  // Social links stored as JSON
+  socialLinks   Json?
+  
+  // Settings stored as JSON
+  settings      Json?       // bookingInterval, cancellationWindow, requireOtp, autoConfirm, etc.
+  
+  // Owner
+  ownerId       String
+  owner         User        @relation("SalonOwner", fields: [ownerId], references: [id])
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  branches      Branch[]
+  staff         Staff[]
+  serviceCategories ServiceCategory[]
+  services      Service[]
+  customers     Customer[]
+  bookings      Booking[]
+  coupons       Coupon[]
+  subscription  SalonSubscription?
+  notifications Notification[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@index([slug])
+}
+
+model SalonSubscription {
+  id          String             @id @default(cuid())
+  salonId     String             @unique
+  salon       Salon              @relation(fields: [salonId], references: [id])
+  plan        SubscriptionPlan   @default(FREE)
+  status      SubscriptionStatus @default(TRIAL)
+  startDate   DateTime           @default(now())
+  endDate     DateTime?
+  amount      Float              @default(0)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+// ============================================================
+// BRANCH MODELS
+// ============================================================
+
+model Branch {
+  id            String       @id @default(cuid())
+  salonId       String
+  salon         Salon        @relation(fields: [salonId], references: [id])
+  name          String
+  address       String?
+  phone         String?
+  email         String?
+  province      String?
+  district      String?
+  city          String?
+  area          String?
+  postalCode    String?
+  latitude      Float?
+  longitude     Float?
+  status        BranchStatus @default(ACTIVE)
+  timezone      String       @default("Asia/Colombo")
+  
+  // Booking settings
+  bookingInterval Int        @default(30) // minutes
+  minNoticeHours  Int        @default(1)
+  maxAdvanceDays  Int        @default(30)
+  
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  // Relations
+  schedules     BranchSchedule[]
+  closures      BranchClosure[]
+  staff         Staff[]          @relation("StaffBranch")
+  staffBranches StaffBranch[]
+  services      BranchService[]
+  bookings      Booking[]
+  notifications Notification[]
+
+  @@index([salonId])
+  @@index([status])
+  @@index([district])
+  @@index([city])
+}
+
+model BranchSchedule {
+  id          String   @id @default(cuid())
+  branchId    String
+  branch      Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  dayOfWeek   Int      // 0=Sunday, 1=Monday, ..., 6=Saturday
+  isOpen      Boolean  @default(true)
+  
+  // Stored as HH:MM format
+  openTime    String   @default("09:00")
+  closeTime   String   @default("18:00")
+  
+  // Break time
+  hasBreak    Boolean  @default(false)
+  breakStart  String?  // HH:MM
+  breakEnd    String?  // HH:MM
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([branchId, dayOfWeek])
+  @@index([branchId])
+}
+
+model BranchClosure {
+  id          String      @id @default(cuid())
+  branchId    String
+  branch      Branch      @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  salonId     String      // Denormalized for query performance
+  
+  closureType ClosureType @default(OTHER)
+  reason      String?
+  
+  // Full day or partial
+  isFullDay   Boolean     @default(true)
+  date        DateTime    // The closure date (date only)
+  
+  // For partial closure
+  startTime   String?     // HH:MM
+  endTime     String?     // HH:MM
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([branchId])
+  @@index([salonId])
+  @@index([date])
+}
+
+// ============================================================
+// STAFF MODELS
+// ============================================================
+
+model Staff {
+  id              String      @id @default(cuid())
+  userId          String?     @unique
+  user            User?       @relation(fields: [userId], references: [id])
+  salonId         String
+  salon           Salon       @relation(fields: [salonId], references: [id])
+  primaryBranchId String?
+  primaryBranch   Branch?     @relation("StaffBranch", fields: [primaryBranchId], references: [id])
+  
+  name            String
+  email           String?
+  phone           String?
+  gender          String?
+  photo           String?
+  specialization  String?
+  bio             String?
+  status          StaffStatus @default(ACTIVE)
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  branches        StaffBranch[]
+  schedules       StaffSchedule[]
+  leaves          StaffLeave[]
+  breaks          StaffBreak[]
+  services        StaffService[]
+  bookings        Booking[]
+  bookingServices BookingService[]
+
+  @@index([salonId])
+  @@index([primaryBranchId])
+  @@index([status])
+}
+
+model StaffBranch {
+  id        String   @id @default(cuid())
+  staffId   String
+  staff     Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  branchId  String
+  branch    Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([staffId, branchId])
+  @@index([staffId])
+  @@index([branchId])
+}
+
+model StaffSchedule {
+  id          String   @id @default(cuid())
+  staffId     String
+  staff       Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  dayOfWeek   Int      // 0=Sunday...6=Saturday
+  isWorking   Boolean  @default(true)
+  startTime   String   @default("09:00") // HH:MM
+  endTime     String   @default("18:00") // HH:MM
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([staffId, dayOfWeek])
+  @@index([staffId])
+}
+
+model StaffLeave {
+  id          String    @id @default(cuid())
+  staffId     String
+  staff       Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  salonId     String    // Denormalized
+  leaveType   LeaveType @default(OTHER)
+  reason      String?
+  
+  isFullDay   Boolean   @default(true)
+  startDate   DateTime  // Date part only
+  endDate     DateTime  // Date part only (same as startDate for single day)
+  
+  // For partial leave
+  startTime   String?   // HH:MM
+  endTime     String?   // HH:MM
+  
+  approved    Boolean   @default(false)
+  approvedBy  String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([staffId])
+  @@index([salonId])
+  @@index([startDate])
+}
+
+model StaffBreak {
+  id          String   @id @default(cuid())
+  staffId     String
+  staff       Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  dayOfWeek   Int      // 0-6, or -1 for all days
+  startTime   String   // HH:MM
+  endTime     String   // HH:MM
+  isRecurring Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([staffId])
+}
+
+// ============================================================
+// SERVICE MODELS
+// ============================================================
+
+model ServiceCategory {
+  id          String    @id @default(cuid())
+  salonId     String
+  salon       Salon     @relation(fields: [salonId], references: [id])
+  name        String
+  description String?
+  image       String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  services    Service[]
+
+  @@index([salonId])
+}
+
+model Service {
+  id            String          @id @default(cuid())
+  salonId       String
+  salon         Salon           @relation(fields: [salonId], references: [id])
+  categoryId    String
+  category      ServiceCategory @relation(fields: [categoryId], references: [id])
+  
+  name          String
+  description   String?
+  image         String?
+  
+  // Default price and duration
+  price         Float           @default(0)
+  duration      Int             @default(30) // minutes
+  bufferTime    Int             @default(0)  // minutes after service
+  
+  isActive      Boolean         @default(true)
+  sortOrder     Int             @default(0)
+  
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  // Relations
+  branchServices  BranchService[]
+  staffServices   StaffService[]
+  bookingServices BookingService[]
+
+  @@index([salonId])
+  @@index([categoryId])
+}
+
+model BranchService {
+  id          String   @id @default(cuid())
+  branchId    String
+  branch      Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  // Branch-specific price override
+  price       Float?   // null means use service default
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([branchId, serviceId])
+  @@index([branchId])
+  @@index([serviceId])
+}
+
+model StaffService {
+  id        String   @id @default(cuid())
+  staffId   String
+  staff     Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([staffId, serviceId])
+  @@index([staffId])
+  @@index([serviceId])
+}
+
+// ============================================================
+// CUSTOMER MODELS
+// ============================================================
+
+model Customer {
+  id              String    @id @default(cuid())
+  salonId         String
+  salon           Salon     @relation(fields: [salonId], references: [id])
+  
+  name            String
+  phone           String
+  email           String?
+  gender          String?
+  dateOfBirth     DateTime?
+  notes           String?   // Customer notes visible to staff
+  
+  // Stats (denormalized for performance)
+  totalBookings   Int       @default(0)
+  totalSpent      Float     @default(0)
+  noShowCount     Int       @default(0)
+  cancelCount     Int       @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  bookings        Booking[]
+  loyaltyAccount  LoyaltyAccount?
+  reviews         Review[]
+
+  @@unique([salonId, phone])
+  @@index([salonId])
+  @@index([phone])
+}
+
+// ============================================================
+// BOOKING MODELS
+// ============================================================
+
+model Booking {
+  id                String        @id @default(cuid())
+  reference         String        @unique // SAL-20260924-00001
+  
+  salonId           String
+  salon             Salon         @relation(fields: [salonId], references: [id])
+  branchId          String
+  branch            Branch        @relation(fields: [branchId], references: [id])
+  customerId        String
+  customer          Customer      @relation(fields: [customerId], references: [id])
+  staffId           String
+  staff             Staff         @relation(fields: [staffId], references: [id])
+  
+  // Booking time
+  bookingDate       DateTime      // Date of appointment
+  startTime         String        // HH:MM
+  endTime           String        // HH:MM
+  
+  // Status
+  status            BookingStatus @default(PENDING)
+  source            BookingSource @default(ONLINE)
+  
+  // Rejection/cancellation
+  rejectionReason   String?
+  cancellationReason String?
+  
+  // Notes
+  customerNotes     String?       // Visible to customer and staff
+  staffNotes        String?       // Internal only
+  
+  // Financial
+  subtotal          Float         @default(0)
+  discountAmount    Float         @default(0)
+  taxAmount         Float         @default(0)
+  totalAmount       Float         @default(0)
+  depositAmount     Float         @default(0)
+  paidAmount        Float         @default(0)
+  paymentStatus     PaymentStatus @default(UNPAID)
+  
+  // Coupon
+  couponId          String?
+  coupon            Coupon?       @relation(fields: [couponId], references: [id])
+  
+  // Timestamps
+  confirmedAt       DateTime?
+  checkedInAt       DateTime?
+  inProgressAt      DateTime?
+  completedAt       DateTime?
+  cancelledAt       DateTime?
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  // Relations
+  services          BookingService[]
+  statusHistory     BookingStatusHistory[]
+  payments          Payment[]
+  invoice           Invoice?
+  review            Review?
+  notifications     Notification[]
+
+  @@index([salonId])
+  @@index([branchId])
+  @@index([staffId])
+  @@index([customerId])
+  @@index([bookingDate])
+  @@index([status])
+  @@index([reference])
+}
+
+model BookingService {
+  id          String   @id @default(cuid())
+  bookingId   String
+  booking     Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id])
+  staffId     String
+  staff       Staff    @relation(fields: [staffId], references: [id])
+  
+  price       Float    @default(0)
+  duration    Int      @default(30) // minutes
+  bufferTime  Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+
+  @@index([bookingId])
+  @@index([serviceId])
+}
+
+model BookingStatusHistory {
+  id          String        @id @default(cuid())
+  bookingId   String
+  booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  status      BookingStatus
+  changedBy   String?       // User ID
+  reason      String?
+  notes       String?
+  createdAt   DateTime      @default(now())
+
+  @@index([bookingId])
+}
+
+// ============================================================
+// PAYMENT & INVOICE MODELS
+// ============================================================
+
+model Payment {
+  id            String        @id @default(cuid())
+  bookingId     String
+  booking       Booking       @relation(fields: [bookingId], references: [id])
+  salonId       String
+  
+  amount        Float
+  method        String        @default("CASH") // CASH, CARD, ONLINE
+  reference     String?       // External payment reference
+  notes         String?
+  status        String        @default("COMPLETED")
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([bookingId])
+  @@index([salonId])
+}
+
+model Invoice {
+  id              String   @id @default(cuid())
+  invoiceNumber   String   @unique
+  bookingId       String   @unique
+  booking         Booking  @relation(fields: [bookingId], references: [id])
+  salonId         String
+  
+  subtotal        Float    @default(0)
+  discountAmount  Float    @default(0)
+  taxAmount       Float    @default(0)
+  totalAmount     Float    @default(0)
+  paidAmount      Float    @default(0)
+  balanceAmount   Float    @default(0)
+  
+  issuedAt        DateTime @default(now())
+  dueDate         DateTime?
+  
+  notes           String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([salonId])
+  @@index([bookingId])
+}
+
+// ============================================================
+// COUPON & LOYALTY MODELS
+// ============================================================
+
+model Coupon {
+  id              String      @id @default(cuid())
+  salonId         String
+  salon           Salon       @relation(fields: [salonId], references: [id])
+  
+  code            String
+  name            String
+  description     String?
+  
+  type            CouponType  @default(PERCENTAGE)
+  value           Float       // Percentage or fixed amount
+  
+  minBookingValue Float?
+  maxDiscount     Float?
+  
+  // Restrictions
+  specificBranchId   String?
+  specificServiceId  String?
+  newCustomersOnly   Boolean  @default(false)
+  
+  // Validity
+  startDate       DateTime?
+  endDate         DateTime?
+  maxUsage        Int?        // Total uses allowed
+  perCustomerLimit Int?       // Uses per customer
+  
+  isActive        Boolean     @default(true)
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  usages          CouponUsage[]
+  bookings        Booking[]
+
+  @@unique([salonId, code])
+  @@index([salonId])
+}
+
+model CouponUsage {
+  id          String   @id @default(cuid())
+  couponId    String
+  coupon      Coupon   @relation(fields: [couponId], references: [id])
+  customerId  String
+  bookingId   String?
+  usedAt      DateTime @default(now())
+
+  @@index([couponId])
+  @@index([customerId])
+}
+
+model LoyaltyAccount {
+  id            String    @id @default(cuid())
+  customerId    String    @unique
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  salonId       String
+  
+  totalPoints   Int       @default(0)
+  usedPoints    Int       @default(0)
+  balance       Int       @default(0) // totalPoints - usedPoints
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  transactions  LoyaltyTransaction[]
+
+  @@index([salonId])
+}
+
+model LoyaltyTransaction {
+  id            String         @id @default(cuid())
+  accountId     String
+  account       LoyaltyAccount @relation(fields: [accountId], references: [id])
+  
+  points        Int            // Positive = earned, Negative = used
+  description   String?
+  bookingId     String?
+  
+  createdAt     DateTime       @default(now())
+
+  @@index([accountId])
+}
+
+// ============================================================
+// REVIEW MODEL
+// ============================================================
+
+model Review {
+  id            String    @id @default(cuid())
+  bookingId     String    @unique
+  booking       Booking   @relation(fields: [bookingId], references: [id])
+  customerId    String
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  salonId       String
+  staffId       String?
+  
+  salonRating   Int       // 1-5
+  staffRating   Int?      // 1-5
+  serviceRating Int?      // 1-5
+  
+  comment       String?
+  
+  isPublished   Boolean   @default(true)
+  isModerated   Boolean   @default(false)
+  moderatedBy   String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([salonId])
+  @@index([customerId])
+  @@index([staffId])
+}
+
+// ============================================================
+// NOTIFICATION MODEL
+// ============================================================
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String?
+  user        User?            @relation("UserNotifications", fields: [userId], references: [id])
+  salonId     String?
+  salon       Salon?           @relation(fields: [salonId], references: [id])
+  branchId    String?
+  branch      Branch?          @relation(fields: [branchId], references: [id])
+  bookingId   String?
+  booking     Booking?         @relation(fields: [bookingId], references: [id])
+  
+  type        NotificationType @default(GENERAL)
+  title       String
+  message     String
+  data        Json?            // Additional data for the notification
+  
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  
+  // Channels
+  sentEmail   Boolean          @default(false)
+  sentSms     Boolean          @default(false)
+  sentPush    Boolean          @default(false)
+  
+  createdAt   DateTime         @default(now())
+
+  @@index([userId])
+  @@index([salonId])
+  @@index([bookingId])
+  @@index([isRead])
+}
+
+// ============================================================
+// AUDIT LOG MODEL
+// ============================================================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  salonId     String?
+  
+  action      String   // e.g., "SALON_APPROVED", "BOOKING_CONFIRMED"
+  entity      String   // e.g., "Salon", "Booking"
+  entityId    String?
+  
+  oldData     Json?
+  newData     Json?
+  metadata    Json?
+  
+  ipAddress   String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([salonId])
+  @@index([action])
+  @@index([createdAt])
+}
