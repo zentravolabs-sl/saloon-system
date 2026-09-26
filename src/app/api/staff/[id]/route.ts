@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { staffLeaveSchema, staffScheduleSchema } from "@/lib/validations";
 import { checkSalonApproval } from "@/lib/salon-status";
 
@@ -66,7 +67,7 @@ export async function PATCH(
 
     const { branchIds, serviceIds, ...staffData } = body;
 
-    const updated = await prisma.$transaction(async (tx) => {
+    const updated = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const updatedStaff = await tx.staff.update({
         where: { id },
         data: staffData,

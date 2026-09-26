@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { staffSchema } from "@/lib/validations";
 import { checkSalonApproval } from "@/lib/salon-status";
 
@@ -88,7 +89,7 @@ export async function POST(req: Request) {
 
     const { branchIds, serviceIds, ...staffData } = parsed.data;
 
-    const staff = await prisma.$transaction(async (tx) => {
+    const staff = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const newStaff = await tx.staff.create({
         data: {
           salonId,

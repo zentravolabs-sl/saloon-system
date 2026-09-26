@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 /**
@@ -28,8 +28,8 @@ export async function GET() {
 
     // Merge and deduplicate
     const allCities = new Set();
-    salonCities.forEach((s) => s.city && allCities.add(s.city));
-    branchCities.forEach((b) => b.city && allCities.add(b.city));
+    salonCities.forEach((s: { city: string | null }) => s.city && allCities.add(s.city));
+    branchCities.forEach((b: { city: string | null }) => b.city && allCities.add(b.city));
 
     const cities = Array.from(allCities).sort();
 

@@ -60,13 +60,13 @@ export async function GET(req: Request) {
 
       const statusSummary = {
         total: bookings.length,
-        completed: bookings.filter((b) => b.status === "COMPLETED").length,
-        cancelled: bookings.filter((b) => b.status === "CANCELLED").length,
-        pending: bookings.filter((b) => b.status === "PENDING").length,
-        confirmed: bookings.filter((b) => b.status === "CONFIRMED").length,
-        noShow: bookings.filter((b) => b.status === "NO_SHOW").length,
-        inProgress: bookings.filter((b) => b.status === "IN_PROGRESS").length,
-        checkedIn: bookings.filter((b) => b.status === "CHECKED_IN").length,
+        completed: bookings.filter((b: (typeof bookings)[number]) => b.status === "COMPLETED").length,
+        cancelled: bookings.filter((b: (typeof bookings)[number]) => b.status === "CANCELLED").length,
+        pending: bookings.filter((b: (typeof bookings)[number]) => b.status === "PENDING").length,
+        confirmed: bookings.filter((b: (typeof bookings)[number]) => b.status === "CONFIRMED").length,
+        noShow: bookings.filter((b: (typeof bookings)[number]) => b.status === "NO_SHOW").length,
+        inProgress: bookings.filter((b: (typeof bookings)[number]) => b.status === "IN_PROGRESS").length,
+        checkedIn: bookings.filter((b: (typeof bookings)[number]) => b.status === "CHECKED_IN").length,
       };
 
       return NextResponse.json({

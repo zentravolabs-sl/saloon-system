@@ -28,15 +28,15 @@ export async function GET(req: Request) {
     });
 
     const totalMRR = subscriptions
-      .filter((s) => s.status === "ACTIVE")
-      .reduce((sum, s) => sum + s.amount, 0);
+      .filter((s: (typeof subscriptions)[number]) => s.status === "ACTIVE")
+      .reduce((sum: number, s: (typeof subscriptions)[number]) => sum + s.amount, 0);
 
     return NextResponse.json({
       subscriptions,
       stats: {
         total: subscriptions.length,
-        active: subscriptions.filter((s) => s.status === "ACTIVE").length,
-        trial: subscriptions.filter((s) => s.status === "TRIAL").length,
+        active: subscriptions.filter((s: (typeof subscriptions)[number]) => s.status === "ACTIVE").length,
+        trial: subscriptions.filter((s: (typeof subscriptions)[number]) => s.status === "TRIAL").length,
         mrr: totalMRR,
       },
     });

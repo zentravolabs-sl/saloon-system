@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { branchSchema } from "@/lib/validations";
 import { checkSalonApproval } from "@/lib/salon-status";
 
@@ -80,7 +81,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: approvalCheck.error }, { status: 403 });
     }
 
-    const branch = await prisma.$transaction(async (tx) => {
+    const branch = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const newBranch = await tx.branch.create({
         data: {
           salonId,

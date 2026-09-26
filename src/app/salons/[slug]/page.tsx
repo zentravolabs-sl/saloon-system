@@ -77,7 +77,7 @@ export default async function SalonDetailPage({
   const avgRating =
     reviews.length > 0
       ? (
-          reviews.reduce((sum, r) => sum + r.salonRating, 0) /
+          reviews.reduce((sum: number, r: (typeof reviews)[number]) => sum + r.salonRating, 0) /
           reviews.length
         ).toFixed(1)
       : "5.0";
@@ -172,7 +172,7 @@ export default async function SalonDetailPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {salon.branches.map((branch) => (
+            {salon.branches.map((branch: (typeof salon.branches)[number]) => (
               <div
                 key={branch.id}
                 className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 space-y-4 hover:border-white/20 transition-colors"
@@ -192,7 +192,7 @@ export default async function SalonDetailPage({
                     Weekly Hours
                   </p>
                   <div className="text-xs space-y-1">
-                    {branch.schedules.map((sch) => (
+                    {branch.schedules.map((sch: (typeof branch.schedules)[number]) => (
                       <div
                         key={sch.id}
                         className="flex items-center justify-between text-[var(--text-secondary)]"
@@ -234,13 +234,13 @@ export default async function SalonDetailPage({
           </div>
 
           <div className="space-y-8">
-            {salon.serviceCategories.map((category) => (
+            {salon.serviceCategories.map((category: (typeof salon.serviceCategories)[number]) => (
               <div key={category.id} className="space-y-4">
                 <h3 className="text-xl font-bold text-white border-b border-white/10 pb-2">
                   {category.name}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {category.services.map((service) => (
+                  {category.services.map((service: (typeof category.services)[number]) => (
                     <div
                       key={service.id}
                       className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors flex items-center justify-between gap-4 group"
@@ -294,7 +294,7 @@ export default async function SalonDetailPage({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {salon.staff.map((member) => (
+            {salon.staff.map((member: (typeof salon.staff)[number]) => (
               <div
                 key={member.id}
                 className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-5 space-y-3 text-center"
@@ -307,7 +307,7 @@ export default async function SalonDetailPage({
                   <p className="text-xs text-[#A78BFA] font-medium">{member.specialization || "Senior Stylist"}</p>
                 </div>
                 <div className="text-[11px] text-[var(--text-muted)]">
-                  {member.branches.map((b) => b.branch.name).join(", ")}
+                  {member.branches.map((b: (typeof member.branches)[number]) => b.branch.name).join(", ")}
                 </div>
                 <Link
                   href={`/booking?salonId=${salon.id}&staffId=${member.id}`}
@@ -334,7 +334,7 @@ export default async function SalonDetailPage({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {reviews.map((rev) => (
+              {reviews.map((rev: (typeof reviews)[number]) => (
                 <div
                   key={rev.id}
                   className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-2"

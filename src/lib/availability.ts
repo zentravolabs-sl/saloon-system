@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { format, parseISO } from "date-fns";
 
 export interface AvailabilityParams {
@@ -124,7 +125,7 @@ export async function getAvailableSlots(
     // Verify staff is assigned to the selected branch
     const isAssignedToBranch =
       staff.primaryBranchId === branchId ||
-      staff.branches.some((sb) => sb.branchId === branchId);
+      staff.branches.some((sb: { branchId: string }) => sb.branchId === branchId);
 
     if (!isAssignedToBranch) {
       return { slots: [], error: `Stylist ${staff.name} is not assigned to ${branch.name}` };
@@ -160,7 +161,7 @@ export async function getAvailableSlots(
     }
 
     // 4. Verify staff-service compatibility (Staff must be qualified for ALL selected services)
-    const staffServiceIds = new Set(staff.services.map((s) => s.serviceId));
+    const staffServiceIds = new Set(staff.services.map((s: { serviceId: string }) => s.serviceId));
     for (const service of services) {
       if (!staffServiceIds.has(service.id)) {
         return {
@@ -171,33 +172,33 @@ export async function getAvailableSlots(
     }
 
     // 5. Check branch working hours for this day of week
-    const branchSchedule = branch.schedules.find((s) => s.dayOfWeek === dayOfWeek);
+    const branchSchedule = branch.schedules.find((s: { dayOfWeek: number }) => s.dayOfWeek === dayOfWeek);
     if (!branchSchedule || !branchSchedule.isOpen) {
       return { slots: [], error: `${branch.name} is closed on this day` };
     }
 
     // 6. Check full-day branch closures / public holidays
-    const fullDayClosure = branch.closures.find((c) => c.isFullDay);
+    const fullDayClosure = branch.closures.find((c: { isFullDay: boolean }) => c.isFullDay);
     if (fullDayClosure) {
       const reasonText = fullDayClosure.reason ? ` (${fullDayClosure.reason})` : "";
       return { slots: [], error: `Branch is closed on this date${reasonText}` };
     }
 
     // 7. Check staff schedule for this day of week
-    const staffSchedule = staff.schedules.find((s) => s.dayOfWeek === dayOfWeek);
+    const staffSchedule = staff.schedules.find((s: { dayOfWeek: number }) => s.dayOfWeek === dayOfWeek);
     if (!staffSchedule || !staffSchedule.isWorking) {
       return { slots: [], error: `${staff.name} does not work on this day` };
     }
 
     // 8. Check staff full-day approved leave
-    const fullDayLeave = staff.leaves.find((l) => l.isFullDay);
+    const fullDayLeave = staff.leaves.find((l: { isFullDay: boolean }) => l.isFullDay);
     if (fullDayLeave) {
       return { slots: [], error: `${staff.name} is on leave on this date` };
     }
 
     // 9. Calculate total duration + buffer
     const totalDuration = services.reduce(
-      (sum, s) => sum + s.duration + s.bufferTime,
+      (sum: number, s: { duration: number; bufferTime: number }) => sum + s.duration + s.bufferTime,
       0
     );
 
@@ -225,8 +226,8 @@ export async function getAvailableSlots(
 
     // A. Branch partial closures
     branch.closures
-      .filter((c) => !c.isFullDay && c.startTime && c.endTime)
-      .forEach((c) =>
+      .filter((c: { isFullDay: boolean; startTime: string | null; endTime: string | null }) => !c.isFullDay && c.startTime && c.endTime)
+      .forEach((c: { isFullDay: boolean; startTime: string | null; endTime: string | null; reason: string | null }) =>
         blockedRanges.push({
           start: c.startTime!,
           end: c.endTime!,
@@ -245,8 +246,8 @@ export async function getAvailableSlots(
 
     // C. Staff partial leaves
     staff.leaves
-      .filter((l) => !l.isFullDay && l.startTime && l.endTime)
-      .forEach((l) =>
+      .filter((l: { isFullDay: boolean; startTime: string | null; endTime: string | null }) => !l.isFullDay && l.startTime && l.endTime)
+      .forEach((l: { isFullDay: boolean; startTime: string | null; endTime: string | null; reason: string | null }) =>
         blockedRanges.push({
           start: l.startTime!,
           end: l.endTime!,
@@ -256,8 +257,8 @@ export async function getAvailableSlots(
 
     // D. Staff breaks (recurring or for this specific day of week)
     staff.breaks
-      .filter((b) => b.dayOfWeek === -1 || b.dayOfWeek === dayOfWeek)
-      .forEach((b) =>
+      .filter((b: { dayOfWeek: number }) => b.dayOfWeek === -1 || b.dayOfWeek === dayOfWeek)
+      .forEach((b: { startTime: string; endTime: string }) =>
         blockedRanges.push({
           start: b.startTime,
           end: b.endTime,
@@ -266,7 +267,7 @@ export async function getAvailableSlots(
       );
 
     // E. Existing active bookings
-    existingBookings.forEach((b) =>
+    existingBookings.forEach((b: { startTime: string; endTime: string }) =>
       blockedRanges.push({
         start: b.startTime,
         end: b.endTime,
@@ -414,7 +415,7 @@ export function minTime(a: string, b: string): string {
  * Format: SAL-YYYYMMDD-00001 (or unique 5-char sequence)
  */
 export async function generateSafeBookingReference(
-  tx: any,
+  tx: Prisma.TransactionClient,
   salonId: string,
   salonSlug: string,
   bookingDateStr: string

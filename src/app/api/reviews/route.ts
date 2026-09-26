@@ -26,7 +26,7 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" },
     });
 
-    const mapped = reviews.map((r) => ({
+    const mapped = reviews.map((r: (typeof reviews)[number]) => ({
       id: r.id,
       rating: r.salonRating,
       staffRating: r.staffRating,

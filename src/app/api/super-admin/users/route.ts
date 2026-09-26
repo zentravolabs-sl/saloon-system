@@ -33,7 +33,7 @@ export async function GET(req: Request) {
       take: 100,
     });
 
-    const mapped = users.map((u) => ({
+    const mapped = users.map((u: (typeof users)[number]) => ({
       id: u.id,
       name: u.name,
       email: u.email,

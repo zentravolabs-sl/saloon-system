@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { bookingStatusUpdateSchema } from "@/lib/validations";
 import { isSlotAvailable, addMinutesToTime } from "@/lib/availability";
 import { getPhoneVariants } from "@/lib/phone";
@@ -94,7 +95,7 @@ export async function PATCH(
       const targetTime = body.newTime || booking.startTime;
       const targetStaffId = body.staffId || booking.staffId;
 
-      const serviceIds = booking.services.map((s) => s.serviceId);
+      const serviceIds = booking.services.map((s: { serviceId: string }) => s.serviceId);
 
       // Re-run full availability validation!
       const availCheck = await isSlotAvailable({
@@ -116,7 +117,7 @@ export async function PATCH(
       const totalDuration = availCheck.totalDuration || 30;
       const targetEndTime = addMinutesToTime(targetTime, totalDuration);
 
-      const rescheduled = await prisma.$transaction(async (tx) => {
+      const rescheduled = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         const updated = await tx.booking.update({
           where: { id },
           data: {
@@ -179,7 +180,7 @@ export async function PATCH(
       timestamps.rejectionReason = reason || null;
     }
 
-    const updated = await prisma.$transaction(async (tx) => {
+    const updated = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const updatedBooking = await tx.booking.update({
         where: { id },
         data: {

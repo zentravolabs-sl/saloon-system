@@ -56,10 +56,10 @@ export async function POST(req: Request) {
         phone: canonicalPhone,
         name: primaryCustomer?.name || name || "Customer",
         email: primaryCustomer?.email || null,
-        totalBookings: customers.reduce((sum, c) => sum + c.totalBookings, 0),
-        totalSpent: customers.reduce((sum, c) => sum + c.totalSpent, 0),
+        totalBookings: customers.reduce((sum: number, c: (typeof customers)[number]) => sum + c.totalBookings, 0),
+        totalSpent: customers.reduce((sum: number, c: (typeof customers)[number]) => sum + c.totalSpent, 0),
       },
-      salons: customers.map((c) => ({
+      salons: customers.map((c: (typeof customers)[number]) => ({
         salonId: c.salonId,
         salonName: c.salon.name,
         loyaltyPoints: c.loyaltyAccount?.balance || 0,

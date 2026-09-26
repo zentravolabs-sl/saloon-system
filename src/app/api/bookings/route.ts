@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { bookingCreateSchema } from "@/lib/validations";
 import {
   isSlotAvailable,
@@ -177,7 +178,7 @@ export async function POST(req: Request) {
     const initialStatus = autoConfirm ? "CONFIRMED" : "PENDING";
 
     // 8. Execute in concurrency-safe PostgreSQL transaction with advisory lock
-    const booking = await prisma.$transaction(async (tx) => {
+    const booking = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Serialize concurrent booking requests for this staff member and date
       const lockKey = `staff_${staffId}_${bookingDate}`;
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${lockKey}))`;

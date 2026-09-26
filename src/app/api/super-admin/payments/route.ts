@@ -45,8 +45,8 @@ export async function GET(req: Request) {
     ]);
 
     // Attach salon name
-    const salonMap = new Map(allSalons.map((s) => [s.id, s.name]));
-    const enrichedPayments = payments.map((p) => ({
+    const salonMap = new Map(allSalons.map((s: (typeof allSalons)[number]) => [s.id, s.name]));
+    const enrichedPayments = payments.map((p: (typeof payments)[number]) => ({
       ...p,
       salonName: salonMap.get(p.salonId) || "Unknown Salon",
     }));

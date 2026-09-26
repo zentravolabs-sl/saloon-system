@@ -41,11 +41,11 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" },
     });
 
-    const mapped = customers.map((c) => {
-      const completed = c.bookings.filter((b) => b.status === "COMPLETED");
-      const totalSpend = completed.reduce((sum, b) => sum + b.totalAmount, 0);
-      const noShows = c.bookings.filter((b) => b.status === "NO_SHOW").length;
-      const cancelled = c.bookings.filter((b) => b.status === "CANCELLED").length;
+    const mapped = customers.map((c: (typeof customers)[number]) => {
+      const completed = c.bookings.filter((b: (typeof c.bookings)[number]) => b.status === "COMPLETED");
+      const totalSpend = completed.reduce((sum: number, b: (typeof completed)[number]) => sum + b.totalAmount, 0);
+      const noShows = c.bookings.filter((b: (typeof c.bookings)[number]) => b.status === "NO_SHOW").length;
+      const cancelled = c.bookings.filter((b: (typeof c.bookings)[number]) => b.status === "CANCELLED").length;
 
       return {
         id: c.id,

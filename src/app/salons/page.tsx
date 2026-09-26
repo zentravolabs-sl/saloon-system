@@ -79,8 +79,8 @@ export default async function SalonsDirectoryPage({
     distinct: ["city"],
   });
   const citySet = new Set<string>();
-  allSalonCities.forEach((s) => s.city && citySet.add(s.city));
-  allBranchCities.forEach((b) => b.city && citySet.add(b.city));
+  allSalonCities.forEach((s: { city: string | null }) => s.city && citySet.add(s.city));
+  allBranchCities.forEach((b: { city: string | null }) => b.city && citySet.add(b.city));
   const cities = Array.from(citySet).sort();
 
   return (
@@ -215,7 +215,7 @@ export default async function SalonsDirectoryPage({
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {salons.map((salon) => {
+            {salons.map((salon: (typeof salons)[number]) => {
               const avgRating = "4.9";
 
               return (

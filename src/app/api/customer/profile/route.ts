@@ -35,16 +35,16 @@ export async function GET(req: Request) {
     }
 
     const primary = customers[0];
-    const totalBookings = customers.reduce((sum, c) => sum + c.totalBookings, 0);
-    const totalSpent = customers.reduce((sum, c) => sum + c.totalSpent, 0);
-    const totalPoints = customers.reduce((sum, c) => sum + (c.loyaltyAccount?.balance || 0), 0);
+    const totalBookings = customers.reduce((sum: number, c: (typeof customers)[number]) => sum + c.totalBookings, 0);
+    const totalSpent = customers.reduce((sum: number, c: (typeof customers)[number]) => sum + c.totalSpent, 0);
+    const totalPoints = customers.reduce((sum: number, c: (typeof customers)[number]) => sum + (c.loyaltyAccount?.balance || 0), 0);
 
-    const loyaltyTransactions = customers.flatMap((c) =>
-      (c.loyaltyAccount?.transactions || []).map((t) => ({
+    const loyaltyTransactions = customers.flatMap((c: (typeof customers)[number]) =>
+      (c.loyaltyAccount?.transactions || []).map((t: NonNullable<typeof c.loyaltyAccount>["transactions"][number]) => ({
         ...t,
         salonName: c.salon.name,
       }))
-    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    ).sort((a: { createdAt: Date }, b: { createdAt: Date }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     return NextResponse.json({
       profile: {
@@ -54,7 +54,7 @@ export async function GET(req: Request) {
         totalBookings,
         totalSpent,
         totalPoints,
-        salons: customers.map((c) => ({
+        salons: customers.map((c: (typeof customers)[number]) => ({
           salonName: c.salon.name,
           points: c.loyaltyAccount?.balance || 0,
         })),

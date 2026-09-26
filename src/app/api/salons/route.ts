@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import bcrypt from "bcryptjs";
 import { salonRegistrationSchema } from "@/lib/validations";
 
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
     }
 
     // Create user and salon in a transaction
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const user = await tx.user.create({
         data: {
           name: ownerName,

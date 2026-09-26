@@ -48,14 +48,14 @@ export async function GET(req: Request) {
       orderBy: { name: "asc" },
     });
 
-    const mapped = services.map((s) => {
-      const branchSpec = s.branchServices.find((bs) => bs.branchId === branchId);
+    const mapped = services.map((s: (typeof services)[number]) => {
+      const branchSpec = s.branchServices.find((bs: (typeof s.branchServices)[number]) => bs.branchId === branchId);
       return {
         ...s,
         price: branchSpec?.price ?? s.price,
         duration: s.duration,
         bufferTime: s.bufferTime,
-        assignedStaff: s.staffServices.map((st) => st.staff),
+        assignedStaff: s.staffServices.map((st: (typeof s.staffServices)[number]) => st.staff),
       };
     });
 

@@ -18,7 +18,7 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" },
     });
 
-    const mapped = coupons.map((c) => ({
+    const mapped = coupons.map((c: (typeof coupons)[number]) => ({
       ...c,
       discountType: c.type,
       discountValue: c.value,

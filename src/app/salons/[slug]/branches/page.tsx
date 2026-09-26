@@ -112,10 +112,10 @@ export default async function SalonBranchesDirectoryPage({
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {salon.branches.map((branch) => {
+              {salon.branches.map((branch: (typeof salon.branches)[number]) => {
                 const todayDayOfWeek = new Date().getDay();
                 const todaySchedule = branch.schedules.find(
-                  (s) => s.dayOfWeek === todayDayOfWeek
+                  (s: (typeof branch.schedules)[number]) => s.dayOfWeek === todayDayOfWeek
                 );
 
                 return (
@@ -181,7 +181,7 @@ export default async function SalonBranchesDirectoryPage({
                           Weekly Operating Hours
                         </span>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-                          {branch.schedules.map((s) => (
+                          {branch.schedules.map((s: (typeof branch.schedules)[number]) => (
                             <div
                               key={s.dayOfWeek}
                               className={`p-2 rounded-xl border text-center ${
@@ -212,7 +212,7 @@ export default async function SalonBranchesDirectoryPage({
                             Popular Services
                           </span>
                           <div className="flex flex-wrap gap-1.5">
-                            {branch.services.map((bs) => (
+                            {branch.services.map((bs: (typeof branch.services)[number]) => (
                               <span
                                 key={bs.id}
                                 className="px-2.5 py-1 rounded-lg text-[11px] bg-white/[0.04] border border-white/10 text-white/90"
