@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { staffLeaveSchema } from "@/lib/validations";
 import { checkSalonApproval } from "@/lib/salon-status";
+import { getLegacyScope } from "@/lib/ops/access";
 
 export async function GET(req: Request) {
   try {
@@ -16,7 +17,10 @@ export async function GET(req: Request) {
     if (!salonId) return NextResponse.json({ error: "Salon not found" }, { status: 404 });
 
     const where: any = { salonId };
-    if (staffId) where.staffId = staffId;
+    // Staff can only see their own leave records
+    const scope = await getLegacyScope();
+    if (scope?.role === "STAFF") where.staffId = scope.staffId ?? "__none__";
+    else if (staffId) where.staffId = staffId;
 
     const leaves = await prisma.staffLeave.findMany({
       where,

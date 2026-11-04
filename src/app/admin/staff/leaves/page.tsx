@@ -95,7 +95,7 @@ export default function StaffLeavesPage() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-5xl">
+    <div className="space-y-6 animate-fadeIn w-full">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

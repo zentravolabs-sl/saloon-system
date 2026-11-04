@@ -1,7 +1,13 @@
 import "dotenv/config";
 import { prisma } from "./src/lib/prisma";
 import { getAvailableSlots, isSlotAvailable } from "./src/lib/availability";
-import { addMinutes, format } from "date-fns";
+import { addMinutes, addDays, format } from "date-fns";
+
+function getNextDayOfWeek(dayOfWeek: number) {
+  const d = new Date();
+  d.setDate(d.getDate() + ((dayOfWeek + 7 - d.getDay()) % 7 || 7));
+  return format(d, "yyyy-MM-dd");
+}
 
 async function runAcceptanceTests() {
   console.log("=================================================");
@@ -51,7 +57,7 @@ async function runAcceptanceTests() {
     assert(!!pendingSalon, "Pending salon exists for Super Admin approval workflow", pendingSalon?.name);
 
     // 3. Test Availability Engine: Working Hours
-    const testDate = "2026-09-29"; // Tuesday (Kasun works 09:00 - 18:00, Colombo branch open)
+    const testDate = getNextDayOfWeek(2); // Next Tuesday
     const hairCut = glamourCuts?.services.find((s) => s.name === "Hair Cut");
     assert(!!hairCut, "Hair Cut service exists (30 mins + 10 min buffer = 40 mins)");
 
@@ -86,7 +92,7 @@ async function runAcceptanceTests() {
 
       // 4. Test Staff Leave Constraint
       console.log("\n--- Testing Staff Leave Constraint ---");
-      const leaveDate = "2026-10-05"; // Next Monday
+      const leaveDate = format(addDays(new Date(testDate), 7), "yyyy-MM-dd"); // Next week
       // Add temporary staff leave
       const tempLeave = await prisma.staffLeave.create({
         data: {
@@ -119,7 +125,7 @@ async function runAcceptanceTests() {
 
       // 5. Test Branch Closure Constraint
       console.log("\n--- Testing Branch Closure Constraint ---");
-      const holidayDate = "2026-10-12";
+      const holidayDate = format(addDays(new Date(testDate), 14), "yyyy-MM-dd");
       const tempClosure = await prisma.branchClosure.create({
         data: {
           branchId: colomboBranch.id,
@@ -149,7 +155,7 @@ async function runAcceptanceTests() {
 
       // 6. Test Double-Booking Concurrency & Race Condition Prevention
       console.log("\n--- Testing Double-Booking Race Condition Prevention ---");
-      const bookingDate = "2026-10-20"; // Tuesday
+      const bookingDate = format(addDays(new Date(testDate), 21), "yyyy-MM-dd");
       const startTime = "11:00";
       const endTime = "11:40";
 

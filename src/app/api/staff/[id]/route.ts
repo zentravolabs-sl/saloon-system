@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import { staffLeaveSchema, staffScheduleSchema } from "@/lib/validations";
 import { checkSalonApproval } from "@/lib/salon-status";
+import { getLegacyScope } from "@/lib/ops/access";
 
 export async function GET(
   req: Request,
@@ -32,6 +33,10 @@ export async function GET(
 
     if (!staff) return NextResponse.json({ error: "Staff not found" }, { status: 404 });
 
+    const staffScope = await getLegacyScope();
+    if (staffScope?.role === "STAFF" && staffScope.staffId !== id) {
+      return NextResponse.json({ error: "You can only view your own profile" }, { status: 403 });
+    }
     if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== staff.salonId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
@@ -56,6 +61,10 @@ export async function PATCH(
     const staff = await prisma.staff.findUnique({ where: { id } });
     if (!staff) return NextResponse.json({ error: "Staff not found" }, { status: 404 });
 
+    const staffScope = await getLegacyScope();
+    if (staffScope?.role === "STAFF" && staffScope.staffId !== id) {
+      return NextResponse.json({ error: "You can only view your own profile" }, { status: 403 });
+    }
     if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== staff.salonId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
@@ -114,6 +123,10 @@ export async function DELETE(
     const staff = await prisma.staff.findUnique({ where: { id } });
     if (!staff) return NextResponse.json({ error: "Staff not found" }, { status: 404 });
 
+    const staffScope = await getLegacyScope();
+    if (staffScope?.role === "STAFF" && staffScope.staffId !== id) {
+      return NextResponse.json({ error: "You can only view your own profile" }, { status: 403 });
+    }
     if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== staff.salonId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }

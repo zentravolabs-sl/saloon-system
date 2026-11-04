@@ -1,0 +1,159 @@
+import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
+import { money } from "@/lib/money";
+import { dayStr, idStr, moneyPositive, optionalText } from "@/lib/ops/schemas";
+import { endOfDayUTC, formatDay, nextOccurrence, parseDay, todayInTz } from "@/lib/ops/periods";
+
+export const DEFAULT_EXPENSE_CATEGORIES = [
+  "Rent",
+  "Electricity",
+  "Water",
+  "Internet",
+  "Staff expenses",
+  "Product purchases",
+  "Equipment and maintenance",
+  "Marketing",
+  "Transportation",
+  "Other expenses",
+];
+
+export const EXPENSE_PAYMENT_METHODS = ["CASH", "BANK_TRANSFER", "CARD", "OTHER"] as const;
+export const EXPENSE_STATUSES = ["PENDING", "APPROVED", "REJECTED", "VOIDED"] as const;
+
+/**
+ * THE definition of an expense that counts toward financial totals.
+ * Deleted, voided, rejected and not-yet-approved expenses are excluded.
+ * Every report must use this helper so totals stay consistent.
+ */
+export function countedExpenseWhere(salonId: string): Prisma.ExpenseWhereInput {
+  return { salonId, deletedAt: null, status: "APPROVED" };
+}
+
+export async function ensureDefaultCategories(salonId: string) {
+  const count = await prisma.expenseCategory.count({ where: { salonId } });
+  if (count > 0) return;
+  await prisma.expenseCategory.createMany({
+    data: DEFAULT_EXPENSE_CATEGORIES.map((name) => ({ salonId, name, isSystem: true })),
+    skipDuplicates: true,
+  });
+}
+
+export const expenseCreateSchema = z.object({
+  branchId: idStr,
+  categoryId: idStr,
+  description: z.string().trim().min(2, "Description is required").max(300),
+  referenceNo: optionalText(100),
+  amount: moneyPositive,
+  expenseDate: dayStr,
+  paymentMethod: z.enum(EXPENSE_PAYMENT_METHODS).default("CASH"),
+  notes: optionalText(1000),
+});
+
+export const expenseUpdateSchema = expenseCreateSchema.partial();
+
+export const recurringCreateSchema = z.object({
+  branchId: idStr,
+  categoryId: idStr,
+  description: z.string().trim().min(2).max(300),
+  amount: moneyPositive,
+  paymentMethod: z.enum(EXPENSE_PAYMENT_METHODS).default("CASH"),
+  frequency: z.enum(["WEEKLY", "MONTHLY", "YEARLY"]).default("MONTHLY"),
+  startDate: dayStr,
+  endDate: dayStr.optional().nullable(),
+  autoApprove: z.boolean().default(false),
+});
+
+export const recurringUpdateSchema = z.object({
+  description: z.string().trim().min(2).max(300).optional(),
+  amount: moneyPositive.optional(),
+  paymentMethod: z.enum(EXPENSE_PAYMENT_METHODS).optional(),
+  endDate: dayStr.optional().nullable(),
+  autoApprove: z.boolean().optional(),
+  isActive: z.boolean().optional(),
+  categoryId: idStr.optional(),
+});
+
+/**
+ * Generates every due occurrence of the salon's recurring expenses (catch-up safe).
+ * Idempotent: the (recurringExpenseId, expenseDate) unique key makes duplicates impossible,
+ * so it is safe to trigger from page loads, a button, or a cron job.
+ */
+export async function runRecurringExpenses(
+  salonId: string,
+  options: { maxPerRule?: number; branchIds?: string[] } = {}
+): Promise<{ created: number }> {
+  const salon = await prisma.salon.findUnique({ where: { id: salonId }, select: { timezone: true } });
+  const today = todayInTz(salon?.timezone || "Asia/Colombo");
+  const maxPerRule = options.maxPerRule ?? 36;
+
+  const rules = await prisma.recurringExpense.findMany({
+    where: {
+      salonId,
+      isActive: true,
+      nextRunDate: { lte: endOfDayUTC(today) },
+      ...(options.branchIds ? { branchId: { in: options.branchIds } } : {}),
+    },
+  });
+
+  let created = 0;
+  for (const rule of rules) {
+    let next = rule.nextRunDate;
+    let guard = 0;
+    while (next.getTime() <= today.getTime() && guard < maxPerRule) {
+      guard++;
+      if (rule.endDate && next.getTime() > rule.endDate.getTime()) break;
+      const occurrence = next;
+      const following = nextOccurrence(rule.startDate, rule.frequency, occurrence);
+      try {
+        await prisma.$transaction(async (tx) => {
+          await tx.expense.create({
+            data: {
+              salonId,
+              branchId: rule.branchId,
+              categoryId: rule.categoryId,
+              description: rule.description,
+              amount: money(rule.amount),
+              expenseDate: occurrence,
+              paymentMethod: rule.paymentMethod,
+              status: rule.autoApprove ? "APPROVED" : "PENDING",
+              approvedAt: rule.autoApprove ? new Date() : null,
+              createdById: rule.createdById,
+              approvedById: rule.autoApprove ? rule.createdById : null,
+              recurringExpenseId: rule.id,
+              notes: `Auto-generated from recurring expense (${formatDay(occurrence)})`,
+            },
+          });
+          await tx.recurringExpense.update({
+            where: { id: rule.id },
+            data: { nextRunDate: following, lastRunAt: new Date() },
+          });
+        });
+        created++;
+      } catch (e) {
+        if ((e as { code?: string }).code === "P2002") {
+          // Already generated by a concurrent run: just advance the pointer
+          await prisma.recurringExpense.update({
+            where: { id: rule.id },
+            data: { nextRunDate: following },
+          });
+        } else {
+          throw e;
+        }
+      }
+      next = following;
+    }
+    if (rule.endDate && next.getTime() > rule.endDate.getTime()) {
+      await prisma.recurringExpense.update({ where: { id: rule.id }, data: { isActive: false } });
+    }
+  }
+  return { created };
+}
+
+export function expenseDateFilter(from?: string, to?: string): Prisma.DateTimeFilter | undefined {
+  if (!from && !to) return undefined;
+  return {
+    ...(from ? { gte: parseDay(from) } : {}),
+    ...(to ? { lte: endOfDayUTC(parseDay(to)) } : {}),
+  };
+}

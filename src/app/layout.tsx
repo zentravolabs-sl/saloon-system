@@ -37,11 +37,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakarta.variable} dark`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${plusJakarta.variable} dark`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased bg-[#080911] text-[#F9FAFB] min-h-screen selection:bg-[#8B5CF6]/30 selection:text-white">
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

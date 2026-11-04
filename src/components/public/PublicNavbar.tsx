@@ -79,7 +79,7 @@ export function PublicNavbar() {
               href={
                 session.user.role === "SUPER_ADMIN"
                   ? "/super-admin/dashboard"
-                  : "/admin/dashboard"
+                  : "/admin"
               }
               className="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-600/25 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
             >
@@ -151,7 +151,7 @@ export function PublicNavbar() {
                 href={
                   session.user.role === "SUPER_ADMIN"
                     ? "/super-admin/dashboard"
-                    : "/admin/dashboard"
+                    : "/admin"
                 }
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-violet-600 text-white"

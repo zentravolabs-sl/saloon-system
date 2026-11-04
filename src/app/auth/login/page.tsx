@@ -51,7 +51,7 @@ function LoginForm() {
         } else if (loginEmail === "admin@zentravo.com") {
           router.push("/super-admin/dashboard");
         } else {
-          router.push("/admin/dashboard");
+          router.push("/admin"); // middleware sends each role to its own home page
         }
         router.refresh();
       }

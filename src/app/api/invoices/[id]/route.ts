@@ -27,6 +27,15 @@ export async function GET(
             coupon: { select: { code: true, type: true, value: true } },
           },
         },
+        sale: {
+          include: {
+            customer: true,
+            branch: true,
+            salon: { select: { id: true, name: true, logo: true, phone: true, address: true, email: true } },
+            items: { include: { product: true } },
+            payments: true,
+          },
+        },
       },
     });
 
@@ -34,7 +43,7 @@ export async function GET(
 
     const session = await auth();
     if (session) {
-      if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== invoice.booking.salonId) {
+      if (session.user.role !== "SUPER_ADMIN" && invoice.salonId && session.user.salonId !== invoice.salonId) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
       }
     }

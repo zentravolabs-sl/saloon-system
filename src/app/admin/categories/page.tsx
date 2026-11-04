@@ -72,7 +72,7 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl">
+    <div className="space-y-6 animate-fadeIn w-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

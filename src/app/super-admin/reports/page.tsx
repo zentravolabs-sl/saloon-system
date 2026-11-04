@@ -45,7 +45,7 @@ export default function SuperAdminReportsPage() {
   }));
 
   return (
-    <div className="space-y-8 animate-fadeIn max-w-5xl">
+    <div className="space-y-8 animate-fadeIn w-full">
       <div>
         <h1 className="text-2xl font-black text-white tracking-tight">
           Platform-Wide SaaS Intelligence

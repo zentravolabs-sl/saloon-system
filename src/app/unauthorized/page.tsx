@@ -14,11 +14,11 @@ export default function UnauthorizedPage() {
         </p>
         <div className="pt-4 flex items-center justify-center gap-3">
           <Link
-            href="/"
+            href="/admin"
             className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors flex items-center gap-1.5"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to Home</span>
+            <span>Back to my work</span>
           </Link>
           <Link
             href="/auth/login"

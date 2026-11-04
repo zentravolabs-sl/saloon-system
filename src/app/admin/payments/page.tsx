@@ -105,7 +105,8 @@ export default function PaymentsPage() {
       !q ||
       p.booking?.customer?.name?.toLowerCase().includes(q) ||
       p.booking?.customer?.phone?.includes(q) ||
-      p.reference?.toLowerCase().includes(q)
+      p.reference?.toLowerCase().includes(q) ||
+      p.notes?.toLowerCase().includes(q)
     );
   });
 

@@ -6,6 +6,14 @@ import { bookingStatusUpdateSchema } from "@/lib/validations";
 import { isSlotAvailable, addMinutesToTime } from "@/lib/availability";
 import { getPhoneVariants } from "@/lib/phone";
 import { format } from "date-fns";
+import { getLegacyScope, type LegacyScope } from "@/lib/ops/access";
+
+/** True when the caller may see/act on this booking (own record for STAFF, branch scope otherwise) */
+function bookingInScope(scope: LegacyScope, booking: { staffId: string; branchId: string }) {
+  if (scope.role === "STAFF") return !!scope.staffId && booking.staffId === scope.staffId;
+  if (scope.branchIds && !scope.branchIds.includes(booking.branchId)) return false;
+  return true;
+}
 
 export async function GET(
   req: Request,
@@ -38,6 +46,10 @@ export async function GET(
     // Multi-tenant & customer privacy authorization check:
     // 1. If staff/admin session is present:
     if (session) {
+      const scope = await getLegacyScope();
+      if (scope && !bookingInScope(scope, booking)) {
+        return NextResponse.json({ error: "You do not have access to this appointment" }, { status: 403 });
+      }
       if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== booking.salonId) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
       }
@@ -87,6 +99,23 @@ export async function PATCH(
     // Tenant isolation
     if (session.user.role !== "SUPER_ADMIN" && session.user.salonId !== booking.salonId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    // Role / branch / own-record checks (staff may only progress their own appointments)
+    const scope = await getLegacyScope();
+    if (scope) {
+      if (!bookingInScope(scope, booking)) {
+        return NextResponse.json({ error: "You do not have access to this appointment" }, { status: 403 });
+      }
+      if (scope.role === "STAFF") {
+        const allowedForStaff = ["CHECKED_IN", "IN_PROGRESS", "COMPLETED"];
+        if (body.action === "RESCHEDULE" || body.newDate || body.newTime || !allowedForStaff.includes(body.status)) {
+          return NextResponse.json(
+            { error: "Staff can only start or finish their own appointments" },
+            { status: 403 }
+          );
+        }
+      }
     }
 
     // Case 1: Rescheduling requested (new bookingDate and/or startTime)
@@ -244,11 +273,39 @@ export async function PATCH(
         });
       }
 
-      if (status === "CANCELLED") {
+      if (status === "CANCELLED" || status === "REJECTED") {
         await tx.customer.update({
           where: { id: booking.customerId },
           data: { cancelCount: { increment: 1 } },
         });
+
+        // Reverse service product consumption if previously applied
+        const { reverseBookingConsumption } = await import("@/lib/ops/inventory");
+        await reverseBookingConsumption(tx, id, session.user.id);
+
+        // Void or offset any generated commissions
+        const { voidBookingCommissions } = await import("@/lib/ops/commission");
+        await voidBookingCommissions(tx, id, reason || `Booking ${status.toLowerCase()}`);
+      }
+
+      // Phase 1: Service Product Consumption trigger
+      const { getOpsSettings } = await import("@/lib/ops/settings");
+      const opsSettings = await getOpsSettings(booking.salonId, tx);
+      if (
+        (status === "COMPLETED" && opsSettings.consumeOn === "COMPLETED") ||
+        (status === "IN_PROGRESS" && opsSettings.consumeOn === "IN_PROGRESS")
+      ) {
+        const { applyBookingConsumption } = await import("@/lib/ops/inventory");
+        await applyBookingConsumption(tx, id, {
+          allowNegative: opsSettings.allowNegativeStock,
+          userId: session.user.id,
+        });
+      }
+
+      // Phase 1: Staff Commission evaluation
+      if (status === "COMPLETED") {
+        const { evaluateBookingCommissions } = await import("@/lib/ops/commission");
+        await evaluateBookingCommissions(tx, id);
       }
 
       // Generate invoice on completion with collision-safe unique invoice number

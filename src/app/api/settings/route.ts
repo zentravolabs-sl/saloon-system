@@ -41,6 +41,23 @@ export async function PUT(req: Request) {
     const body = await req.json();
     const { name, description, phone, email, address, city, timezone, currency, settings } = body;
 
+    // Preserve the Phase 1 `operations` block (managed via /api/ops/settings) because this
+    // endpoint replaces the whole settings JSON.
+    let mergedSettings = settings ?? undefined;
+    if (settings && typeof settings === "object" && !Array.isArray(settings)) {
+      const existing = await prisma.salon.findUnique({
+        where: { id: session.user.salonId },
+        select: { settings: true },
+      });
+      const ops =
+        existing?.settings && typeof existing.settings === "object" && !Array.isArray(existing.settings)
+          ? (existing.settings as Record<string, unknown>).operations
+          : undefined;
+      if (ops !== undefined && (settings as Record<string, unknown>).operations === undefined) {
+        mergedSettings = { ...settings, operations: ops };
+      }
+    }
+
     const updated = await prisma.salon.update({
       where: { id: session.user.salonId },
       data: {
@@ -52,7 +69,7 @@ export async function PUT(req: Request) {
         city,
         timezone,
         currency,
-        settings: settings ?? undefined,
+        settings: mergedSettings,
       },
     });
 

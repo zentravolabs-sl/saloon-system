@@ -11,6 +11,7 @@ import {
 import { checkSalonApproval } from "@/lib/salon-status";
 import { normalizePhone, getPhoneVariants } from "@/lib/phone";
 import { signCustomerToken } from "@/lib/customer-token";
+import { getLegacyScope } from "@/lib/ops/access";
 
 export async function GET(req: Request) {
   try {
@@ -34,18 +35,39 @@ export async function GET(req: Request) {
     const staffId = searchParams.get("staffId");
     const status = searchParams.get("status");
     const date = searchParams.get("date");
+    const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
 
     const where: any = { salonId };
+
+    // Server-side scope: staff only see their own appointments; branch-limited users only
+    // see their branches (requested filters can narrow this, never widen it).
+    const scope = await getLegacyScope();
+    if (scope?.role === "STAFF") {
+      where.staffId = scope.staffId ?? "__none__";
+    }
+    if (scope?.branchIds) {
+      if (branchId && !scope.branchIds.includes(branchId)) {
+        return NextResponse.json({ error: "You do not have access to this branch" }, { status: 403 });
+      }
+      where.branchId = branchId ? branchId : { in: scope.branchIds };
+    }
     if (branchId) where.branchId = branchId;
-    if (staffId) where.staffId = staffId;
+    if (staffId && scope?.role !== "STAFF") where.staffId = staffId;
     if (status) where.status = status;
     if (date) {
       where.bookingDate = {
         gte: new Date(date + "T00:00:00.000Z"),
         lt: new Date(date + "T23:59:59.999Z"),
       };
+    }
+    if (search) {
+      where.OR = [
+        { reference: { contains: search, mode: "insensitive" } },
+        { customer: { name: { contains: search, mode: "insensitive" } } },
+        { customer: { phone: { contains: search, mode: "insensitive" } } },
+      ];
     }
 
     const [bookings, total] = await Promise.all([
@@ -79,8 +101,9 @@ export async function POST(req: Request) {
     const parsed = bookingCreateSchema.safeParse(body);
 
     if (!parsed.success) {
+      const errorMsg = parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join(", ");
       return NextResponse.json(
-        { error: "Validation failed", details: parsed.error.flatten() },
+        { error: errorMsg || "Validation failed", details: parsed.error.flatten() },
         { status: 400 }
       );
     }
@@ -107,6 +130,12 @@ export async function POST(req: Request) {
     });
 
     if (!branch) return NextResponse.json({ error: "Branch not found" }, { status: 404 });
+
+    // Logged-in salon users can only book into branches they are assigned to
+    const callerScope = await getLegacyScope().catch(() => null);
+    if (callerScope?.branchIds && callerScope.salonId === branch.salonId && !callerScope.branchIds.includes(branchId)) {
+      return NextResponse.json({ error: "You do not have access to this branch" }, { status: 403 });
+    }
     if (branch.status !== "ACTIVE") return NextResponse.json({ error: "Branch is inactive" }, { status: 400 });
 
     // 2. Ensure salon is approved by Super Admin

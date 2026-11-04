@@ -1,10 +1,27 @@
 import { auth } from "@/lib/auth-edge";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { canAccessPage, checkApiAccess, homeFor } from "@/lib/rbac";
 
 export default auth((req: NextRequest & { auth: any }) => {
   const { pathname } = req.nextUrl;
   const session = req.auth;
+  const role = session?.user?.role as string | undefined;
+
+  // Role rules for API routes. These run BEFORE the public-route shortcut below because some
+  // public prefixes (e.g. /api/staff, /api/services) also contain staff-only write endpoints.
+  if (pathname.startsWith("/api/")) {
+    const decision = checkApiAccess(role, req.method, pathname);
+    if (decision === "unauthenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    if (decision === "forbidden") {
+      return NextResponse.json(
+        { error: "You do not have permission to do this" },
+        { status: 403 }
+      );
+    }
+  }
 
   // Public routes - allow without salon owner / staff login
   const publicRoutes = [
@@ -46,8 +63,6 @@ export default auth((req: NextRequest & { auth: any }) => {
     return NextResponse.redirect(loginUrl);
   }
 
-  const role = session.user?.role as string;
-
   // Super admin routes
   if (pathname.startsWith("/super-admin")) {
     if (role !== "SUPER_ADMIN") {
@@ -55,10 +70,16 @@ export default auth((req: NextRequest & { auth: any }) => {
     }
   }
 
-  // Admin routes (salon staff)
+  // Admin routes (salon staff) - each role only reaches the pages in its own navigation
   if (pathname.startsWith("/admin")) {
     const allowedRoles = ["SALON_OWNER", "MANAGER", "RECEPTIONIST", "STAFF"];
-    if (!allowedRoles.includes(role)) {
+    if (!role || !allowedRoles.includes(role)) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
+    if (pathname === "/admin" || pathname === "/admin/") {
+      return NextResponse.redirect(new URL(homeFor(role), req.url));
+    }
+    if (!canAccessPage(role, pathname)) {
       return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
   }

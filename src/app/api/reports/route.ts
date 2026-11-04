@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getLegacyScope } from "@/lib/ops/access";
 import { startOfDay, endOfDay, startOfMonth, endOfMonth, subDays, format } from "date-fns";
 
 export async function GET(req: Request) {
@@ -18,6 +19,16 @@ export async function GET(req: Request) {
     const staffId = searchParams.get("staffId");
 
     const salonId = session.user.salonId;
+
+    // Business reports are for owners and managers only; managers are limited to their branches
+    const scope = await getLegacyScope();
+    if (!scope || !["SALON_OWNER", "MANAGER", "SUPER_ADMIN"].includes(scope.role)) {
+      return NextResponse.json({ error: "You do not have permission to view reports" }, { status: 403 });
+    }
+    if (branchId && scope.branchIds && !scope.branchIds.includes(branchId)) {
+      return NextResponse.json({ error: "You do not have access to this branch" }, { status: 403 });
+    }
+
     const dateFrom = from ? new Date(from) : subDays(new Date(), 30);
     const dateTo = to ? new Date(to) : new Date();
 
@@ -28,6 +39,8 @@ export async function GET(req: Request) {
         lte: endOfDay(dateTo),
       },
       ...(branchId && { branchId }),
+      // Managers only see reports for the branches they are assigned to
+      ...(!branchId && scope?.branchIds ? { branchId: { in: scope.branchIds } } : {}),
       ...(staffId && { staffId }),
     };
 
@@ -151,6 +164,7 @@ export async function GET(req: Request) {
         where: {
           booking: {
             salonId,
+            ...(branchId ? { branchId } : scope?.branchIds ? { branchId: { in: scope.branchIds } } : {}),
             bookingDate: {
               gte: startOfDay(dateFrom),
               lte: endOfDay(dateTo),
