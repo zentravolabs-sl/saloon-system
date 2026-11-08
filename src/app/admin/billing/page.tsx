@@ -352,19 +352,19 @@ function BillingContent() {
       <div className="max-w-xl mx-auto space-y-6 animate-fadeIn">
         <Panel>
           <div className="text-center space-y-4 py-6">
-            <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto" />
-            <h1 className="text-2xl font-black text-white">{t("pay.done")}</h1>
-            <p className="text-base text-[#D1D5DB]">
+            <CheckCircle2 className="w-16 h-16 text-[#15803D] mx-auto" />
+            <h1 className="text-2xl font-black text-[#0F172A]">{t("pay.done")}</h1>
+            <p className="text-base text-[#334155]">
               {completedResult.customerName} &bull; {completedResult.bookingRef}
             </p>
-            <div className="py-3 px-6 rounded-2xl bg-white/5 border border-white/10 max-w-xs mx-auto">
-              <span className="text-xs text-[#9CA3AF] uppercase font-semibold">
+            <div className="py-3 px-6 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] max-w-xs mx-auto">
+              <span className="text-xs text-[#64748B] uppercase font-semibold">
                 {t("common.total")} {t("common.paid")}
               </span>
-              <p className="text-3xl font-black text-emerald-400 mt-0.5">
+              <p className="text-3xl font-black text-[#15803D] mt-0.5">
                 {formatMoney(completedResult.amountPaid)}
               </p>
-              <span className="text-xs text-white/60 font-medium">via {completedResult.method}</span>
+              <span className="text-xs text-[#64748B] font-medium">via {completedResult.method}</span>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
@@ -395,11 +395,11 @@ function BillingContent() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">{t("pay.title")}</h1>
-          <p className="text-sm text-[#9CA3AF] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A]">{t("pay.title")}</h1>
+          <p className="text-sm text-[#64748B] mt-0.5">
             Quick 1-click checkout for salon services and retail products
           </p>
         </div>
@@ -419,7 +419,7 @@ function BillingContent() {
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#64748B]" />
                 <input
                   type="search"
                   value={searchQuery}
@@ -429,7 +429,7 @@ function BillingContent() {
                   autoFocus
                 />
               </div>
-              <label className="flex items-center gap-2 text-sm text-[#D1D5DB] cursor-pointer shrink-0 select-none px-2">
+              <label className="flex items-center gap-2 text-sm text-[#334155] cursor-pointer shrink-0 select-none px-2">
                 <input
                   type="checkbox"
                   checked={showAllStatuses}
@@ -452,29 +452,29 @@ function BillingContent() {
                     <button
                       key={appt.id}
                       onClick={() => selectAppointment(appt)}
-                      className="text-left p-4 rounded-xl bg-[#131524] border border-white/10 hover:border-[#8B5CF6] transition-all flex flex-col justify-between gap-3 group"
+                      className="text-left p-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#8B5CF6] transition-all flex flex-col justify-between gap-3 group"
                     >
                       <div className="space-y-1 w-full">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-extrabold text-white text-base">
+                          <span className="font-extrabold text-[#0F172A] text-base">
                             {appt.startTime}
                           </span>
                           <StatusBadge status={appt.status} />
                         </div>
-                        <p className="font-bold text-white text-base group-hover:text-[#A78BFA] transition-colors">
+                        <p className="font-bold text-[#0F172A] text-base group-hover:text-[#6D28D9] transition-colors">
                           {appt.customer?.name || "Walk-in"}
                         </p>
-                        <p className="text-xs text-[#9CA3AF]">
+                        <p className="text-xs text-[#64748B]">
                           {appt.customer?.phone} &bull; {appt.branch?.name}
                         </p>
-                        <p className="text-xs text-[#D1D5DB] line-clamp-1">
+                        <p className="text-xs text-[#334155] line-clamp-1">
                           {appt.services?.map((s) => s.service.name).join(", ")}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-white/10 w-full flex items-center justify-between">
-                        <span className="text-xs text-[#9CA3AF]">{t("common.balance")}:</span>
-                        <span className="text-base font-black text-amber-300">
+                      <div className="pt-2 border-t border-[#E2E8F0] w-full flex items-center justify-between">
+                        <span className="text-xs text-[#64748B]">{t("common.balance")}:</span>
+                        <span className="text-base font-black text-[#D97706]">
                           {formatMoney(bal)}
                         </span>
                       </div>
@@ -495,32 +495,32 @@ function BillingContent() {
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h2 className="text-lg font-bold text-white">
+                    <h2 className="text-lg font-bold text-[#0F172A]">
                       {selectedAppt.customer?.name}
                     </h2>
-                    <p className="text-sm text-[#9CA3AF]">
+                    <p className="text-sm text-[#64748B]">
                       {selectedAppt.customer?.phone} &bull; {selectedAppt.branch?.name}
                     </p>
-                    <p className="text-xs text-[#A78BFA] font-medium mt-0.5">
+                    <p className="text-xs text-[#6D28D9] font-medium mt-0.5">
                       Stylist: {selectedAppt.staff?.name || "Any"} &bull; {selectedAppt.startTime}
                     </p>
                   </div>
                   <StatusBadge status={selectedAppt.status} />
                 </div>
 
-                <div className="pt-3 border-t border-white/10 space-y-2">
-                  <span className="text-xs font-bold uppercase text-[#9CA3AF] tracking-wider">
+                <div className="pt-3 border-t border-[#E2E8F0] space-y-2">
+                  <span className="text-xs font-bold uppercase text-[#64748B] tracking-wider">
                     {t("pay.services")}
                   </span>
                   {selectedAppt.services?.map((bs, i) => (
                     <div key={i} className="flex justify-between items-center text-sm py-1">
-                      <span className="text-white font-medium">{bs.service.name}</span>
-                      <span className="text-white font-bold">{formatMoney(bs.service.price)}</span>
+                      <span className="text-[#0F172A] font-medium">{bs.service.name}</span>
+                      <span className="text-[#0F172A] font-bold">{formatMoney(bs.service.price)}</span>
                     </div>
                   ))}
-                  <div className="flex justify-between items-center text-sm pt-2 border-t border-white/5 font-bold">
-                    <span className="text-[#9CA3AF]">Service Subtotal</span>
-                    <span className="text-white">{formatMoney(servicesTotal)}</span>
+                  <div className="flex justify-between items-center text-sm pt-2 border-t border-[#E2E8F0] font-bold">
+                    <span className="text-[#64748B]">Service Subtotal</span>
+                    <span className="text-[#0F172A]">{formatMoney(servicesTotal)}</span>
                   </div>
                 </div>
               </div>
@@ -530,7 +530,7 @@ function BillingContent() {
             <Panel title={t("pay.addProducts")}>
               <div className="space-y-4">
                 <div className="relative">
-                  <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+                  <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#64748B]" />
                   <input
                     type="search"
                     placeholder={t("pay.productSearch")}
@@ -539,26 +539,26 @@ function BillingContent() {
                     className={`${inputClass} pl-12`}
                   />
                   {searchingProducts && (
-                    <Loader2 className="w-5 h-5 animate-spin absolute right-4 top-1/2 -translate-y-1/2 text-[#A78BFA]" />
+                    <Loader2 className="w-5 h-5 animate-spin absolute right-4 top-1/2 -translate-y-1/2 text-[#6D28D9]" />
                   )}
                 </div>
 
                 {foundProducts.length > 0 && (
-                  <ul className="rounded-xl border border-white/10 bg-[#131524] divide-y divide-white/10 max-h-48 overflow-y-auto">
+                  <ul className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] divide-y divide-[#E2E8F0] max-h-48 overflow-y-auto">
                     {foundProducts.map((p) => (
                       <li key={p.id}>
                         <button
                           type="button"
                           onClick={() => addProductToCart(p)}
-                          className="w-full text-left p-3 hover:bg-white/5 flex items-center justify-between text-sm"
+                          className="w-full text-left p-3 hover:bg-[#F8FAFC] flex items-center justify-between text-sm"
                         >
                           <div>
-                            <span className="font-bold text-white block">{p.name}</span>
-                            <span className="text-xs text-[#9CA3AF]">
+                            <span className="font-bold text-[#0F172A] block">{p.name}</span>
+                            <span className="text-xs text-[#64748B]">
                               {p.sku} &bull; Stock: {p.onHand} {p.unit}
                             </span>
                           </div>
-                          <span className="font-bold text-[#A78BFA]">
+                          <span className="font-bold text-[#6D28D9]">
                             +{formatMoney(Number(p.sellingPrice))}
                           </span>
                         </button>
@@ -569,17 +569,17 @@ function BillingContent() {
 
                 {cartProducts.length > 0 && (
                   <div className="space-y-2 pt-2">
-                    <span className="text-xs font-bold uppercase text-[#9CA3AF] tracking-wider">
+                    <span className="text-xs font-bold uppercase text-[#64748B] tracking-wider">
                       Selected Retail Products
                     </span>
-                    <ul className="divide-y divide-white/10">
+                    <ul className="divide-y divide-[#E2E8F0]">
                       {cartProducts.map((item) => (
                         <li key={item.product.id} className="py-2 flex items-center justify-between gap-3 text-sm">
                           <div className="min-w-0">
-                            <span className="font-semibold text-white block truncate">
+                            <span className="font-semibold text-[#0F172A] block truncate">
                               {item.product.name}
                             </span>
-                            <span className="text-xs text-[#9CA3AF]">
+                            <span className="text-xs text-[#64748B]">
                               {formatMoney(item.unitPrice)} each
                             </span>
                           </div>
@@ -591,14 +591,14 @@ function BillingContent() {
                               onChange={(e) =>
                                 updateProductQty(item.product.id, parseInt(e.target.value) || 1)
                               }
-                              className="w-14 min-h-9 px-2 text-center rounded-lg bg-[#181B2B] border border-white/20 text-white font-bold"
+                              className="w-14 min-h-9 px-2 text-center rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-bold"
                             />
-                            <span className="font-bold text-white min-w-16 text-right">
+                            <span className="font-bold text-[#0F172A] min-w-16 text-right">
                               {formatMoney(item.quantity * item.unitPrice)}
                             </span>
                             <button
                               onClick={() => removeCartProduct(item.product.id)}
-                              className="p-1.5 text-red-400 hover:bg-red-400/10 rounded-lg"
+                              className="p-1.5 text-[#B91C1C] hover:bg-red-400/10 rounded-lg"
                               title="Remove"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -618,24 +618,24 @@ function BillingContent() {
             <Panel title="2. Total & Payment">
               <div className="space-y-4">
                 {/* Price Breakdown */}
-                <dl className="space-y-2 text-sm border-b border-white/10 pb-4">
+                <dl className="space-y-2 text-sm border-b border-[#E2E8F0] pb-4">
                   <div className="flex justify-between">
-                    <dt className="text-[#9CA3AF]">{t("pay.subtotal")}:</dt>
-                    <dd className="font-semibold text-white">{formatMoney(servicesTotal)}</dd>
+                    <dt className="text-[#64748B]">{t("pay.subtotal")}:</dt>
+                    <dd className="font-semibold text-[#0F172A]">{formatMoney(servicesTotal)}</dd>
                   </div>
                   {productsTotal > 0 && (
                     <div className="flex justify-between">
-                      <dt className="text-[#9CA3AF]">{t("pay.products")}:</dt>
-                      <dd className="font-semibold text-white">+{formatMoney(productsTotal)}</dd>
+                      <dt className="text-[#64748B]">{t("pay.products")}:</dt>
+                      <dd className="font-semibold text-[#0F172A]">+{formatMoney(productsTotal)}</dd>
                     </div>
                   )}
 
                   {/* Step 4: Discount */}
                   <div className="pt-2">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-semibold text-[#D1D5DB]">{t("pay.discount")}:</span>
+                      <span className="text-xs font-semibold text-[#334155]">{t("pay.discount")}:</span>
                       {!canDiscount && (
-                        <span className="text-[10px] text-amber-300">Manager only</span>
+                        <span className="text-[10px] text-[#D97706]">Manager only</span>
                       )}
                     </div>
                     {canDiscount ? (
@@ -649,13 +649,13 @@ function BillingContent() {
                         className={inputClass}
                       />
                     ) : (
-                      <p className="text-xs text-[#9CA3AF] italic">{t("pay.discountHint")}</p>
+                      <p className="text-xs text-[#64748B] italic">{t("pay.discountHint")}</p>
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center pt-3 border-t border-white/10">
-                    <dt className="text-base font-extrabold text-white">{t("pay.grandTotal")}:</dt>
-                    <dd className="text-2xl font-black text-emerald-400">
+                  <div className="flex justify-between items-center pt-3 border-t border-[#E2E8F0]">
+                    <dt className="text-base font-extrabold text-[#0F172A]">{t("pay.grandTotal")}:</dt>
+                    <dd className="text-2xl font-black text-[#15803D]">
                       {formatMoney(grandTotal)}
                     </dd>
                   </div>
@@ -671,7 +671,7 @@ function BillingContent() {
                       className={`p-3 rounded-xl border text-center font-bold text-xs flex flex-col items-center gap-1.5 transition-all ${
                         method === "CASH"
                           ? "bg-[#8B5CF6] border-[#8B5CF6] text-white"
-                          : "bg-[#131524] border-white/10 text-[#D1D5DB] hover:bg-white/5"
+                          : "bg-[#F8FAFC] border-[#E2E8F0] text-[#334155] hover:bg-[#F8FAFC]"
                       }`}
                     >
                       <Banknote className="w-5 h-5" />
@@ -684,7 +684,7 @@ function BillingContent() {
                       className={`p-3 rounded-xl border text-center font-bold text-xs flex flex-col items-center gap-1.5 transition-all ${
                         method === "CARD"
                           ? "bg-[#8B5CF6] border-[#8B5CF6] text-white"
-                          : "bg-[#131524] border-white/10 text-[#D1D5DB] hover:bg-white/5"
+                          : "bg-[#F8FAFC] border-[#E2E8F0] text-[#334155] hover:bg-[#F8FAFC]"
                       }`}
                     >
                       <CreditCard className="w-5 h-5" />
@@ -697,7 +697,7 @@ function BillingContent() {
                       className={`p-3 rounded-xl border text-center font-bold text-xs flex flex-col items-center gap-1.5 transition-all ${
                         method === "ONLINE" || method === "BANK"
                           ? "bg-[#8B5CF6] border-[#8B5CF6] text-white"
-                          : "bg-[#131524] border-white/10 text-[#D1D5DB] hover:bg-white/5"
+                          : "bg-[#F8FAFC] border-[#E2E8F0] text-[#334155] hover:bg-[#F8FAFC]"
                       }`}
                     >
                       <Globe className="w-5 h-5" />
@@ -708,9 +708,9 @@ function BillingContent() {
 
                 {/* If Cash: Amount received & Change calculation */}
                 {method === "CASH" && (
-                  <div className="space-y-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <div className="space-y-3 p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
                     <div>
-                      <label htmlFor="received" className="block text-xs font-bold text-[#D1D5DB] mb-1">
+                      <label htmlFor="received" className="block text-xs font-bold text-[#334155] mb-1">
                         {t("pay.amountReceived")}
                       </label>
                       <input
@@ -724,8 +724,8 @@ function BillingContent() {
                     </div>
                     {receivedNum > grandTotal && (
                       <div className="flex justify-between items-center text-sm pt-1">
-                        <span className="text-[#9CA3AF] font-semibold">{t("pay.change")}:</span>
-                        <span className="text-lg font-black text-amber-300">
+                        <span className="text-[#64748B] font-semibold">{t("pay.change")}:</span>
+                        <span className="text-lg font-black text-[#D97706]">
                           {formatMoney(changeDue)}
                         </span>
                       </div>

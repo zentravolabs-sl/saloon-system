@@ -258,7 +258,7 @@ export default function PayrollPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <Banknote className="w-7 h-7 text-[#8B5CF6]" />
             Staff Salary & Monthly Payroll
           </h1>
@@ -280,7 +280,7 @@ export default function PayrollPage() {
               }
               setShowAdvanceModal(true);
             }}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] transition-all flex items-center gap-1.5"
           >
             <CreditCard className="w-3.5 h-3.5" />
             <span>Issue Salary Advance</span>
@@ -298,7 +298,7 @@ export default function PayrollPage() {
               }
               setShowCompModal(true);
             }}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] transition-all flex items-center gap-1.5"
           >
             <Users className="w-3.5 h-3.5" />
             <span>Salary Setup</span>
@@ -315,47 +315,47 @@ export default function PayrollPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Total Payroll Disbursed</span>
-            <DollarSign className="w-4 h-4 text-emerald-400" />
+            <DollarSign className="w-4 h-4 text-[#15803D]" />
           </div>
-          <div className="text-xl font-bold text-white">{formatLKR(totalPayrollYTD)}</div>
-          <div className="text-[11px] text-emerald-400 mt-1">Net compensation across runs</div>
+          <div className="text-xl font-bold text-[#0F172A]">{formatLKR(totalPayrollYTD)}</div>
+          <div className="text-[11px] text-[#15803D] mt-1">Net compensation across runs</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Configured Staff</span>
-            <Users className="w-4 h-4 text-purple-400" />
+            <Users className="w-4 h-4 text-[#6D28D9]" />
           </div>
-          <div className="text-xl font-bold text-white">{compensations.length} Active</div>
+          <div className="text-xl font-bold text-[#0F172A]">{compensations.length} Active</div>
           <div className="text-[11px] text-[var(--text-muted)] mt-1">Salary structures setup</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Active Salary Advances</span>
-            <CreditCard className="w-4 h-4 text-amber-400" />
+            <CreditCard className="w-4 h-4 text-[#D97706]" />
           </div>
-          <div className="text-xl font-bold text-amber-300">
+          <div className="text-xl font-bold text-[#D97706]">
             {formatLKR(advances.reduce((s, a) => s + (a.balanceRemaining || 0), 0))}
           </div>
-          <div className="text-[11px] text-amber-400/80 mt-1">{advances.length} staff balance(s)</div>
+          <div className="text-[11px] text-[#D97706]/80 mt-1">{advances.length} staff balance(s)</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Payroll Runs</span>
-            <Calendar className="w-4 h-4 text-pink-400" />
+            <Calendar className="w-4 h-4 text-[#DB2777]" />
           </div>
-          <div className="text-xl font-bold text-white">{periods.length} Periods</div>
+          <div className="text-xl font-bold text-[#0F172A]">{periods.length} Periods</div>
           <div className="text-[11px] text-[var(--text-muted)] mt-1">Historical monthly runs</div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-3">
         {[
           { id: "history", label: "Monthly Payroll Runs", icon: Calendar },
           { id: "compensation", label: "Salary Compensation Setup", icon: Users },
@@ -370,7 +370,7 @@ export default function PayrollPage() {
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 isActive
                   ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-md shadow-[#8B5CF6]/20"
-                  : "text-[var(--text-secondary)] hover:text-white hover:bg-white/5"
+                  : "text-[var(--text-secondary)] hover:text-[#6D28D9] hover:bg-[#F8FAFC]"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -389,7 +389,7 @@ export default function PayrollPage() {
               Loading payroll history...
             </div>
           ) : periods.length === 0 ? (
-            <div className="p-12 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+            <div className="p-12 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
               No payroll runs generated yet. Click "Generate Monthly Payroll" to start for this month.
             </div>
           ) : (
@@ -400,16 +400,16 @@ export default function PayrollPage() {
               return (
                 <div
                   key={period.id}
-                  className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden space-y-3"
+                  className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden space-y-3"
                 >
                   {/* Period Header */}
-                  <div className="p-4 bg-white/[0.02] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+                  <div className="p-4 bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-b border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 flex items-center justify-center text-[#A78BFA] font-bold text-sm">
+                      <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 flex items-center justify-center text-[#6D28D9] font-bold text-sm">
                         {period.month}
                       </div>
                       <div>
-                        <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                        <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                           <span>{monthNames[period.month - 1]} {period.year}</span>
                           {period.branch && (
                             <span className="text-[11px] font-normal text-[var(--text-muted)]">
@@ -426,7 +426,7 @@ export default function PayrollPage() {
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <div className="text-[10px] text-[var(--text-muted)]">Total Disbursed</div>
-                        <div className="font-mono font-bold text-sm text-emerald-400">
+                        <div className="font-mono font-bold text-sm text-[#15803D]">
                           {formatLKR(periodNetTotal)}
                         </div>
                       </div>
@@ -434,10 +434,10 @@ export default function PayrollPage() {
                       <span
                         className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                           period.status === "PAID"
-                            ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                            ? "bg-blue-500/20 text-[#1D4ED8] border border-blue-500/30"
                             : period.status === "APPROVED"
-                            ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                            : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                            ? "bg-emerald-500/20 text-[#15803D] border border-emerald-500/30"
+                            : "bg-amber-500/20 text-[#D97706] border border-amber-500/30"
                         }`}
                       >
                         {period.status}
@@ -446,7 +446,7 @@ export default function PayrollPage() {
                       {period.status === "DRAFT" && (
                         <button
                           onClick={() => handlePeriodAction(period.id, "approve")}
-                          className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"
+                          className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/10 text-[#15803D] hover:bg-emerald-500/20"
                         >
                           Approve Run
                         </button>
@@ -468,7 +468,7 @@ export default function PayrollPage() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
                         <thead>
-                          <tr className="text-[var(--text-muted)] border-b border-white/5">
+                          <tr className="text-[var(--text-muted)] border-b border-[#E2E8F0]">
                             <th className="pb-2.5 font-bold">Employee</th>
                             <th className="pb-2.5 font-bold text-right">Basic Salary</th>
                             <th className="pb-2.5 font-bold text-right">Commissions</th>
@@ -478,31 +478,31 @@ export default function PayrollPage() {
                             <th className="pb-2.5 font-bold text-right">Payslip</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-[#E2E8F0]">
                           {period.records.map((rec) => (
-                            <tr key={rec.id} className="hover:bg-white/[0.01]">
-                              <td className="py-2.5 font-bold text-white">
+                            <tr key={rec.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                              <td className="py-2.5 font-bold text-[#0F172A]">
                                 {rec.staff?.name || rec.staffName}
                               </td>
                               <td className="py-2.5 text-right font-mono text-[var(--text-secondary)]">
                                 {formatLKR(rec.basicSalary)}
                               </td>
-                              <td className="py-2.5 text-right font-mono text-purple-400 font-semibold">
+                              <td className="py-2.5 text-right font-mono text-[#6D28D9] font-semibold">
                                 {formatLKR(rec.commissionAmount)}
                               </td>
-                              <td className="py-2.5 text-right font-mono text-emerald-400">
+                              <td className="py-2.5 text-right font-mono text-[#15803D]">
                                 {rec.bonusAmount > 0 ? `+${formatLKR(rec.bonusAmount)}` : "—"}
                               </td>
-                              <td className="py-2.5 text-right font-mono text-red-400">
+                              <td className="py-2.5 text-right font-mono text-[#B91C1C]">
                                 {rec.deductionAmount > 0 ? `-${formatLKR(rec.deductionAmount)}` : "—"}
                               </td>
-                              <td className="py-2.5 text-right font-mono font-bold text-white">
+                              <td className="py-2.5 text-right font-mono font-bold text-[#0F172A]">
                                 {formatLKR(rec.netSalary)}
                               </td>
                               <td className="py-2.5 text-right">
                                 <Link
                                   href={`/admin/payroll/${rec.id}/payslip`}
-                                  className="p-1.5 rounded-lg bg-white/5 text-[#A78BFA] hover:bg-[#8B5CF6]/20 inline-flex items-center gap-1 text-[11px] font-semibold transition-colors"
+                                  className="p-1.5 rounded-lg bg-[#F8FAFC] text-[#6D28D9] hover:bg-[#8B5CF6]/20 inline-flex items-center gap-1 text-[11px] font-semibold transition-colors"
                                   title="Print Payslip"
                                 >
                                   <Printer className="w-3.5 h-3.5" />
@@ -524,11 +524,11 @@ export default function PayrollPage() {
 
       {/* TAB 2: COMPENSATION SETUP */}
       {activeTab === "compensation" && (
-        <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+        <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+                <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                   <th className="p-3.5 font-bold">Staff Member</th>
                   <th className="p-3.5 font-bold">Salary Model</th>
                   <th className="p-3.5 font-bold text-right">Base Pay Rate</th>
@@ -536,7 +536,7 @@ export default function PayrollPage() {
                   <th className="p-3.5 font-bold text-right">Fixed Allowance</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {compensations.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="p-8 text-center text-[var(--text-muted)]">
@@ -545,20 +545,20 @@ export default function PayrollPage() {
                   </tr>
                 ) : (
                   compensations.map((c) => (
-                    <tr key={c.id} className="hover:bg-white/[0.02]">
-                      <td className="p-3.5 font-bold text-white">{c.staff?.name}</td>
+                    <tr key={c.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                      <td className="p-3.5 font-bold text-[#0F172A]">{c.staff?.name}</td>
                       <td className="p-3.5">
-                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-purple-500/10 text-purple-400">
+                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-purple-500/10 text-[#6D28D9]">
                           {c.salaryType.replace(/_/g, " ")}
                         </span>
                       </td>
-                      <td className="p-3.5 text-right font-mono font-bold text-white">
+                      <td className="p-3.5 text-right font-mono font-bold text-[#0F172A]">
                         {formatLKR(c.baseRate)}
                       </td>
                       <td className="p-3.5 text-right font-mono text-[var(--text-secondary)]">
                         {formatLKR(c.overtimeHourlyRate)}
                       </td>
-                      <td className="p-3.5 text-right font-mono text-emerald-400">
+                      <td className="p-3.5 text-right font-mono text-[#15803D]">
                         {formatLKR(c.allowanceAmount)}
                       </td>
                     </tr>
@@ -572,11 +572,11 @@ export default function PayrollPage() {
 
       {/* TAB 3: SALARY ADVANCES */}
       {activeTab === "advances" && (
-        <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+        <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+                <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                   <th className="p-3.5 font-bold">Staff Member</th>
                   <th className="p-3.5 font-bold">Request Date</th>
                   <th className="p-3.5 font-bold text-right">Original Advance</th>
@@ -585,7 +585,7 @@ export default function PayrollPage() {
                   <th className="p-3.5 font-bold text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {advances.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-8 text-center text-[var(--text-muted)]">
@@ -594,26 +594,26 @@ export default function PayrollPage() {
                   </tr>
                 ) : (
                   advances.map((a) => (
-                    <tr key={a.id} className="hover:bg-white/[0.02]">
-                      <td className="p-3.5 font-bold text-white">{a.staff?.name}</td>
+                    <tr key={a.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                      <td className="p-3.5 font-bold text-[#0F172A]">{a.staff?.name}</td>
                       <td className="p-3.5 text-[var(--text-secondary)]">
                         {new Date(a.requestDate).toLocaleDateString()}
                       </td>
-                      <td className="p-3.5 text-right font-mono text-white">
+                      <td className="p-3.5 text-right font-mono text-[#0F172A]">
                         {formatLKR(a.amount)}
                       </td>
-                      <td className="p-3.5 text-right font-mono text-red-400">
+                      <td className="p-3.5 text-right font-mono text-[#B91C1C]">
                         {formatLKR(a.monthlyDeduction)} / month
                       </td>
-                      <td className="p-3.5 text-right font-mono font-bold text-amber-300">
+                      <td className="p-3.5 text-right font-mono font-bold text-[#D97706]">
                         {formatLKR(a.balanceRemaining)}
                       </td>
                       <td className="p-3.5 text-center">
                         <span
                           className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                             a.balanceRemaining <= 0
-                              ? "bg-emerald-500/20 text-emerald-400"
-                              : "bg-amber-500/20 text-amber-300"
+                              ? "bg-emerald-500/20 text-[#15803D]"
+                              : "bg-amber-500/20 text-[#D97706]"
                           }`}
                         >
                           {a.balanceRemaining <= 0 ? "RECOVERED" : "ACTIVE"}
@@ -630,14 +630,14 @@ export default function PayrollPage() {
 
       {/* GENERATE PAYROLL MODAL */}
       {showGenerateModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#8B5CF6]" />
                 Generate Monthly Payroll Run
               </h3>
-              <button onClick={() => setShowGenerateModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowGenerateModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -651,7 +651,7 @@ export default function PayrollPage() {
                     required
                     value={generateForm.year}
                     onChange={(e) => setGenerateForm({ ...generateForm, year: Number(e.target.value) })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
                 <div>
@@ -659,10 +659,10 @@ export default function PayrollPage() {
                   <select
                     value={generateForm.month}
                     onChange={(e) => setGenerateForm({ ...generateForm, month: Number(e.target.value) })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
                     {monthNames.map((m, idx) => (
-                      <option key={idx} value={idx + 1} className="bg-[#0C0E1A]">
+                      <option key={idx} value={idx + 1} className="bg-white">
                         {idx + 1} - {m}
                       </option>
                     ))}
@@ -675,18 +675,18 @@ export default function PayrollPage() {
                 <select
                   value={generateForm.branchId}
                   onChange={(e) => setGenerateForm({ ...generateForm, branchId: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 >
-                  <option value="" className="bg-[#0C0E1A]">All Salon Branches</option>
+                  <option value="" className="bg-white">All Salon Branches</option>
                   {branches.map((b) => (
-                    <option key={b.id} value={b.id} className="bg-[#0C0E1A]">{b.name}</option>
+                    <option key={b.id} value={b.id} className="bg-white">{b.name}</option>
                   ))}
                 </select>
               </div>
 
-              <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[11px] space-y-1">
+              <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[#6D28D9] text-[11px] space-y-1">
                 <p>The payroll calculation engine will:</p>
-                <ul className="list-disc list-inside text-white/80 space-y-0.5">
+                <ul className="list-disc list-inside text-[#334155] space-y-0.5">
                   <li>Apply basic salary by model (Fixed, Hourly, etc.)</li>
                   <li>Aggregate all approved staff commissions for this period</li>
                   <li>Recover active salary advances up to the monthly deduction</li>
@@ -694,11 +694,11 @@ export default function PayrollPage() {
                 </ul>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowGenerateModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>
@@ -717,14 +717,14 @@ export default function PayrollPage() {
 
       {/* SALARY COMPENSATION SETUP MODAL */}
       {showCompModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Users className="w-4 h-4 text-[#8B5CF6]" />
                 Staff Salary Setup
               </h3>
-              <button onClick={() => setShowCompModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowCompModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -736,10 +736,10 @@ export default function PayrollPage() {
                   required
                   value={compForm.staffId}
                   onChange={(e) => setCompForm({ ...compForm, staffId: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 >
                   {staffList.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                    <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                   ))}
                 </select>
               </div>
@@ -749,13 +749,13 @@ export default function PayrollPage() {
                 <select
                   value={compForm.salaryType}
                   onChange={(e) => setCompForm({ ...compForm, salaryType: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 >
-                  <option value="BASIC_PLUS_COMMISSION" className="bg-[#0C0E1A]">Basic + Commission</option>
-                  <option value="FIXED" className="bg-[#0C0E1A]">Fixed Monthly Salary</option>
-                  <option value="COMMISSION_ONLY" className="bg-[#0C0E1A]">Commission Only (100% Commission)</option>
-                  <option value="HOURLY" className="bg-[#0C0E1A]">Hourly Rate</option>
-                  <option value="DAILY" className="bg-[#0C0E1A]">Daily Rate</option>
+                  <option value="BASIC_PLUS_COMMISSION" className="bg-white">Basic + Commission</option>
+                  <option value="FIXED" className="bg-white">Fixed Monthly Salary</option>
+                  <option value="COMMISSION_ONLY" className="bg-white">Commission Only (100% Commission)</option>
+                  <option value="HOURLY" className="bg-white">Hourly Rate</option>
+                  <option value="DAILY" className="bg-white">Daily Rate</option>
                 </select>
               </div>
 
@@ -768,7 +768,7 @@ export default function PayrollPage() {
                     required
                     value={compForm.baseRate}
                     onChange={(e) => setCompForm({ ...compForm, baseRate: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
                 <div>
@@ -778,7 +778,7 @@ export default function PayrollPage() {
                     step="0.01"
                     value={compForm.overtimeHourlyRate}
                     onChange={(e) => setCompForm({ ...compForm, overtimeHourlyRate: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
@@ -790,15 +790,15 @@ export default function PayrollPage() {
                   step="0.01"
                   value={compForm.allowanceAmount}
                   onChange={(e) => setCompForm({ ...compForm, allowanceAmount: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowCompModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>
@@ -817,14 +817,14 @@ export default function PayrollPage() {
 
       {/* SALARY ADVANCE MODAL */}
       {showAdvanceModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <CreditCard className="w-4 h-4 text-[#8B5CF6]" />
                 Issue Staff Salary Advance
               </h3>
-              <button onClick={() => setShowAdvanceModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowAdvanceModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -836,10 +836,10 @@ export default function PayrollPage() {
                   required
                   value={advanceForm.staffId}
                   onChange={(e) => setAdvanceForm({ ...advanceForm, staffId: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 >
                   {staffList.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                    <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                   ))}
                 </select>
               </div>
@@ -853,7 +853,7 @@ export default function PayrollPage() {
                     required
                     value={advanceForm.amount}
                     onChange={(e) => setAdvanceForm({ ...advanceForm, amount: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
                 <div>
@@ -864,7 +864,7 @@ export default function PayrollPage() {
                     required
                     value={advanceForm.monthlyDeduction}
                     onChange={(e) => setAdvanceForm({ ...advanceForm, monthlyDeduction: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
@@ -876,15 +876,15 @@ export default function PayrollPage() {
                   placeholder="e.g. Medical emergency, Festival advance"
                   value={advanceForm.reason}
                   onChange={(e) => setAdvanceForm({ ...advanceForm, reason: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowAdvanceModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

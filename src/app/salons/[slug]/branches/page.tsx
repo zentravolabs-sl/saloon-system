@@ -52,18 +52,18 @@ export default async function SalonBranchesDirectoryPage({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <PublicNavbar />
 
       {/* Hero / Header */}
-      <section className="relative overflow-hidden pt-12 pb-14 border-b border-[var(--border)] bg-[#0C0E1A]">
+      <section className="relative overflow-hidden pt-12 pb-14 border-b border-[var(--border)] bg-white">
         <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-[#8B5CF6]/15 blur-[120px] pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-4">
             <Link
               href={`/salons/${salon.slug}`}
-              className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[#6D28D9] transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>Back to {salon.name} Overview</span>
@@ -72,14 +72,14 @@ export default async function SalonBranchesDirectoryPage({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#8B5CF6]/20 text-[#A78BFA] border border-[#8B5CF6]/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#8B5CF6]/20 text-[#6D28D9] border border-[#8B5CF6]/30">
                     Locations Directory
                   </span>
                   <span className="text-xs text-[var(--text-muted)]">
                     {salon.branches.length} Active {salon.branches.length === 1 ? "Branch" : "Branches"}
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                <h1 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
                   {salon.name} Branches
                 </h1>
                 <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-xl">
@@ -103,9 +103,9 @@ export default async function SalonBranchesDirectoryPage({
       <section className="py-12 flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {salon.branches.length === 0 ? (
-            <div className="p-12 text-center rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="p-12 text-center rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-3">
               <MapPin className="w-10 h-10 text-[var(--text-muted)] mx-auto" />
-              <h3 className="text-lg font-bold text-white">No Branches Available</h3>
+              <h3 className="text-lg font-bold text-[#0F172A]">No Branches Available</h3>
               <p className="text-xs text-[var(--text-muted)]">
                 This salon currently has no public branch locations listed.
               </p>
@@ -121,7 +121,7 @@ export default async function SalonBranchesDirectoryPage({
                 return (
                   <div
                     key={branch.id}
-                    className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 relative overflow-hidden group shadow-xl"
+                    className="p-6 sm:p-8 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] hover:border-[#E2E8F0] transition-all flex flex-col justify-between space-y-6 relative overflow-hidden group shadow-xl"
                   >
                     <div className="absolute top-0 right-0 w-48 h-48 bg-[#8B5CF6]/10 blur-3xl pointer-events-none group-hover:bg-[#8B5CF6]/20 transition-colors" />
 
@@ -130,8 +130,8 @@ export default async function SalonBranchesDirectoryPage({
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <h2 className="text-xl font-bold text-white">{branch.name}</h2>
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <h2 className="text-xl font-bold text-[#0F172A]">{branch.name}</h2>
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-[#15803D] border border-emerald-500/20">
                               Active
                             </span>
                           </div>
@@ -141,13 +141,13 @@ export default async function SalonBranchesDirectoryPage({
                           </p>
                         </div>
 
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#8B5CF6]/20 to-[#EC4899]/20 border border-white/10 flex items-center justify-center text-[#A78BFA] shrink-0">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#8B5CF6]/20 to-[#EC4899]/20 border border-[#E2E8F0] flex items-center justify-center text-[#6D28D9] shrink-0">
                           <Scissors className="w-5 h-5 -rotate-45" />
                         </div>
                       </div>
 
                       {/* Contact & Meta */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-[var(--text-secondary)] pt-2 border-t border-white/5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-[var(--text-secondary)] pt-2 border-t border-[#E2E8F0]">
                         {branch.phone && (
                           <div className="flex items-center gap-2">
                             <Phone className="w-3.5 h-3.5 text-[var(--text-muted)]" />
@@ -186,8 +186,8 @@ export default async function SalonBranchesDirectoryPage({
                               key={s.dayOfWeek}
                               className={`p-2 rounded-xl border text-center ${
                                 s.dayOfWeek === todayDayOfWeek
-                                  ? "bg-[#8B5CF6]/15 border-[#8B5CF6]/30 text-white font-bold"
-                                  : "bg-white/[0.02] border-white/5 text-[var(--text-secondary)]"
+                                  ? "bg-[#8B5CF6]/15 border-[#8B5CF6]/30 text-[#0F172A] font-bold"
+                                  : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0] text-[var(--text-secondary)]"
                               }`}
                             >
                               <div className="text-[10px] text-[var(--text-muted)]">
@@ -197,7 +197,7 @@ export default async function SalonBranchesDirectoryPage({
                                 {s.isOpen ? (
                                   <span>{s.openTime}-{s.closeTime}</span>
                                 ) : (
-                                  <span className="text-red-400">Closed</span>
+                                  <span className="text-[#B91C1C]">Closed</span>
                                 )}
                               </div>
                             </div>
@@ -215,7 +215,7 @@ export default async function SalonBranchesDirectoryPage({
                             {branch.services.map((bs: (typeof branch.services)[number]) => (
                               <span
                                 key={bs.id}
-                                className="px-2.5 py-1 rounded-lg text-[11px] bg-white/[0.04] border border-white/10 text-white/90"
+                                className="px-2.5 py-1 rounded-lg text-[11px] bg-[#F8FAFC] border border-[#E2E8F0] text-[#334155]"
                               >
                                 {bs.service.name} • Rs. {(bs.price ?? bs.service.price).toLocaleString()}
                               </span>
@@ -226,7 +226,7 @@ export default async function SalonBranchesDirectoryPage({
                     </div>
 
                     {/* Booking CTA */}
-                    <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+                    <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-4">
                       <span className="text-xs text-[var(--text-muted)]">
                         Slot interval: {branch.bookingInterval} mins
                       </span>

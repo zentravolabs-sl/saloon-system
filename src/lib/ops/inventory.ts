@@ -407,17 +407,40 @@ export async function applyBookingConsumption(
     }
   }
 
+  // Resolve the effective branch for consumption: use booking.branchId if it has stock,
+  // otherwise fall back to the salon's primary branch that holds stock for these products
+  let targetBranchId = booking.branchId;
+  const requiredProductIds = Array.from(required.keys());
+  const bookingBranchLevels = await tx.stockLevel.findMany({
+    where: { branchId: booking.branchId, productId: { in: requiredProductIds } },
+    select: { productId: true, quantity: true },
+  });
+  const hasEnoughInBookingBranch = requiredProductIds.every((pid) => {
+    const lvl = bookingBranchLevels.find((l) => l.productId === pid);
+    return lvl && D(lvl.quantity).greaterThanOrEqualTo(required.get(pid)!);
+  });
+  if (!hasEnoughInBookingBranch) {
+    const salonLevels = await tx.stockLevel.findMany({
+      where: { salonId: booking.salonId, productId: { in: requiredProductIds }, quantity: { gt: 0 } },
+      orderBy: { quantity: "desc" },
+      select: { branchId: true, productId: true, quantity: true },
+    });
+    if (salonLevels.length > 0) {
+      targetBranchId = salonLevels[0].branchId;
+    }
+  }
+
   let result: Map<string, StockOutResult>;
   try {
     result = await stockOutMany(
       tx,
       {
         salonId: booking.salonId,
-        branchId: booking.branchId,
+        branchId: targetBranchId,
         type: "SERVICE_CONSUMPTION",
         referenceType: "BOOKING",
         referenceId: booking.id,
-        reason: `Service consumption for ${booking.reference}`,
+        reason: "Used in salon",
         userId: opts.userId,
         allowNegative: opts.allowNegative,
       },
@@ -427,7 +450,7 @@ export async function applyBookingConsumption(
     if (e instanceof InsufficientStockError) {
       await tx.bookingConsumption.upsert({
         where: { bookingId },
-        create: { bookingId, salonId: booking.salonId, branchId: booking.branchId, status: "FAILED", message: e.message },
+        create: { bookingId, salonId: booking.salonId, branchId: targetBranchId, status: "FAILED", message: e.message },
         update: { status: "FAILED", message: e.message },
       });
       return { status: "FAILED", message: e.message };
@@ -443,8 +466,8 @@ export async function applyBookingConsumption(
   }));
   const consumption = await tx.bookingConsumption.upsert({
     where: { bookingId },
-    create: { bookingId, salonId: booking.salonId, branchId: booking.branchId, status: "APPLIED", appliedAt: new Date() },
-    update: { status: "APPLIED", message: null, appliedAt: new Date(), reversedAt: null },
+    create: { bookingId, salonId: booking.salonId, branchId: targetBranchId, status: "APPLIED", appliedAt: new Date() },
+    update: { branchId: targetBranchId, status: "APPLIED", message: null, appliedAt: new Date(), reversedAt: null },
   });
   await tx.bookingConsumptionItem.deleteMany({ where: { consumptionId: consumption.id } });
   await tx.bookingConsumptionItem.createMany({ data: items.map((i) => ({ ...i, consumptionId: consumption.id })) });

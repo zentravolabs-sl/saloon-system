@@ -103,7 +103,7 @@ export default function AdminSettingsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Salon Configuration & Rules
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -122,14 +122,14 @@ export default function AdminSettingsPage() {
       </div>
 
       {success && (
-        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[#15803D] text-xs flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4" />
           <span>Salon configuration saved successfully!</span>
         </div>
       )}
 
       {error && (
-        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4" />
           <span>{error}</span>
         </div>
@@ -137,9 +137,9 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-6">
         {/* Booking Engine Policies */}
-        <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-5">
+        <div className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-5">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#8B5CF6]" />
               Booking Engine Policies
             </h3>
@@ -150,9 +150,9 @@ export default function AdminSettingsPage() {
 
           <div className="space-y-4">
             {/* Auto confirm mode */}
-            <div className="flex items-start justify-between p-4 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="flex items-start justify-between p-4 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0]">
               <div className="space-y-0.5">
-                <span className="font-bold text-sm text-white block">
+                <span className="font-bold text-sm text-[#0F172A] block">
                   Automatic Slot Confirmation
                 </span>
                 <p className="text-xs text-[var(--text-muted)]">
@@ -176,12 +176,12 @@ export default function AdminSettingsPage() {
                 <select
                   value={bookingInterval}
                   onChange={(e) => setBookingInterval(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none"
                 >
-                  <option value={15} className="bg-[#111827]">15 Minutes</option>
-                  <option value={30} className="bg-[#111827]">30 Minutes</option>
-                  <option value={45} className="bg-[#111827]">45 Minutes</option>
-                  <option value={60} className="bg-[#111827]">60 Minutes</option>
+                  <option value={15} className="bg-white text-[#0F172A]">15 Minutes</option>
+                  <option value={30} className="bg-white text-[#0F172A]">30 Minutes</option>
+                  <option value={45} className="bg-white text-[#0F172A]">45 Minutes</option>
+                  <option value={60} className="bg-white text-[#0F172A]">60 Minutes</option>
                 </select>
               </div>
 
@@ -193,7 +193,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={cancellationWindow}
                   onChange={(e) => setCancellationWindow(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none"
                 />
               </div>
             </div>
@@ -201,9 +201,9 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Salon Profile Details */}
-        <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4">
+        <div className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
               <Building2 className="w-4 h-4 text-[#EC4899]" />
               Public Salon Profile
             </h3>
@@ -219,7 +219,7 @@ export default function AdminSettingsPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
               />
             </div>
 
@@ -229,7 +229,7 @@ export default function AdminSettingsPage() {
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
               />
             </div>
 
@@ -239,7 +239,7 @@ export default function AdminSettingsPage() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
               />
             </div>
 
@@ -249,7 +249,7 @@ export default function AdminSettingsPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
               />
             </div>
 
@@ -259,7 +259,7 @@ export default function AdminSettingsPage() {
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
               />
             </div>
 
@@ -269,7 +269,7 @@ export default function AdminSettingsPage() {
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none resize-none"
               />
             </div>
           </div>

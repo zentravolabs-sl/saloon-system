@@ -126,7 +126,7 @@ export default function CustomerBookingDetailPage() {
   const isCancelled = ["CANCELLED", "REJECTED", "NO_SHOW"].includes(booking?.status);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <div className="print:hidden">
         <PublicNavbar />
       </div>
@@ -135,7 +135,7 @@ export default function CustomerBookingDetailPage() {
         <div className="print:hidden flex items-center justify-between">
           <Link
             href="/customer/bookings"
-            className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[#6D28D9] transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Back to All Appointments</span>
@@ -143,7 +143,7 @@ export default function CustomerBookingDetailPage() {
 
           <button
             onClick={() => window.print()}
-            className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors flex items-center gap-1.5"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print Receipt</span>
@@ -157,20 +157,20 @@ export default function CustomerBookingDetailPage() {
           </div>
         ) : error || !booking ? (
           <div className="p-8 rounded-3xl bg-red-500/10 border border-red-500/20 text-center space-y-3">
-            <AlertCircle className="w-8 h-8 text-red-400 mx-auto" />
-            <h3 className="text-base font-bold text-white">Unable to Load Appointment</h3>
-            <p className="text-xs text-red-300">{error || "Booking not found"}</p>
+            <AlertCircle className="w-8 h-8 text-[#B91C1C] mx-auto" />
+            <h3 className="text-base font-bold text-[#0F172A]">Unable to Load Appointment</h3>
+            <p className="text-xs text-[#B91C1C]">{error || "Booking not found"}</p>
           </div>
         ) : (
           <div className="space-y-6">
             {/* Header Card */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0C0E1A] border border-white/10 shadow-2xl space-y-6 relative overflow-hidden">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2E8F0] shadow-2xl space-y-6 relative overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="font-mono text-xs font-bold text-[#A78BFA]">
+                  <span className="font-mono text-xs font-bold text-[#6D28D9]">
                     Booking Ref: {booking.reference}
                   </span>
-                  <h1 className="text-2xl font-black text-white mt-1">
+                  <h1 className="text-2xl font-black text-[#0F172A] mt-1">
                     {booking.salon?.name}
                   </h1>
                   <p className="text-xs text-[var(--text-muted)] flex items-center gap-1 mt-0.5">
@@ -183,10 +183,10 @@ export default function CustomerBookingDetailPage() {
                   <span
                     className={`inline-block px-3.5 py-1 rounded-full text-xs font-bold border uppercase tracking-wider ${
                       isCancelled
-                        ? "bg-red-500/10 text-red-400 border-red-500/30"
+                        ? "bg-red-500/10 text-[#B91C1C] border-red-500/30"
                         : booking.status === "COMPLETED"
-                        ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
-                        : "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        ? "bg-blue-500/10 text-[#1D4ED8] border-blue-500/30"
+                        : "bg-emerald-500/10 text-[#15803D] border-emerald-500/30"
                     }`}
                   >
                     {booking.status.replace("_", " ")}
@@ -199,7 +199,7 @@ export default function CustomerBookingDetailPage() {
 
               {/* Status Timeline */}
               {!isCancelled ? (
-                <div className="pt-4 border-t border-white/10 print:hidden">
+                <div className="pt-4 border-t border-[#E2E8F0] print:hidden">
                   <div className="grid grid-cols-5 gap-2 text-center text-xs">
                     {steps.map((st, idx) => {
                       const isPast = idx < currentStepIdx;
@@ -213,7 +213,7 @@ export default function CustomerBookingDetailPage() {
                                 ? "bg-emerald-500 text-white"
                                 : isCurrent
                                 ? "bg-[#8B5CF6] text-white ring-4 ring-[#8B5CF6]/30 shadow-lg"
-                                : "bg-white/10 text-[var(--text-muted)]"
+                                : "bg-[#F8FAFC] text-[var(--text-muted)]"
                             }`}
                           >
                             {isPast ? "✓" : idx + 1}
@@ -221,9 +221,9 @@ export default function CustomerBookingDetailPage() {
                           <span
                             className={`text-[11px] block ${
                               isCurrent
-                                ? "font-bold text-white"
+                                ? "font-bold text-[#0F172A]"
                                 : isPast
-                                ? "text-emerald-400 font-medium"
+                                ? "text-[#15803D] font-medium"
                                 : "text-[var(--text-muted)]"
                             }`}
                           >
@@ -235,15 +235,15 @@ export default function CustomerBookingDetailPage() {
                   </div>
                 </div>
               ) : (
-                <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300">
+                <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-[#B91C1C]">
                   Appointment is marked as {booking.status}.
                   {booking.cancellationReason && (
-                    <span className="block mt-0.5 text-white">
+                    <span className="block mt-0.5 text-[#0F172A]">
                       Reason: {booking.cancellationReason}
                     </span>
                   )}
                   {booking.rejectionReason && (
-                    <span className="block mt-0.5 text-white">
+                    <span className="block mt-0.5 text-[#0F172A]">
                       Reason: {booking.rejectionReason}
                     </span>
                   )}
@@ -254,8 +254,8 @@ export default function CustomerBookingDetailPage() {
             {/* Appointment Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Stylist & Location */}
-              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/10 space-y-4">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <div className="p-6 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4">
+                <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">
                   Assigned Stylist & Location
                 </h3>
 
@@ -264,14 +264,14 @@ export default function CustomerBookingDetailPage() {
                     {booking.staff?.name?.charAt(0) || "S"}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-white">{booking.staff?.name}</h4>
+                    <h4 className="font-bold text-sm text-[#0F172A]">{booking.staff?.name}</h4>
                     <span className="text-xs text-[var(--text-muted)]">
                       {booking.staff?.specialization || "Professional Barber / Stylist"}
                     </span>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/5 space-y-2 text-xs text-[var(--text-secondary)]">
+                <div className="pt-2 border-t border-[#E2E8F0] space-y-2 text-xs text-[var(--text-secondary)]">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-3.5 h-3.5 text-[#8B5CF6] shrink-0" />
                     <span>{booking.branch?.address || booking.branch?.city}</span>
@@ -286,24 +286,24 @@ export default function CustomerBookingDetailPage() {
               </div>
 
               {/* Customer Info */}
-              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/10 space-y-4">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <div className="p-6 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4">
+                <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">
                   Customer & Notes
                 </h3>
 
                 <div className="space-y-1.5 text-xs text-[var(--text-secondary)]">
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Name:</span>
-                    <span className="font-semibold text-white">{booking.customer?.name}</span>
+                    <span className="font-semibold text-[#0F172A]">{booking.customer?.name}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Mobile:</span>
-                    <span className="font-semibold text-white">{booking.customer?.phone}</span>
+                    <span className="font-semibold text-[#0F172A]">{booking.customer?.phone}</span>
                   </div>
                   {booking.customerNotes && (
-                    <div className="pt-2 border-t border-white/5">
+                    <div className="pt-2 border-t border-[#E2E8F0]">
                       <span className="text-[var(--text-muted)] block">Customer Preference:</span>
-                      <p className="text-white italic mt-0.5">&quot;{booking.customerNotes}&quot;</p>
+                      <p className="text-[#0F172A] italic mt-0.5">&quot;{booking.customerNotes}&quot;</p>
                     </div>
                   )}
                 </div>
@@ -311,9 +311,9 @@ export default function CustomerBookingDetailPage() {
             </div>
 
             {/* Itemized Services & Receipt (Section 41) */}
-            <div id="invoice" className="p-6 sm:p-8 rounded-3xl bg-[#0C0E1A] border border-white/10 space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <div id="invoice" className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2E8F0] space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+                <h3 className="text-sm font-bold text-[#0F172A] flex items-center gap-2">
                   <FileText className="w-4 h-4 text-[#8B5CF6]" />
                   Itemized Bill & Receipt
                 </h3>
@@ -328,33 +328,33 @@ export default function CustomerBookingDetailPage() {
                 {booking.services?.map((bs: any) => (
                   <div key={bs.id} className="flex items-center justify-between py-1">
                     <div>
-                      <span className="font-semibold text-white">{bs.service?.name}</span>
+                      <span className="font-semibold text-[#0F172A]">{bs.service?.name}</span>
                       <span className="text-[var(--text-muted)] text-[11px] block">
                         Duration: {bs.duration} minutes
                       </span>
                     </div>
-                    <span className="font-bold text-white">
+                    <span className="font-bold text-[#0F172A]">
                       Rs. {bs.price.toLocaleString()}
                     </span>
                   </div>
                 ))}
 
-                <div className="pt-3 border-t border-white/10 space-y-1.5 text-xs">
+                <div className="pt-3 border-t border-[#E2E8F0] space-y-1.5 text-xs">
                   <div className="flex justify-between text-[var(--text-secondary)]">
                     <span>Subtotal</span>
                     <span>Rs. {booking.subtotal?.toLocaleString() || booking.totalAmount?.toLocaleString()}</span>
                   </div>
 
                   {booking.discountAmount > 0 && (
-                    <div className="flex justify-between text-emerald-400">
+                    <div className="flex justify-between text-[#15803D]">
                       <span>Coupon Discount</span>
                       <span>- Rs. {booking.discountAmount.toLocaleString()}</span>
                     </div>
                   )}
 
-                  <div className="flex justify-between font-bold text-base text-white pt-2 border-t border-white/10">
+                  <div className="flex justify-between font-bold text-base text-[#0F172A] pt-2 border-t border-[#E2E8F0]">
                     <span>Total Amount</span>
-                    <span className="text-emerald-400">Rs. {booking.totalAmount.toLocaleString()}</span>
+                    <span className="text-[#15803D]">Rs. {booking.totalAmount.toLocaleString()}</span>
                   </div>
 
                   <div className="flex justify-between text-[11px] text-[var(--text-muted)] pt-1">
@@ -367,14 +367,14 @@ export default function CustomerBookingDetailPage() {
 
             {/* Review Section (Section 44) */}
             {booking.status === "COMPLETED" && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/10 space-y-4 print:hidden">
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <div className="p-6 sm:p-8 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4 print:hidden">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+                  <h3 className="text-sm font-bold text-[#0F172A] flex items-center gap-2">
+                    <Star className="w-4 h-4 text-[#D97706] fill-amber-400" />
                     Rating & Experience Review
                   </h3>
                   {booking.review && (
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-[#15803D] border border-emerald-500/20">
                       Review Published
                     </span>
                   )}
@@ -383,22 +383,22 @@ export default function CustomerBookingDetailPage() {
                 {booking.review ? (
                   <div className="space-y-3 text-xs">
                     <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1 text-amber-400">
+                      <div className="flex items-center gap-1 text-[#D97706]">
                         {Array.from({ length: 5 }).map((_, i) => (
                           <Star
                             key={i}
                             className={`w-4 h-4 ${
-                              i < booking.review.salonRating ? "fill-amber-400" : "text-white/20"
+                              i < booking.review.salonRating ? "fill-amber-400" : "text-[#64748B]"
                             }`}
                           />
                         ))}
                       </div>
-                      <span className="text-white font-bold">
+                      <span className="text-[#0F172A] font-bold">
                         {booking.review.salonRating} / 5 Stars
                       </span>
                     </div>
                     {booking.review.comment && (
-                      <p className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-white/90 italic">
+                      <p className="p-3 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] text-[#334155] italic">
                         &quot;{booking.review.comment}&quot;
                       </p>
                     )}
@@ -406,12 +406,12 @@ export default function CustomerBookingDetailPage() {
                 ) : (
                   <form onSubmit={handleSubmitReview} className="space-y-4 text-xs">
                     {reviewSuccess && (
-                      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[#15803D]">
                         Thank you! Your review has been submitted successfully.
                       </div>
                     )}
                     {reviewError && (
-                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
+                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C]">
                         {reviewError}
                       </div>
                     )}
@@ -422,13 +422,13 @@ export default function CustomerBookingDetailPage() {
                         <select
                           value={salonRating}
                           onChange={(e) => setSalonRating(Number(e.target.value))}
-                          className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                          className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                         >
-                          <option value={5} className="bg-[#111827]">5 Stars - Outstanding</option>
-                          <option value={4} className="bg-[#111827]">4 Stars - Very Good</option>
-                          <option value={3} className="bg-[#111827]">3 Stars - Average</option>
-                          <option value={2} className="bg-[#111827]">2 Stars - Poor</option>
-                          <option value={1} className="bg-[#111827]">1 Star - Terrible</option>
+                          <option value={5} className="bg-white text-[#0F172A]">5 Stars - Outstanding</option>
+                          <option value={4} className="bg-white text-[#0F172A]">4 Stars - Very Good</option>
+                          <option value={3} className="bg-white text-[#0F172A]">3 Stars - Average</option>
+                          <option value={2} className="bg-white text-[#0F172A]">2 Stars - Poor</option>
+                          <option value={1} className="bg-white text-[#0F172A]">1 Star - Terrible</option>
                         </select>
                       </div>
 
@@ -437,13 +437,13 @@ export default function CustomerBookingDetailPage() {
                         <select
                           value={staffRating}
                           onChange={(e) => setStaffRating(Number(e.target.value))}
-                          className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                          className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                         >
-                          <option value={5} className="bg-[#111827]">5 Stars - Master Barber</option>
-                          <option value={4} className="bg-[#111827]">4 Stars - Great</option>
-                          <option value={3} className="bg-[#111827]">3 Stars - Okay</option>
-                          <option value={2} className="bg-[#111827]">2 Stars - Unsatisfied</option>
-                          <option value={1} className="bg-[#111827]">1 Star - Disappointed</option>
+                          <option value={5} className="bg-white text-[#0F172A]">5 Stars - Master Barber</option>
+                          <option value={4} className="bg-white text-[#0F172A]">4 Stars - Great</option>
+                          <option value={3} className="bg-white text-[#0F172A]">3 Stars - Okay</option>
+                          <option value={2} className="bg-white text-[#0F172A]">2 Stars - Unsatisfied</option>
+                          <option value={1} className="bg-white text-[#0F172A]">1 Star - Disappointed</option>
                         </select>
                       </div>
 
@@ -452,13 +452,13 @@ export default function CustomerBookingDetailPage() {
                         <select
                           value={serviceRating}
                           onChange={(e) => setServiceRating(Number(e.target.value))}
-                          className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                          className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                         >
-                          <option value={5} className="bg-[#111827]">5 Stars - Highly Recommended</option>
-                          <option value={4} className="bg-[#111827]">4 Stars - Good</option>
-                          <option value={3} className="bg-[#111827]">3 Stars - Average</option>
-                          <option value={2} className="bg-[#111827]">2 Stars - Needs Improvement</option>
-                          <option value={1} className="bg-[#111827]">1 Star - Bad</option>
+                          <option value={5} className="bg-white text-[#0F172A]">5 Stars - Highly Recommended</option>
+                          <option value={4} className="bg-white text-[#0F172A]">4 Stars - Good</option>
+                          <option value={3} className="bg-white text-[#0F172A]">3 Stars - Average</option>
+                          <option value={2} className="bg-white text-[#0F172A]">2 Stars - Needs Improvement</option>
+                          <option value={1} className="bg-white text-[#0F172A]">1 Star - Bad</option>
                         </select>
                       </div>
                     </div>
@@ -470,7 +470,7 @@ export default function CustomerBookingDetailPage() {
                         placeholder="Tell others about your experience, styling finish, and comfort..."
                         value={reviewComment}
                         onChange={(e) => setReviewComment(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
                       />
                     </div>
 
@@ -494,7 +494,7 @@ export default function CustomerBookingDetailPage() {
             {/* Book Again CTA */}
             <div className="p-6 rounded-3xl bg-gradient-to-r from-[#8B5CF6]/15 to-[#EC4899]/15 border border-[#8B5CF6]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
               <div>
-                <h4 className="font-bold text-white text-sm">Loved your experience?</h4>
+                <h4 className="font-bold text-[#0F172A] text-sm">Loved your experience?</h4>
                 <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                   Schedule your next appointment with {booking.staff?.name} at {booking.branch?.name}.
                 </p>

@@ -6,17 +6,17 @@ import { AlertCircle, CheckCircle2, Inbox, Loader2 } from "lucide-react";
 import { useT } from "@/context/I18nContext";
 import type { MessageKey } from "@/lib/i18n/messages";
 
-/** Shared, deliberately plain building blocks: big text, big buttons, high contrast. */
+/** Shared building blocks styled with the HomePage light lavender/slate palette */
 
 export const btnPrimary =
-  "inline-flex items-center justify-center gap-2 px-5 min-h-12 rounded-xl text-base font-bold bg-[#8B5CF6] text-white hover:bg-[#7C3AED] active:bg-[#6D28D9] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors";
+  "inline-flex items-center justify-center gap-2 px-5 min-h-12 rounded-xl text-base font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_6px_16px_rgba(124,58,237,0.28)] hover:brightness-105 active:bg-[#5B21B6] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7C3AED] transition-all";
 export const btnSecondary =
-  "inline-flex items-center justify-center gap-2 px-5 min-h-12 rounded-xl text-base font-semibold bg-white/10 text-white border border-white/15 hover:bg-white/15 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors";
+  "inline-flex items-center justify-center gap-2 px-5 min-h-12 rounded-xl text-base font-semibold bg-white text-[#0F172A] border border-[#E2E8F0] shadow-[0_2px_8px_rgba(15,23,42,0.03)] hover:bg-[#F8FAFC] hover:border-[#CBD5E1] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7C3AED] transition-colors";
 export const btnSmall =
-  "inline-flex items-center justify-center gap-1.5 px-4 min-h-11 rounded-lg text-sm font-bold bg-[#8B5CF6] text-white hover:bg-[#7C3AED] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors";
+  "inline-flex items-center justify-center gap-1.5 px-4 min-h-11 rounded-lg text-sm font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_4px_12px_rgba(124,58,237,0.25)] hover:brightness-105 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7C3AED] transition-all";
 export const inputClass =
-  "w-full min-h-12 px-4 rounded-xl bg-[#131524] border border-white/20 text-base text-white placeholder:text-[#9CA3AF] focus:outline-2 focus:outline-[#A78BFA] focus:border-[#A78BFA]";
-export const labelClass = "block text-sm font-semibold text-[#E5E7EB] mb-1.5";
+  "w-full min-h-12 px-4 rounded-xl bg-white border border-[#E2E8F0] text-base text-[#0F172A] placeholder:text-[#64748B] shadow-[0_2px_6px_rgba(15,23,42,0.02)] focus:outline-2 focus:outline-[#7C3AED] focus:border-[#7C3AED]";
+export const labelClass = "block text-sm font-semibold text-[#334155] mb-1.5";
 
 export function formatMoney(value: number, currency = "LKR") {
   return `${currency} ${Math.round(value * 100) / 100 === Math.round(value) ? Math.round(value).toLocaleString() : value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -32,10 +32,10 @@ export function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-2xl bg-[#10121E] border border-white/10 p-4 sm:p-5">
+    <section className="rounded-[22px] bg-white/95 backdrop-blur-md border border-white shadow-[0_8px_28px_rgba(15,23,42,0.04)] p-4 sm:p-5">
       {(title || action) && (
         <div className="flex items-center justify-between gap-3 mb-4">
-          {title && <h2 className="text-lg font-bold text-white">{title}</h2>}
+          {title && <h2 className="text-lg font-extrabold text-[#0F172A] tracking-tight">{title}</h2>}
           {action}
         </div>
       )}
@@ -58,22 +58,22 @@ export function StatCard({
   href?: string;
 }) {
   const tones = {
-    default: "border-white/10",
-    good: "border-emerald-500/40",
-    warn: "border-amber-500/40",
-    bad: "border-red-500/40",
+    default: "border-white",
+    good: "border-[#BBF7D0]",
+    warn: "border-[#FDE68A]",
+    bad: "border-[#FECACA]",
   } as const;
   const inner = (
-    <div className={`h-full rounded-2xl bg-[#10121E] border ${tones[tone]} p-4 sm:p-5`}>
-      <div className="flex items-center gap-2 text-sm font-semibold text-[#D1D5DB]">
-        {Icon && <Icon className="w-5 h-5 text-[#A78BFA]" aria-hidden />}
+    <div className={`h-full rounded-[22px] bg-white/95 backdrop-blur-md border ${tones[tone]} shadow-[0_8px_24px_rgba(15,23,42,0.04)] p-4 sm:p-5`}>
+      <div className="flex items-center gap-2 text-sm font-bold text-[#475569]">
+        {Icon && <Icon className="w-5 h-5 text-[#7C3AED]" aria-hidden />}
         <span>{label}</span>
       </div>
-      <p className="mt-2 text-3xl font-extrabold text-white break-words">{value}</p>
+      <p className="mt-2 text-3xl font-extrabold text-[#0F172A] break-words">{value}</p>
     </div>
   );
   return href ? (
-    <Link href={href} className="block focus-visible:outline-2 focus-visible:outline-[#A78BFA] rounded-2xl">
+    <Link href={href} className="block focus-visible:outline-2 focus-visible:outline-[#7C3AED] rounded-[22px]">
       {inner}
     </Link>
   ) : (
@@ -92,8 +92,10 @@ export function EmptyState({
 }) {
   return (
     <div className="py-8 px-4 text-center flex flex-col items-center gap-3">
-      <Icon className="w-10 h-10 text-[#6B7280]" aria-hidden />
-      <p className="text-base text-[#D1D5DB] max-w-md">{text}</p>
+      <div className="w-12 h-12 rounded-full bg-[#EDE9FE] flex items-center justify-center text-[#7C3AED]">
+        <Icon className="w-6 h-6" aria-hidden />
+      </div>
+      <p className="text-base font-medium text-[#475569] max-w-md">{text}</p>
       {action}
     </div>
   );
@@ -109,20 +111,20 @@ export function Banner({
   onClose?: () => void;
 }) {
   const styles = {
-    success: "bg-emerald-500/15 border-emerald-500/40 text-emerald-100",
-    error: "bg-red-500/15 border-red-500/40 text-red-100",
-    info: "bg-blue-500/15 border-blue-500/40 text-blue-100",
+    success: "bg-[#DCFCE7] border-[#BBF7D0] text-[#15803D]",
+    error: "bg-[#FEE2E2] border-[#FECACA] text-[#B91C1C]",
+    info: "bg-[#DBEAFE] border-[#BFDBFE] text-[#1D4ED8]",
   } as const;
   const Icon = kind === "error" ? AlertCircle : CheckCircle2;
   return (
     <div
       role={kind === "error" ? "alert" : "status"}
-      className={`flex items-start gap-3 rounded-xl border px-4 py-3 text-base ${styles[kind]}`}
+      className={`flex items-start gap-3 rounded-xl border px-4 py-3 text-base font-medium ${styles[kind]}`}
     >
       <Icon className="w-5 h-5 mt-0.5 shrink-0" aria-hidden />
       <div className="flex-1">{children}</div>
       {onClose && (
-        <button onClick={onClose} className="font-bold px-2 min-h-8" aria-label="�">
+        <button onClick={onClose} className="font-bold px-2 min-h-8" aria-label="Close">
           ×
         </button>
       )}
@@ -132,28 +134,28 @@ export function Banner({
 
 export function PageLoading({ label }: { label: string }) {
   return (
-    <div className="py-24 flex items-center justify-center gap-3 text-base text-[#D1D5DB]" role="status">
-      <Loader2 className="w-6 h-6 animate-spin text-[#A78BFA]" aria-hidden />
+    <div className="py-24 flex items-center justify-center gap-3 text-base font-medium text-[#475569]" role="status">
+      <Loader2 className="w-6 h-6 animate-spin text-[#7C3AED]" aria-hidden />
       <span>{label}</span>
     </div>
   );
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  PENDING: "bg-amber-500/20 text-amber-100",
-  CONFIRMED: "bg-blue-500/20 text-blue-100",
-  CHECKED_IN: "bg-purple-500/25 text-purple-100",
-  IN_PROGRESS: "bg-cyan-500/20 text-cyan-100",
-  COMPLETED: "bg-emerald-500/20 text-emerald-100",
-  CANCELLED: "bg-red-500/20 text-red-100",
-  REJECTED: "bg-red-500/20 text-red-100",
-  NO_SHOW: "bg-zinc-500/25 text-zinc-100",
+  PENDING: "bg-[#FEF3C7] text-[#D97706]",
+  CONFIRMED: "bg-[#DBEAFE] text-[#1D4ED8]",
+  CHECKED_IN: "bg-[#EDE9FE] text-[#6D28D9]",
+  IN_PROGRESS: "bg-[#EDE9FE] text-[#6D28D9]",
+  COMPLETED: "bg-[#DCFCE7] text-[#15803D]",
+  CANCELLED: "bg-[#FEE2E2] text-[#B91C1C]",
+  REJECTED: "bg-[#FEE2E2] text-[#B91C1C]",
+  NO_SHOW: "bg-[#F1F5F9] text-[#475569]",
 };
 
 export function StatusBadge({ status }: { status: string }) {
   const { t } = useT();
   return (
-    <span className={`inline-block px-2.5 py-1 rounded-lg text-sm font-semibold ${STATUS_STYLES[status] || "bg-white/10 text-white"}`}>
+    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${STATUS_STYLES[status] || "bg-[#F1F5F9] text-[#334155]"}`}>
       {t(`status.${status}` as MessageKey)}
     </span>
   );

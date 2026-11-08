@@ -271,7 +271,7 @@ export default function CommissionsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <Award className="w-7 h-7 text-[#8B5CF6]" />
             Staff Commission Management
           </h1>
@@ -293,7 +293,7 @@ export default function CommissionsPage() {
               }
               setShowAdjustModal(true);
             }}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] transition-all flex items-center gap-1.5"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Manual Adjustment</span>
@@ -310,45 +310,45 @@ export default function CommissionsPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Total Commissions</span>
-            <DollarSign className="w-4 h-4 text-emerald-400" />
+            <DollarSign className="w-4 h-4 text-[#15803D]" />
           </div>
-          <div className="text-xl font-bold text-white">{formatLKR(totalCommissionsEarned)}</div>
-          <div className="text-[11px] text-emerald-400 mt-1">Service & retail earnings</div>
+          <div className="text-xl font-bold text-[#0F172A]">{formatLKR(totalCommissionsEarned)}</div>
+          <div className="text-[11px] text-[#15803D] mt-1">Service & retail earnings</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Pending Payout</span>
-            <Clock className="w-4 h-4 text-amber-400" />
+            <Clock className="w-4 h-4 text-[#D97706]" />
           </div>
-          <div className="text-xl font-bold text-amber-300">{formatLKR(totalCommissionsPending)}</div>
-          <div className="text-[11px] text-amber-400/80 mt-1">Ready for monthly payroll</div>
+          <div className="text-xl font-bold text-[#D97706]">{formatLKR(totalCommissionsPending)}</div>
+          <div className="text-[11px] text-[#D97706]/80 mt-1">Ready for monthly payroll</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Commissioned Staff</span>
-            <Users className="w-4 h-4 text-purple-400" />
+            <Users className="w-4 h-4 text-[#6D28D9]" />
           </div>
-          <div className="text-xl font-bold text-white">{staffSummaries.length} Staff</div>
+          <div className="text-xl font-bold text-[#0F172A]">{staffSummaries.length} Staff</div>
           <div className="text-[11px] text-[var(--text-muted)] mt-1">Active earners</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10">
+        <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0]">
           <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2">
             <span>Configured Rules</span>
-            <Award className="w-4 h-4 text-pink-400" />
+            <Award className="w-4 h-4 text-[#DB2777]" />
           </div>
-          <div className="text-xl font-bold text-white">{rules.length} Rules</div>
+          <div className="text-xl font-bold text-[#0F172A]">{rules.length} Rules</div>
           <div className="text-[11px] text-[var(--text-muted)] mt-1">Service / product rates</div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-3">
         {[
           { id: "entries", label: "Commission Entries", icon: Award },
           { id: "summary", label: "Staff Payout Summary", icon: Users },
@@ -363,7 +363,7 @@ export default function CommissionsPage() {
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 isActive
                   ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-md shadow-[#8B5CF6]/20"
-                  : "text-[var(--text-secondary)] hover:text-white hover:bg-white/5"
+                  : "text-[var(--text-secondary)] hover:text-[#6D28D9] hover:bg-[#F8FAFC]"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -376,38 +376,38 @@ export default function CommissionsPage() {
       {/* TAB 1: COMMISSION ENTRIES */}
       {activeTab === "entries" && (
         <div className="space-y-4">
-          <div className="p-3.5 rounded-2xl bg-[#0C0E1A] border border-white/10 flex flex-wrap items-center justify-between gap-3">
+          <div className="p-3.5 rounded-2xl bg-white border border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 flex-1 min-w-[280px]">
               <select
                 value={staffFilter}
                 onChange={(e) => setStaffFilter(e.target.value)}
-                className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-1.5 text-xs text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
               >
-                <option value="ALL" className="bg-[#0C0E1A]">All Staff Members</option>
+                <option value="ALL" className="bg-white">All Staff Members</option>
                 {staffList.map((s) => (
-                  <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                  <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                 ))}
               </select>
 
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-1.5 text-xs text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
               >
-                <option value="ALL" className="bg-[#0C0E1A]">All Statuses</option>
-                <option value="PENDING" className="bg-[#0C0E1A]">Pending</option>
-                <option value="APPROVED" className="bg-[#0C0E1A]">Approved</option>
-                <option value="PAID" className="bg-[#0C0E1A]">Paid</option>
-                <option value="VOIDED" className="bg-[#0C0E1A]">Voided</option>
+                <option value="ALL" className="bg-white">All Statuses</option>
+                <option value="PENDING" className="bg-white">Pending</option>
+                <option value="APPROVED" className="bg-white">Approved</option>
+                <option value="PAID" className="bg-white">Paid</option>
+                <option value="VOIDED" className="bg-white">Voided</option>
               </select>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+          <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+                  <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                     <th className="p-3.5 font-bold">Staff Member</th>
                     <th className="p-3.5 font-bold">Source</th>
                     <th className="p-3.5 font-bold">Branch</th>
@@ -419,7 +419,7 @@ export default function CommissionsPage() {
                     <th className="p-3.5 font-bold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[#E2E8F0]">
                   {loading ? (
                     <tr>
                       <td colSpan={9} className="p-8 text-center text-[var(--text-muted)]">
@@ -435,10 +435,10 @@ export default function CommissionsPage() {
                     </tr>
                   ) : (
                     entries.map((ent) => (
-                      <tr key={ent.id} className="hover:bg-white/[0.02]">
-                        <td className="p-3.5 font-bold text-white">{ent.staff.name}</td>
+                      <tr key={ent.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                        <td className="p-3.5 font-bold text-[#0F172A]">{ent.staff.name}</td>
                         <td className="p-3.5">
-                          <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-white/5 text-[var(--text-secondary)]">
+                          <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-[#F8FAFC] text-[var(--text-secondary)]">
                             {ent.sourceType} {ent.sourceRef ? `(${ent.sourceRef})` : ""}
                           </span>
                         </td>
@@ -451,22 +451,22 @@ export default function CommissionsPage() {
                         <td className="p-3.5 text-right font-mono text-[var(--text-secondary)]">
                           {formatLKR(ent.baseAmount)}
                         </td>
-                        <td className="p-3.5 text-center font-mono text-purple-400">
+                        <td className="p-3.5 text-center font-mono text-[#6D28D9]">
                           {ent.commissionType === "PERCENTAGE" ? `${ent.rate}%` : formatLKR(ent.rate)}
                         </td>
-                        <td className="p-3.5 text-right font-bold text-emerald-400 font-mono">
+                        <td className="p-3.5 text-right font-bold text-[#15803D] font-mono">
                           {formatLKR(ent.commissionAmount)}
                         </td>
                         <td className="p-3.5 text-center">
                           <span
                             className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                               ent.status === "APPROVED"
-                                ? "bg-emerald-500/20 text-emerald-400"
+                                ? "bg-emerald-500/20 text-[#15803D]"
                                 : ent.status === "PENDING"
-                                ? "bg-amber-500/20 text-amber-300"
+                                ? "bg-amber-500/20 text-[#D97706]"
                                 : ent.status === "PAID"
-                                ? "bg-blue-500/20 text-blue-400"
-                                : "bg-red-500/20 text-red-400"
+                                ? "bg-blue-500/20 text-[#1D4ED8]"
+                                : "bg-red-500/20 text-[#B91C1C]"
                             }`}
                           >
                             {ent.status}
@@ -477,14 +477,14 @@ export default function CommissionsPage() {
                             <div className="flex items-center justify-end gap-1.5">
                               <button
                                 onClick={() => handleUpdateStatus(ent.id, "APPROVED")}
-                                className="p-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"
+                                className="p-1 rounded-lg bg-emerald-500/10 text-[#15803D] hover:bg-emerald-500/20"
                                 title="Approve"
                               >
                                 <Check className="w-3.5 h-3.5" />
                               </button>
                               <button
                                 onClick={() => handleUpdateStatus(ent.id, "VOIDED")}
-                                className="p-1 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20"
+                                className="p-1 rounded-lg bg-red-500/10 text-[#B91C1C] hover:bg-red-500/20"
                                 title="Void"
                               >
                                 <X className="w-3.5 h-3.5" />
@@ -506,15 +506,15 @@ export default function CommissionsPage() {
       {activeTab === "summary" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {staffSummaries.length === 0 ? (
-            <div className="col-span-full p-8 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+            <div className="col-span-full p-8 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
               No staff commission activity found.
             </div>
           ) : (
             staffSummaries.map((ss) => (
-              <div key={ss.staffId} className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-4">
+              <div key={ss.staffId} className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="font-bold text-sm text-white flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#8B5CF6]/20 text-[#A78BFA] flex items-center justify-center font-bold text-xs">
+                  <div className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#8B5CF6]/20 text-[#6D28D9] flex items-center justify-center font-bold text-xs">
                       {ss.staffName.charAt(0)}
                     </div>
                     <span>{ss.staffName}</span>
@@ -524,22 +524,22 @@ export default function CommissionsPage() {
                   </span>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-white/5 text-xs">
+                <div className="space-y-2 pt-2 border-t border-[#E2E8F0] text-xs">
                   <div className="flex items-center justify-between">
                     <span className="text-[var(--text-muted)]">Pending Payout:</span>
-                    <span className="font-mono font-bold text-amber-300">
+                    <span className="font-mono font-bold text-[#D97706]">
                       {formatLKR(ss.totalPending)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[var(--text-muted)]">Approved for Payroll:</span>
-                    <span className="font-mono font-bold text-emerald-400">
+                    <span className="font-mono font-bold text-[#15803D]">
                       {formatLKR(ss.totalApproved)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[var(--text-muted)]">Paid Out to Date:</span>
-                    <span className="font-mono font-bold text-blue-400">
+                    <span className="font-mono font-bold text-[#1D4ED8]">
                       {formatLKR(ss.totalPaid)}
                     </span>
                   </div>
@@ -552,11 +552,11 @@ export default function CommissionsPage() {
 
       {/* TAB 3: COMMISSION RULES */}
       {activeTab === "rules" && (
-        <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+        <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+                <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                   <th className="p-3.5 font-bold">Rule Name</th>
                   <th className="p-3.5 font-bold">Target Staff</th>
                   <th className="p-3.5 font-bold">Applies To</th>
@@ -566,7 +566,7 @@ export default function CommissionsPage() {
                   <th className="p-3.5 font-bold text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {rules.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-8 text-center text-[var(--text-muted)]">
@@ -575,12 +575,12 @@ export default function CommissionsPage() {
                   </tr>
                 ) : (
                   rules.map((r) => (
-                    <tr key={r.id} className="hover:bg-white/[0.02]">
-                      <td className="p-3.5 font-bold text-white">{r.name}</td>
-                      <td className="p-3.5 text-purple-400">
+                    <tr key={r.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                      <td className="p-3.5 font-bold text-[#0F172A]">{r.name}</td>
+                      <td className="p-3.5 text-[#6D28D9]">
                         {r.staff?.name || "All Staff Members"}
                       </td>
-                      <td className="p-3.5 text-white">
+                      <td className="p-3.5 text-[#0F172A]">
                         {r.service && <span>Service: {r.service.name}</span>}
                         {r.product && <span>Product: {r.product.name}</span>}
                         {!r.service && !r.product && (
@@ -591,17 +591,17 @@ export default function CommissionsPage() {
                         {r.branch?.name || "All Branches"}
                       </td>
                       <td className="p-3.5 text-center">
-                        <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] font-semibold text-white">
+                        <span className="px-2 py-0.5 rounded bg-[#F8FAFC] text-[10px] font-semibold text-[#0F172A]">
                           {r.type}
                         </span>
                       </td>
-                      <td className="p-3.5 text-right font-bold text-emerald-400 font-mono">
+                      <td className="p-3.5 text-right font-bold text-[#15803D] font-mono">
                         {r.type === "PERCENTAGE" ? `${r.rate}%` : formatLKR(r.rate)}
                       </td>
                       <td className="p-3.5 text-center">
                         <span
                           className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            r.isActive ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"
+                            r.isActive ? "bg-emerald-500/20 text-[#15803D]" : "bg-red-500/20 text-[#B91C1C]"
                           }`}
                         >
                           {r.isActive ? "ACTIVE" : "INACTIVE"}
@@ -618,14 +618,14 @@ export default function CommissionsPage() {
 
       {/* CREATE RULE MODAL */}
       {showRuleModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Award className="w-4 h-4 text-[#8B5CF6]" />
                 Create Commission Rule
               </h3>
-              <button onClick={() => setShowRuleModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowRuleModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -639,7 +639,7 @@ export default function CommissionsPage() {
                   placeholder="e.g. Senior Barber Haircut 20%, Retail Sales 10%"
                   value={ruleForm.name}
                   onChange={(e) => setRuleForm({ ...ruleForm, name: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -649,11 +649,11 @@ export default function CommissionsPage() {
                   <select
                     value={ruleForm.staffId}
                     onChange={(e) => setRuleForm({ ...ruleForm, staffId: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">All Staff (Global)</option>
+                    <option value="" className="bg-white">All Staff (Global)</option>
                     {staffList.map((s) => (
-                      <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                      <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                     ))}
                   </select>
                 </div>
@@ -663,11 +663,11 @@ export default function CommissionsPage() {
                   <select
                     value={ruleForm.branchId}
                     onChange={(e) => setRuleForm({ ...ruleForm, branchId: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">All Branches</option>
+                    <option value="" className="bg-white">All Branches</option>
                     {branches.map((b) => (
-                      <option key={b.id} value={b.id} className="bg-[#0C0E1A]">{b.name}</option>
+                      <option key={b.id} value={b.id} className="bg-white">{b.name}</option>
                     ))}
                   </select>
                 </div>
@@ -679,11 +679,11 @@ export default function CommissionsPage() {
                   <select
                     value={ruleForm.serviceId}
                     onChange={(e) => setRuleForm({ ...ruleForm, serviceId: e.target.value, productId: "" })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">Any / None</option>
+                    <option value="" className="bg-white">Any / None</option>
                     {services.map((s) => (
-                      <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                      <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                     ))}
                   </select>
                 </div>
@@ -693,11 +693,11 @@ export default function CommissionsPage() {
                   <select
                     value={ruleForm.productId}
                     onChange={(e) => setRuleForm({ ...ruleForm, productId: e.target.value, serviceId: "" })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">Any / None</option>
+                    <option value="" className="bg-white">Any / None</option>
                     {products.map((p) => (
-                      <option key={p.id} value={p.id} className="bg-[#0C0E1A]">{p.name}</option>
+                      <option key={p.id} value={p.id} className="bg-white">{p.name}</option>
                     ))}
                   </select>
                 </div>
@@ -709,10 +709,10 @@ export default function CommissionsPage() {
                   <select
                     value={ruleForm.type}
                     onChange={(e) => setRuleForm({ ...ruleForm, type: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="PERCENTAGE" className="bg-[#0C0E1A]">Percentage (%)</option>
-                    <option value="FIXED" className="bg-[#0C0E1A]">Fixed Amount (LKR)</option>
+                    <option value="PERCENTAGE" className="bg-white">Percentage (%)</option>
+                    <option value="FIXED" className="bg-white">Fixed Amount (LKR)</option>
                   </select>
                 </div>
 
@@ -725,16 +725,16 @@ export default function CommissionsPage() {
                     placeholder={ruleForm.type === "PERCENTAGE" ? "10" : "500.00"}
                     value={ruleForm.rate}
                     onChange={(e) => setRuleForm({ ...ruleForm, rate: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowRuleModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>
@@ -753,11 +753,11 @@ export default function CommissionsPage() {
 
       {/* MANUAL ADJUSTMENT MODAL */}
       {showAdjustModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white">Manual Commission Adjustment</h3>
-              <button onClick={() => setShowAdjustModal(false)} className="text-[var(--text-muted)] hover:text-white">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A]">Manual Commission Adjustment</h3>
+              <button onClick={() => setShowAdjustModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -769,10 +769,10 @@ export default function CommissionsPage() {
                   required
                   value={adjustForm.staffId}
                   onChange={(e) => setAdjustForm({ ...adjustForm, staffId: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 >
                   {staffList.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                    <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                   ))}
                 </select>
               </div>
@@ -786,7 +786,7 @@ export default function CommissionsPage() {
                   placeholder="e.g. 2500.00"
                   value={adjustForm.amount}
                   onChange={(e) => setAdjustForm({ ...adjustForm, amount: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -797,15 +797,15 @@ export default function CommissionsPage() {
                   placeholder="e.g. Performance bonus for high client satisfaction..."
                   value={adjustForm.notes}
                   onChange={(e) => setAdjustForm({ ...adjustForm, notes: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowAdjustModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

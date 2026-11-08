@@ -114,7 +114,7 @@ export default function AdminStaffPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Stylists & Barbers
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -125,14 +125,14 @@ export default function AdminStaffPage() {
         <div className="flex items-center gap-2">
           <Link
             href="/admin/staff/schedules"
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors flex items-center gap-1.5"
           >
             <Clock className="w-3.5 h-3.5" />
             <span>Weekly Schedules</span>
           </Link>
           <Link
             href="/admin/staff/leaves"
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors flex items-center gap-1.5"
           >
             <CalendarOff className="w-3.5 h-3.5" />
             <span>Staff Leaves</span>
@@ -149,9 +149,9 @@ export default function AdminStaffPage() {
             <button
               disabled
               title="Salon registration is pending Super Admin approval. Adding stylists is locked."
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 text-amber-300/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] text-[#D97706]/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
             >
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Add Stylist (Pending Approval)</span>
             </button>
           )}
@@ -165,9 +165,9 @@ export default function AdminStaffPage() {
           <span>Loading staff profiles...</span>
         </div>
       ) : staffList.length === 0 ? (
-        <div className="p-8 text-center rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+        <div className="p-8 text-center rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-3">
           <Users className="w-10 h-10 text-[var(--text-muted)] mx-auto" />
-          <h3 className="text-base font-bold text-white">No Stylists Found</h3>
+          <h3 className="text-base font-bold text-[#0F172A]">No Stylists Found</h3>
           <p className="text-xs text-[var(--text-muted)]">
             Add team members to assign services and start generating booking slots.
           </p>
@@ -177,7 +177,7 @@ export default function AdminStaffPage() {
           {staffList.map((st) => (
             <div
               key={st.id}
-              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 hover:border-white/20 transition-colors flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4 hover:border-[#E2E8F0] transition-colors flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
@@ -186,16 +186,16 @@ export default function AdminStaffPage() {
                       {st.name.charAt(0)}
                     </div>
                     <div>
-                      <h3 className="font-bold text-base text-white">{st.name}</h3>
-                      <p className="text-xs text-[#A78BFA] font-medium">{st.specialization}</p>
+                      <h3 className="font-bold text-base text-[#0F172A]">{st.name}</h3>
+                      <p className="text-xs text-[#6D28D9] font-medium">{st.specialization}</p>
                     </div>
                   </div>
 
                   <span
                     className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
                       st.status === "ACTIVE"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                        : "bg-red-500/10 text-red-400 border-red-500/20"
+                        ? "bg-emerald-500/10 text-[#15803D] border-emerald-500/20"
+                        : "bg-red-500/10 text-[#B91C1C] border-red-500/20"
                     }`}
                   >
                     {st.status}
@@ -218,7 +218,7 @@ export default function AdminStaffPage() {
                 </div>
 
                 {/* Assigned branches */}
-                <div className="pt-2 border-t border-white/5 space-y-1 text-xs">
+                <div className="pt-2 border-t border-[#E2E8F0] space-y-1 text-xs">
                   <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider block font-semibold">
                     Assigned Branches:
                   </span>
@@ -226,7 +226,7 @@ export default function AdminStaffPage() {
                     {st.branches?.map((sb: any) => (
                       <span
                         key={sb.branch.id}
-                        className="px-2 py-0.5 rounded bg-white/5 text-[11px] text-white/80"
+                        className="px-2 py-0.5 rounded bg-[#F8FAFC] text-[11px] text-[#334155]"
                       >
                         {sb.branch.name}
                       </span>
@@ -237,14 +237,14 @@ export default function AdminStaffPage() {
                 {/* Assigned services count */}
                 <div className="pt-1 text-xs text-[var(--text-muted)]">
                   Competent in:{" "}
-                  <strong className="text-white">{st.services?.length || 0}</strong> services
+                  <strong className="text-[#0F172A]">{st.services?.length || 0}</strong> services
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
                 <Link
                   href="/admin/staff/schedules"
-                  className="text-xs font-semibold text-[#A78BFA] hover:text-white"
+                  className="text-xs font-semibold text-[#6D28D9] hover:text-[#6D28D9]"
                 >
                   Edit Schedule →
                 </Link>
@@ -253,8 +253,8 @@ export default function AdminStaffPage() {
                   onClick={() => handleToggleStatus(st.id, st.status)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-colors ${
                     st.status === "ACTIVE"
-                      ? "bg-red-500/10 text-red-300 border-red-500/20 hover:bg-red-500/20"
-                      : "bg-emerald-500/10 text-emerald-300 border-emerald-500/20 hover:bg-emerald-500/20"
+                      ? "bg-red-500/10 text-[#B91C1C] border-red-500/20 hover:bg-red-500/20"
+                      : "bg-emerald-500/10 text-[#15803D] border-emerald-500/20 hover:bg-emerald-500/20"
                   }`}
                 >
                   {st.status === "ACTIVE" ? "Deactivate" : "Activate"}
@@ -267,23 +267,23 @@ export default function AdminStaffPage() {
 
       {/* Add Staff Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-4 max-h-[90vh] overflow-y-auto animate-scaleIn">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-4 max-h-[90vh] overflow-y-auto animate-scaleIn">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+              <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                 <Users className="w-4 h-4 text-[#8B5CF6]" />
                 Add New Stylist / Barber
               </h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                 {error}
               </div>
             )}
@@ -297,7 +297,7 @@ export default function AdminStaffPage() {
                   placeholder="e.g. Kasun Fernando"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -309,7 +309,7 @@ export default function AdminStaffPage() {
                     placeholder="+9477..."
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                   />
                 </div>
 
@@ -320,7 +320,7 @@ export default function AdminStaffPage() {
                     placeholder="kasun@..."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                   />
                 </div>
               </div>
@@ -332,7 +332,7 @@ export default function AdminStaffPage() {
                   placeholder="e.g. Master Barber & Hair Coloring"
                   value={specialization}
                   onChange={(e) => setSpecialization(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                 />
               </div>
 
@@ -343,7 +343,7 @@ export default function AdminStaffPage() {
                   {branches.map((b) => (
                     <label
                       key={b.id}
-                      className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.02] border border-white/5 cursor-pointer"
+                      className="flex items-center gap-2 p-2 rounded-lg bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] cursor-pointer"
                     >
                       <input
                         type="checkbox"
@@ -356,7 +356,7 @@ export default function AdminStaffPage() {
                           }
                         }}
                       />
-                      <span className="text-xs text-white">{b.name}</span>
+                      <span className="text-xs text-[#0F172A]">{b.name}</span>
                     </label>
                   ))}
                 </div>
@@ -371,7 +371,7 @@ export default function AdminStaffPage() {
                   {services.map((s) => (
                     <label
                       key={s.id}
-                      className="flex items-center gap-2 p-1.5 rounded-lg bg-white/[0.02] border border-white/5 cursor-pointer text-[11px]"
+                      className="flex items-center gap-2 p-1.5 rounded-lg bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] cursor-pointer text-[11px]"
                     >
                       <input
                         type="checkbox"
@@ -384,17 +384,17 @@ export default function AdminStaffPage() {
                           }
                         }}
                       />
-                      <span className="text-white truncate">{s.name}</span>
+                      <span className="text-[#0F172A] truncate">{s.name}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-4 border-t border-[#E2E8F0] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

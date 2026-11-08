@@ -305,7 +305,7 @@ export default function AdminBranchesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Branch Management
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -326,15 +326,15 @@ export default function AdminBranchesPage() {
             <button
               disabled
               title="Salon registration is pending Super Admin approval. Creating branches is locked."
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 text-amber-300/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] text-[#D97706]/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
             >
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Add Branch (Pending Approval)</span>
             </button>
           )}
           <button
             onClick={fetchBranches}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[var(--text-muted)] hover:text-white border border-white/10"
+            className="p-2 rounded-xl bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[var(--text-muted)] hover:text-[#6D28D9] border border-[#E2E8F0]"
             title="Refresh"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -349,9 +349,9 @@ export default function AdminBranchesPage() {
           <span>Loading salon branches...</span>
         </div>
       ) : branches.length === 0 ? (
-        <div className="p-8 text-center rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+        <div className="p-8 text-center rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-3">
           <Building2 className="w-10 h-10 text-[var(--text-muted)] mx-auto" />
-          <h3 className="text-base font-bold text-white">No Branches Added</h3>
+          <h3 className="text-base font-bold text-[#0F172A]">No Branches Added</h3>
           <p className="text-xs text-[var(--text-muted)]">
             Create your first branch location to start receiving customer appointments.
           </p>
@@ -361,16 +361,16 @@ export default function AdminBranchesPage() {
           {branches.map((b) => (
             <div
               key={b.id}
-              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 hover:border-white/20 transition-colors flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4 hover:border-[#E2E8F0] transition-colors flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#A78BFA]">
+                    <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#6D28D9]">
                       <Building2 className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-base text-white">{b.name}</h3>
+                      <h3 className="font-bold text-base text-[#0F172A]">{b.name}</h3>
                       <span className="text-xs text-[var(--text-muted)]">{b.city}</span>
                     </div>
                   </div>
@@ -378,8 +378,8 @@ export default function AdminBranchesPage() {
                   <span
                     className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
                       b.status === "ACTIVE"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                        : "bg-red-500/10 text-red-400 border-red-500/20"
+                        ? "bg-emerald-500/10 text-[#15803D] border-emerald-500/20"
+                        : "bg-red-500/10 text-[#B91C1C] border-red-500/20"
                     }`}
                   >
                     {b.status}
@@ -403,7 +403,7 @@ export default function AdminBranchesPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/5 flex items-center gap-4 text-xs text-[var(--text-muted)]">
+                <div className="pt-2 border-t border-[#E2E8F0] flex items-center gap-4 text-xs text-[var(--text-muted)]">
                   <span>{b._count?.staff || 0} Stylists</span>
                   <span>•</span>
                   <span>{b._count?.bookings || 0} Bookings</span>
@@ -411,18 +411,18 @@ export default function AdminBranchesPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 border-t border-white/10 space-y-2">
+              <div className="pt-4 border-t border-[#E2E8F0] space-y-2">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => openScheduleModal(b)}
-                    className="px-3 py-2 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/10 flex items-center justify-center gap-1.5 transition-colors"
+                    className="px-3 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Clock className="w-3.5 h-3.5 text-[#8B5CF6]" />
                     <span>Hours</span>
                   </button>
                   <button
                     onClick={() => openClosuresModal(b)}
-                    className="px-3 py-2 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/10 flex items-center justify-center gap-1.5 transition-colors"
+                    className="px-3 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <CalendarOff className="w-3.5 h-3.5 text-[#EC4899]" />
                     <span>Holidays</span>
@@ -433,8 +433,8 @@ export default function AdminBranchesPage() {
                   onClick={() => handleToggleStatus(b.id, b.status)}
                   className={`w-full py-1.5 rounded-xl text-xs font-semibold border transition-colors ${
                     b.status === "ACTIVE"
-                      ? "bg-red-500/10 text-red-300 border-red-500/20 hover:bg-red-500/20"
-                      : "bg-emerald-500/10 text-emerald-300 border-emerald-500/20 hover:bg-emerald-500/20"
+                      ? "bg-red-500/10 text-[#B91C1C] border-red-500/20 hover:bg-red-500/20"
+                      : "bg-emerald-500/10 text-[#15803D] border-emerald-500/20 hover:bg-emerald-500/20"
                   }`}
                 >
                   {b.status === "ACTIVE" ? "Mark Branch Closed" : "Activate Branch"}
@@ -447,23 +447,23 @@ export default function AdminBranchesPage() {
 
       {/* Add Branch Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-4 animate-scaleIn">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-4 animate-scaleIn">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+              <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-[#8B5CF6]" />
                 Add New Salon Branch
               </h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                 {error}
               </div>
             )}
@@ -477,7 +477,7 @@ export default function AdminBranchesPage() {
                   placeholder="e.g. Galle Branch"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -489,7 +489,7 @@ export default function AdminBranchesPage() {
                   placeholder="e.g. Galle"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -501,7 +501,7 @@ export default function AdminBranchesPage() {
                   placeholder="e.g. 78 Fort Road, Galle"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -513,7 +513,7 @@ export default function AdminBranchesPage() {
                     placeholder="+9491..."
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                   />
                 </div>
 
@@ -522,21 +522,21 @@ export default function AdminBranchesPage() {
                   <select
                     value={bookingInterval}
                     onChange={(e) => setBookingInterval(Number(e.target.value))}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                   >
-                    <option value={15} className="bg-[#111827]">15 minutes</option>
-                    <option value={30} className="bg-[#111827]">30 minutes</option>
-                    <option value={45} className="bg-[#111827]">45 minutes</option>
-                    <option value={60} className="bg-[#111827]">60 minutes</option>
+                    <option value={15} className="bg-white text-[#0F172A]">15 minutes</option>
+                    <option value={30} className="bg-white text-[#0F172A]">30 minutes</option>
+                    <option value={45} className="bg-white text-[#0F172A]">45 minutes</option>
+                    <option value={60} className="bg-white text-[#0F172A]">60 minutes</option>
                   </select>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[#E2E8F0] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>
@@ -555,11 +555,11 @@ export default function AdminBranchesPage() {
 
       {/* Operating Schedule Modal (Section 8) */}
       {scheduleBranch && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-5 animate-scaleIn max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-5 animate-scaleIn max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#8B5CF6]" />
                   Operating Hours Schedule - {scheduleBranch.name}
                 </h3>
@@ -569,7 +569,7 @@ export default function AdminBranchesPage() {
               </div>
               <button
                 onClick={() => setScheduleBranch(null)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -579,8 +579,8 @@ export default function AdminBranchesPage() {
               <div
                 className={`p-3 rounded-xl text-xs ${
                   scheduleMsg.includes("success")
-                    ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
-                    : "bg-red-500/10 border border-red-500/20 text-red-400"
+                    ? "bg-emerald-500/10 border border-emerald-500/20 text-[#15803D]"
+                    : "bg-red-500/10 border border-red-500/20 text-[#B91C1C]"
                 }`}
               >
                 {scheduleMsg}
@@ -599,7 +599,7 @@ export default function AdminBranchesPage() {
                     key={sch.dayOfWeek}
                     className={`p-3.5 rounded-xl border text-xs transition-colors ${
                       sch.isOpen
-                        ? "bg-white/[0.02] border-white/10"
+                        ? "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0]"
                         : "bg-red-500/[0.03] border-red-500/20 opacity-75"
                     }`}
                   >
@@ -616,13 +616,13 @@ export default function AdminBranchesPage() {
                             }}
                             className="sr-only peer"
                           />
-                          <div className="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#8B5CF6]"></div>
+                          <div className="w-9 h-5 bg-[#F8FAFC] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#8B5CF6]"></div>
                         </label>
-                        <span className="font-bold text-white w-24">
+                        <span className="font-bold text-[#0F172A] w-24">
                           {DAYS_OF_WEEK[sch.dayOfWeek]}
                         </span>
                         {!sch.isOpen && (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-300">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-[#B91C1C]">
                             CLOSED
                           </span>
                         )}
@@ -640,7 +640,7 @@ export default function AdminBranchesPage() {
                                 updated[idx].openTime = e.target.value;
                                 setSchedules(updated);
                               }}
-                              className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-white font-mono"
+                              className="px-2 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono"
                             />
                           </div>
 
@@ -654,11 +654,11 @@ export default function AdminBranchesPage() {
                                 updated[idx].closeTime = e.target.value;
                                 setSchedules(updated);
                               }}
-                              className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-white font-mono"
+                              className="px-2 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono"
                             />
                           </div>
 
-                          <div className="flex items-center gap-2 pl-2 border-l border-white/10">
+                          <div className="flex items-center gap-2 pl-2 border-l border-[#E2E8F0]">
                             <label className="flex items-center gap-1 cursor-pointer">
                               <input
                                 type="checkbox"
@@ -685,7 +685,7 @@ export default function AdminBranchesPage() {
                                     updated[idx].breakStart = e.target.value;
                                     setSchedules(updated);
                                   }}
-                                  className="px-1.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white font-mono text-[11px]"
+                                  className="px-1.5 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono text-[11px]"
                                 />
                                 <span className="text-[var(--text-muted)]">-</span>
                                 <input
@@ -696,7 +696,7 @@ export default function AdminBranchesPage() {
                                     updated[idx].breakEnd = e.target.value;
                                     setSchedules(updated);
                                   }}
-                                  className="px-1.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white font-mono text-[11px]"
+                                  className="px-1.5 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono text-[11px]"
                                 />
                               </div>
                             )}
@@ -707,10 +707,10 @@ export default function AdminBranchesPage() {
                   </div>
                 ))}
 
-                <div className="pt-4 border-t border-white/10 flex justify-end gap-2">
+                <div className="pt-4 border-t border-[#E2E8F0] flex justify-end gap-2">
                   <button
                     onClick={() => setScheduleBranch(null)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A]"
                   >
                     Cancel
                   </button>
@@ -737,11 +737,11 @@ export default function AdminBranchesPage() {
 
       {/* Holidays & Closures Modal (Section 9 & 10) */}
       {closureBranch && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-5 animate-scaleIn max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-5 animate-scaleIn max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                   <CalendarOff className="w-4 h-4 text-[#EC4899]" />
                   Holidays & Closures - {closureBranch.name}
                 </h3>
@@ -751,21 +751,21 @@ export default function AdminBranchesPage() {
               </div>
               <button
                 onClick={() => setClosureBranch(null)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {closureError && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                 {closureError}
               </div>
             )}
 
             {/* Add New Closure Form */}
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3.5">
-              <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+            <div className="p-4 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-3.5">
+              <h4 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">
                 Schedule New Closure / Holiday
               </h4>
 
@@ -776,7 +776,7 @@ export default function AdminBranchesPage() {
                     type="date"
                     value={newClosureDate}
                     onChange={(e) => setNewClosureDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                   />
                 </div>
 
@@ -785,14 +785,14 @@ export default function AdminBranchesPage() {
                   <select
                     value={newClosureType}
                     onChange={(e) => setNewClosureType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                   >
-                    <option value="PUBLIC_HOLIDAY" className="bg-[#111827]">Public Holiday</option>
-                    <option value="SPECIAL_HOLIDAY" className="bg-[#111827]">Special Holiday</option>
-                    <option value="WEEKLY_OFF" className="bg-[#111827]">Weekly Off</option>
-                    <option value="EMERGENCY_CLOSURE" className="bg-[#111827]">Emergency Closure</option>
-                    <option value="MAINTENANCE" className="bg-[#111827]">Maintenance</option>
-                    <option value="OTHER" className="bg-[#111827]">Other</option>
+                    <option value="PUBLIC_HOLIDAY" className="bg-white text-[#0F172A]">Public Holiday</option>
+                    <option value="SPECIAL_HOLIDAY" className="bg-white text-[#0F172A]">Special Holiday</option>
+                    <option value="WEEKLY_OFF" className="bg-white text-[#0F172A]">Weekly Off</option>
+                    <option value="EMERGENCY_CLOSURE" className="bg-white text-[#0F172A]">Emergency Closure</option>
+                    <option value="MAINTENANCE" className="bg-white text-[#0F172A]">Maintenance</option>
+                    <option value="OTHER" className="bg-white text-[#0F172A]">Other</option>
                   </select>
                 </div>
               </div>
@@ -804,7 +804,7 @@ export default function AdminBranchesPage() {
                   placeholder="e.g. Christmas Day / Annual deep cleaning & electrical maintenance"
                   value={newClosureReason}
                   onChange={(e) => setNewClosureReason(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A]"
                 />
               </div>
 
@@ -816,7 +816,7 @@ export default function AdminBranchesPage() {
                     onChange={(e) => setNewClosureFullDay(e.target.checked)}
                     className="rounded text-[#EC4899]"
                   />
-                  <span className="text-white font-medium">Full Day Closure</span>
+                  <span className="text-[#0F172A] font-medium">Full Day Closure</span>
                 </label>
 
                 {!newClosureFullDay && (
@@ -826,14 +826,14 @@ export default function AdminBranchesPage() {
                       type="time"
                       value={newClosureStart}
                       onChange={(e) => setNewClosureStart(e.target.value)}
-                      className="px-2 py-1 rounded bg-white/5 border border-white/10 text-white font-mono"
+                      className="px-2 py-1 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono"
                     />
                     <span className="text-[var(--text-muted)]">To:</span>
                     <input
                       type="time"
                       value={newClosureEnd}
                       onChange={(e) => setNewClosureEnd(e.target.value)}
-                      className="px-2 py-1 rounded bg-white/5 border border-white/10 text-white font-mono"
+                      className="px-2 py-1 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] font-mono"
                     />
                   </div>
                 )}
@@ -858,7 +858,7 @@ export default function AdminBranchesPage() {
 
             {/* List of Closures */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">
                 Configured Closures ({closures.length})
               </h4>
 
@@ -876,21 +876,21 @@ export default function AdminBranchesPage() {
                   {closures.map((c) => (
                     <div
                       key={c.id}
-                      className="p-3 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between gap-3 text-xs"
+                      className="p-3 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] flex items-center justify-between gap-3 text-xs"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-white">
+                          <span className="font-bold text-[#0F172A]">
                             {new Date(c.date).toISOString().split("T")[0]}
                           </span>
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-[#6D28D9]">
                             {c.closureType.replace("_", " ")}
                           </span>
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                               c.isFullDay
-                                ? "bg-amber-500/20 text-amber-300"
-                                : "bg-cyan-500/20 text-cyan-300"
+                                ? "bg-amber-500/20 text-[#D97706]"
+                                : "bg-cyan-500/20 text-[#0284C7]"
                             }`}
                           >
                             {c.isFullDay
@@ -905,7 +905,7 @@ export default function AdminBranchesPage() {
 
                       <button
                         onClick={() => handleDeleteClosure(c.id)}
-                        className="p-2 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
+                        className="p-2 rounded-lg text-[#B91C1C] hover:bg-red-500/10 hover:text-[#B91C1C] transition-colors"
                         title="Delete Closure"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -921,24 +921,24 @@ export default function AdminBranchesPage() {
 
       {/* Affected Bookings Warning Modal (Section 10) */}
       {affectedWarning && (
-        <div className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#111322] border border-amber-500/40 p-6 space-y-4 animate-scaleIn shadow-2xl shadow-amber-500/20">
-            <div className="flex items-center gap-3 text-amber-400">
+        <div className="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-amber-500/40 p-6 space-y-4 animate-scaleIn shadow-2xl shadow-amber-500/20">
+            <div className="flex items-center gap-3 text-[#D97706]">
               <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center shrink-0">
                 <ShieldAlert className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">
+                <h3 className="text-base font-bold text-[#0F172A]">
                   Existing Bookings Conflict Warning
                 </h3>
-                <span className="text-xs text-amber-300 font-semibold">
+                <span className="text-xs text-[#D97706] font-semibold">
                   Action required before closing branch
                 </span>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2 text-xs text-amber-200">
-              <p className="font-bold text-amber-300">
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2 text-xs text-[#D97706]">
+              <p className="font-bold text-[#D97706]">
                 ⚠️ {affectedWarning.count} existing booking(s) will be affected by this closure!
               </p>
               <p className="text-[11px] text-[var(--text-secondary)]">
@@ -966,7 +966,7 @@ export default function AdminBranchesPage() {
 
               <button
                 onClick={() => setAffectedWarning(null)}
-                className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-white transition-colors"
+                className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] transition-colors"
               >
                 Go Back / Adjust Closure Time
               </button>

@@ -147,7 +147,7 @@ export default function SuppliersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <Truck className="w-7 h-7 text-[#8B5CF6]" />
             Supplier Directory
           </h1>
@@ -158,7 +158,7 @@ export default function SuppliersPage() {
         <div className="flex items-center gap-2.5">
           <Link
             href="/admin/inventory/purchase-orders"
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] transition-all flex items-center gap-1.5"
           >
             <span>View Purchase Orders</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -174,7 +174,7 @@ export default function SuppliersPage() {
       </div>
 
       {/* Search Bar */}
-      <div className="p-3.5 rounded-2xl bg-[#0C0E1A] border border-white/10">
+      <div className="p-3.5 rounded-2xl bg-white border border-[#E2E8F0]">
         <div className="relative max-w-md">
           <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
           <input
@@ -182,7 +182,7 @@ export default function SuppliersPage() {
             placeholder="Search suppliers by name, contact, phone, or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
+            className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl pl-9 pr-3 py-1.5 text-xs text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
           />
         </div>
       </div>
@@ -195,31 +195,31 @@ export default function SuppliersPage() {
             Loading suppliers...
           </div>
         ) : filteredSuppliers.length === 0 ? (
-          <div className="col-span-full p-12 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+          <div className="col-span-full p-12 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
             No suppliers found. Click "Add Supplier" to register your distributors.
           </div>
         ) : (
           filteredSuppliers.map((sup) => (
             <div
               key={sup.id}
-              className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 flex flex-col justify-between space-y-4 hover:border-white/20 transition-all"
+              className="p-5 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-4 hover:border-[#E2E8F0] transition-all"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 flex items-center justify-center text-[#A78BFA] font-bold text-sm">
+                  <div className="w-10 h-10 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 flex items-center justify-center text-[#6D28D9] font-bold text-sm">
                     {sup.name.charAt(0)}
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        sup.isActive ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"
+                        sup.isActive ? "bg-emerald-500/20 text-[#15803D]" : "bg-red-500/20 text-[#B91C1C]"
                       }`}
                     >
                       {sup.isActive ? "ACTIVE" : "INACTIVE"}
                     </span>
                     <button
                       onClick={() => openEditModal(sup)}
-                      className="p-1 rounded-lg text-[var(--text-muted)] hover:text-white hover:bg-white/5"
+                      className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[#6D28D9] hover:bg-[#F8FAFC]"
                       title="Edit"
                     >
                       <Edit className="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@ export default function SuppliersPage() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-sm text-white">{sup.name}</h3>
+                  <h3 className="font-bold text-sm text-[#0F172A]">{sup.name}</h3>
                   {sup.contactPerson && (
                     <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                       Contact: {sup.contactPerson}
@@ -239,28 +239,28 @@ export default function SuppliersPage() {
                 <div className="space-y-1.5 text-xs text-[var(--text-muted)]">
                   {sup.phone && (
                     <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                      <Phone className="w-3.5 h-3.5 text-[#6D28D9] shrink-0" />
                       <span>{sup.phone}</span>
                     </div>
                   )}
                   {sup.email && (
                     <div className="flex items-center gap-2">
-                      <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                      <Mail className="w-3.5 h-3.5 text-[#6D28D9] shrink-0" />
                       <span className="truncate">{sup.email}</span>
                     </div>
                   )}
                   {sup.address && (
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-[#6D28D9] shrink-0" />
                       <span className="line-clamp-1">{sup.address}</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-[var(--text-muted)]">
-                <span>Terms: <b className="text-white">{sup.paymentTerms || "Standard"}</b></span>
-                <span>Lead Time: <b className="text-white">{sup.leadTimeDays || 3} days</b></span>
+              <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-[11px] text-[var(--text-muted)]">
+                <span>Terms: <b className="text-[#0F172A]">{sup.paymentTerms || "Standard"}</b></span>
+                <span>Lead Time: <b className="text-[#0F172A]">{sup.leadTimeDays || 3} days</b></span>
               </div>
             </div>
           ))
@@ -269,14 +269,14 @@ export default function SuppliersPage() {
 
       {/* CREATE / EDIT MODAL */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Truck className="w-4 h-4 text-[#8B5CF6]" />
                 {editingSupplier ? "Edit Supplier" : "Add Supplier"}
               </h3>
-              <button onClick={() => setShowModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -290,7 +290,7 @@ export default function SuppliersPage() {
                   placeholder="e.g. L'Oreal Professional Sri Lanka"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -302,7 +302,7 @@ export default function SuppliersPage() {
                     placeholder="e.g. John Silva"
                     value={form.contactPerson}
                     onChange={(e) => setForm({ ...form, contactPerson: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
                 <div>
@@ -312,7 +312,7 @@ export default function SuppliersPage() {
                     placeholder="077-1234567"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
@@ -324,7 +324,7 @@ export default function SuppliersPage() {
                   placeholder="orders@supplier.lk"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -335,7 +335,7 @@ export default function SuppliersPage() {
                   placeholder="Warehouse address..."
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -347,7 +347,7 @@ export default function SuppliersPage() {
                     placeholder="e.g. Net 30, COD"
                     value={form.paymentTerms}
                     onChange={(e) => setForm({ ...form, paymentTerms: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
                 <div>
@@ -358,7 +358,7 @@ export default function SuppliersPage() {
                     placeholder="3"
                     value={form.leadTimeDays}
                     onChange={(e) => setForm({ ...form, leadTimeDays: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
@@ -370,7 +370,7 @@ export default function SuppliersPage() {
                   placeholder="Order instructions, minimum order quantities..."
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
@@ -380,18 +380,18 @@ export default function SuppliersPage() {
                   id="isActive"
                   checked={form.isActive}
                   onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-                  className="rounded border-white/20 bg-white/5 text-[#8B5CF6]"
+                  className="rounded border-[#E2E8F0] bg-[#F8FAFC] text-[#8B5CF6]"
                 />
-                <label htmlFor="isActive" className="text-white cursor-pointer select-none">
+                <label htmlFor="isActive" className="text-[#0F172A] cursor-pointer select-none">
                   Active supplier
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

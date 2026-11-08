@@ -42,11 +42,11 @@ export default function SuperAdminSettingsPage() {
 
   const Section = ({ title, icon: Icon, children }: any) => (
     <div className="card p-6 space-y-5">
-      <div className="flex items-center gap-3 pb-3 border-b border-white/5">
+      <div className="flex items-center gap-3 pb-3 border-b border-[#E2E8F0]">
         <div className="p-2 rounded-xl bg-amber-500/10">
-          <Icon className="w-4 h-4 text-amber-400" />
+          <Icon className="w-4 h-4 text-[#D97706]" />
         </div>
-        <h2 className="text-sm font-bold text-white">{title}</h2>
+        <h2 className="text-sm font-bold text-[#0F172A]">{title}</h2>
       </div>
       {children}
     </div>
@@ -64,7 +64,7 @@ export default function SuperAdminSettingsPage() {
       type={type}
       value={value}
       onChange={onChange}
-      className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-amber-400/50 transition-colors"
+      className="w-full px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-amber-400/50 transition-colors"
       {...props}
     />
   );
@@ -73,7 +73,7 @@ export default function SuperAdminSettingsPage() {
     <label className="flex items-center gap-3 cursor-pointer">
       <div className="relative">
         <input type="checkbox" className="sr-only" checked={checked} onChange={onChange} />
-        <div className={`w-11 h-6 rounded-full transition-colors ${checked ? "bg-amber-500" : "bg-white/10"}`} />
+        <div className={`w-11 h-6 rounded-full transition-colors ${checked ? "bg-amber-500" : "bg-[#F8FAFC]"}`} />
         <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${checked ? "translate-x-5" : ""}`} />
       </div>
       <span className="text-sm text-[var(--text-secondary)]">{label}</span>
@@ -85,7 +85,7 @@ export default function SuperAdminSettingsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Platform Settings</h1>
+          <h1 className="text-2xl font-bold text-[#0F172A]">Platform Settings</h1>
           <p className="text-sm text-[var(--text-muted)] mt-0.5">Configure global platform settings and defaults</p>
         </div>
         <button
@@ -117,10 +117,10 @@ export default function SuperAdminSettingsPage() {
           <select
             value={settings.defaultCurrency}
             onChange={(e) => setSettings((s) => ({ ...s, defaultCurrency: e.target.value }))}
-            className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-400/50"
+            className="w-full px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-amber-400/50"
           >
             {["LKR", "USD", "GBP", "EUR", "AUD", "INR", "SGD"].map((c) => (
-              <option key={c} value={c} className="bg-[#0C0E1A]">{c}</option>
+              <option key={c} value={c} className="bg-white">{c}</option>
             ))}
           </select>
         </Field>
@@ -128,10 +128,10 @@ export default function SuperAdminSettingsPage() {
           <select
             value={settings.defaultTimezone}
             onChange={(e) => setSettings((s) => ({ ...s, defaultTimezone: e.target.value }))}
-            className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-400/50"
+            className="w-full px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-amber-400/50"
           >
             {["Asia/Colombo", "UTC", "America/New_York", "Europe/London", "Asia/Singapore", "Australia/Sydney"].map((tz) => (
-              <option key={tz} value={tz} className="bg-[#0C0E1A]">{tz}</option>
+              <option key={tz} value={tz} className="bg-white">{tz}</option>
             ))}
           </select>
         </Field>
@@ -198,7 +198,7 @@ export default function SuperAdminSettingsPage() {
         </Field>
         {settings.maintenanceMode && (
           <div className="p-3 rounded-xl bg-red-400/10 border border-red-400/20">
-            <p className="text-sm text-red-400 font-semibold">⚠️ Maintenance mode is ON. Public users cannot access the platform.</p>
+            <p className="text-sm text-[#B91C1C] font-semibold">⚠️ Maintenance mode is ON. Public users cannot access the platform.</p>
           </div>
         )}
       </Section>

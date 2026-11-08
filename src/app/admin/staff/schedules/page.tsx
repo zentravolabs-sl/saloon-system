@@ -78,20 +78,20 @@ export default function StaffSchedulesPage() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl">
+    <div className="space-y-6 animate-fadeIn w-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Link
               href="/admin/staff"
-              className="text-xs text-[var(--text-muted)] hover:text-white flex items-center gap-1"
+              className="text-xs text-[var(--text-muted)] hover:text-[#6D28D9] flex items-center gap-1"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Back to Staff</span>
             </Link>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Weekly Staff Working Schedules
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -114,31 +114,31 @@ export default function StaffSchedulesPage() {
       </div>
 
       {success && (
-        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[#15803D] text-xs flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4" />
           <span>Staff working schedule successfully saved!</span>
         </div>
       )}
 
       {error && (
-        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Staff Selector */}
-      <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex items-center gap-4">
+      <div className="p-4 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] flex items-center gap-4">
         <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase">
           Select Stylist:
         </label>
         <select
           value={selectedStaffId}
           onChange={(e) => setSelectedStaffId(e.target.value)}
-          className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none"
+          className="px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none"
         >
           {staffList.map((st) => (
-            <option key={st.id} value={st.id} className="bg-[#111827]">
+            <option key={st.id} value={st.id} className="bg-white text-[#0F172A]">
               {st.name} ({st.specialization || "Stylist"})
             </option>
           ))}
@@ -146,7 +146,7 @@ export default function StaffSchedulesPage() {
       </div>
 
       {/* Schedule Rows */}
-      <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] divide-y divide-white/5">
+      <div className="rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] divide-y divide-[#E2E8F0]">
         {loading ? (
           <div className="py-16 text-center text-xs text-[var(--text-muted)] flex items-center justify-center gap-2">
             <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6]" />
@@ -163,10 +163,10 @@ export default function StaffSchedulesPage() {
             return (
               <div
                 key={dayName}
-                className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-white/[0.01] transition-colors"
+                className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition-colors"
               >
                 <div className="flex items-center gap-4 w-40">
-                  <span className="font-bold text-sm text-white">{dayName}</span>
+                  <span className="font-bold text-sm text-[#0F172A]">{dayName}</span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -177,7 +177,7 @@ export default function StaffSchedulesPage() {
                       onChange={(e) => updateDaySchedule(idx, "isWorking", e.target.checked)}
                       className="rounded"
                     />
-                    <span className={sch.isWorking ? "text-emerald-400 font-semibold" : "text-red-400"}>
+                    <span className={sch.isWorking ? "text-[#15803D] font-semibold" : "text-[#B91C1C]"}>
                       {sch.isWorking ? "Working" : "Day Off"}
                     </span>
                   </label>
@@ -190,14 +190,14 @@ export default function StaffSchedulesPage() {
                       type="time"
                       value={sch.startTime || "09:00"}
                       onChange={(e) => updateDaySchedule(idx, "startTime", e.target.value)}
-                      className="px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                      className="px-2.5 py-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                     />
                     <span className="text-[var(--text-muted)]">To:</span>
                     <input
                       type="time"
                       value={sch.endTime || "18:00"}
                       onChange={(e) => updateDaySchedule(idx, "endTime", e.target.value)}
-                      className="px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                      className="px-2.5 py-1.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                     />
                   </div>
                 ) : (

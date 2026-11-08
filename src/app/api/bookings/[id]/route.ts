@@ -7,6 +7,9 @@ import { isSlotAvailable, addMinutesToTime } from "@/lib/availability";
 import { getPhoneVariants } from "@/lib/phone";
 import { format } from "date-fns";
 import { getLegacyScope, type LegacyScope } from "@/lib/ops/access";
+import { parseOpsSettings } from "@/lib/ops/settings";
+import { applyBookingConsumption, reverseBookingConsumption } from "@/lib/ops/inventory";
+import { evaluateBookingCommissions, voidBookingCommissions } from "@/lib/ops/commission";
 
 /** True when the caller may see/act on this booking (own record for STAFF, branch scope otherwise) */
 function bookingInScope(scope: LegacyScope, booking: { staffId: string; branchId: string }) {
@@ -90,7 +93,7 @@ export async function PATCH(
       where: { id },
       include: {
         services: true,
-        salon: { select: { slug: true } },
+        salon: { select: { slug: true, settings: true } },
       },
     });
 
@@ -146,41 +149,44 @@ export async function PATCH(
       const totalDuration = availCheck.totalDuration || 30;
       const targetEndTime = addMinutesToTime(targetTime, totalDuration);
 
-      const rescheduled = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-        const updated = await tx.booking.update({
-          where: { id },
-          data: {
-            bookingDate: new Date(targetDate),
-            startTime: targetTime,
-            endTime: targetEndTime,
-            staffId: targetStaffId,
-            status: "CONFIRMED",
-          },
-        });
+      const rescheduled = await prisma.$transaction(
+        async (tx: Prisma.TransactionClient) => {
+          const updated = await tx.booking.update({
+            where: { id },
+            data: {
+              bookingDate: new Date(targetDate),
+              startTime: targetTime,
+              endTime: targetEndTime,
+              staffId: targetStaffId,
+              status: "CONFIRMED",
+            },
+          });
 
-        await tx.bookingStatusHistory.create({
-          data: {
-            bookingId: id,
-            status: "CONFIRMED",
-            changedBy: session.user.id,
-            reason: body.reason || "Appointment rescheduled",
-            notes: `Moved to ${targetDate} at ${targetTime}`,
-          },
-        });
+          await tx.bookingStatusHistory.create({
+            data: {
+              bookingId: id,
+              status: "CONFIRMED",
+              changedBy: session.user.id,
+              reason: body.reason || "Appointment rescheduled",
+              notes: `Moved to ${targetDate} at ${targetTime}`,
+            },
+          });
 
-        await tx.notification.create({
-          data: {
-            salonId: booking.salonId,
-            branchId: booking.branchId,
-            bookingId: id,
-            type: "BOOKING_RESCHEDULED",
-            title: "Appointment Rescheduled",
-            message: `Booking ${booking.reference} rescheduled to ${targetDate} at ${targetTime}`,
-          },
-        });
+          await tx.notification.create({
+            data: {
+              salonId: booking.salonId,
+              branchId: booking.branchId,
+              bookingId: id,
+              type: "BOOKING_RESCHEDULED",
+              title: "Appointment Rescheduled",
+              message: `Booking ${booking.reference} rescheduled to ${targetDate} at ${targetTime}`,
+            },
+          });
 
-        return updated;
-      });
+          return updated;
+        },
+        { maxWait: 15000, timeout: 30000 }
+      );
 
       return NextResponse.json({ booking: rescheduled, message: "Appointment rescheduled successfully" });
     }
@@ -209,161 +215,166 @@ export async function PATCH(
       timestamps.rejectionReason = reason || null;
     }
 
-    const updated = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      const updatedBooking = await tx.booking.update({
-        where: { id },
-        data: {
-          status: status as any,
-          staffNotes: notes || booking.staffNotes,
-          ...timestamps,
-        },
-      });
+    const opsSettings = parseOpsSettings(booking.salon?.settings);
 
-      // Record status history
-      await tx.bookingStatusHistory.create({
-        data: {
-          bookingId: id,
-          status: status as any,
-          changedBy: session.user.id,
-          reason,
-          notes,
-        },
-      });
-
-      // Customer stats update
-      if (status === "COMPLETED") {
-        await tx.customer.update({
-          where: { id: booking.customerId },
-          data: { totalSpent: { increment: booking.totalAmount } },
+    const updated = await prisma.$transaction(
+      async (tx: Prisma.TransactionClient) => {
+        const updatedBooking = await tx.booking.update({
+          where: { id },
+          data: {
+            status: status as any,
+            staffNotes: notes || booking.staffNotes,
+            ...timestamps,
+          },
         });
 
-        // Loyalty points update: 1 point per 100 LKR
-        const earnedPoints = Math.floor(booking.totalAmount / 100);
-        if (earnedPoints > 0) {
-          const loyaltyAcc = await tx.loyaltyAccount.upsert({
-            where: { customerId: booking.customerId },
-            update: {
-              totalPoints: { increment: earnedPoints },
-              balance: { increment: earnedPoints },
-            },
-            create: {
-              customerId: booking.customerId,
-              salonId: booking.salonId,
-              totalPoints: earnedPoints,
-              usedPoints: 0,
-              balance: earnedPoints,
-            },
+        // Record status history
+        await tx.bookingStatusHistory.create({
+          data: {
+            bookingId: id,
+            status: status as any,
+            changedBy: session.user.id,
+            reason,
+            notes,
+          },
+        });
+
+        // Customer stats update
+        if (status === "COMPLETED") {
+          await tx.customer.update({
+            where: { id: booking.customerId },
+            data: { totalSpent: { increment: booking.totalAmount } },
           });
 
-          await tx.loyaltyTransaction.create({
-            data: {
-              accountId: loyaltyAcc.id,
-              points: earnedPoints,
-              description: `Earned from completed appointment ${booking.reference}`,
+          // Loyalty points update: 1 point per 100 LKR
+          const earnedPoints = Math.floor(booking.totalAmount / 100);
+          if (earnedPoints > 0) {
+            const loyaltyAcc = await tx.loyaltyAccount.upsert({
+              where: { customerId: booking.customerId },
+              update: {
+                totalPoints: { increment: earnedPoints },
+                balance: { increment: earnedPoints },
+              },
+              create: {
+                customerId: booking.customerId,
+                salonId: booking.salonId,
+                totalPoints: earnedPoints,
+                usedPoints: 0,
+                balance: earnedPoints,
+              },
+            });
+
+            await tx.loyaltyTransaction.create({
+              data: {
+                accountId: loyaltyAcc.id,
+                points: earnedPoints,
+                description: `Earned from completed appointment ${booking.reference}`,
+                bookingId: id,
+              },
+            });
+          }
+        }
+
+        if (status === "NO_SHOW") {
+          await tx.customer.update({
+            where: { id: booking.customerId },
+            data: { noShowCount: { increment: 1 } },
+          });
+        }
+
+        if (status === "CANCELLED" || status === "REJECTED") {
+          await tx.customer.update({
+            where: { id: booking.customerId },
+            data: { cancelCount: { increment: 1 } },
+          });
+
+          // Reverse service product consumption if previously applied
+          await reverseBookingConsumption(tx, id, session.user.id);
+
+          // Void or offset any generated commissions
+          await voidBookingCommissions(tx, id, reason || `Booking ${status.toLowerCase()}`);
+        }
+
+        // Phase 1: Service Product Consumption trigger
+        if (
+          (status === "COMPLETED" && opsSettings.consumeOn === "COMPLETED") ||
+          (status === "IN_PROGRESS" && opsSettings.consumeOn === "IN_PROGRESS")
+        ) {
+          await applyBookingConsumption(tx, id, {
+            allowNegative: opsSettings.allowNegativeStock,
+            userId: session.user.id,
+          });
+        }
+
+        // Phase 1: Staff Commission evaluation
+        if (status === "COMPLETED") {
+          await evaluateBookingCommissions(tx, id);
+        }
+
+        // Generate invoice on completion with collision-safe unique invoice number
+        if (status === "COMPLETED") {
+          const slug = (booking.salon?.slug || "SAL").toUpperCase().substring(0, 3);
+          const dateStr = format(new Date(), "yyyyMMdd");
+          const invRandom = Math.random().toString(36).substring(2, 6).toUpperCase();
+          const invoiceNumber = `INV-${slug}-${dateStr}-${invRandom}`;
+
+          await tx.invoice.upsert({
+            where: { bookingId: id },
+            update: {
+              subtotal: booking.subtotal,
+              discountAmount: booking.discountAmount,
+              taxAmount: booking.taxAmount,
+              totalAmount: booking.totalAmount,
+              paidAmount: booking.paidAmount,
+              balanceAmount: Math.max(0, booking.totalAmount - booking.paidAmount),
+            },
+            create: {
+              invoiceNumber,
               bookingId: id,
+              salonId: booking.salonId,
+              subtotal: booking.subtotal,
+              discountAmount: booking.discountAmount,
+              taxAmount: booking.taxAmount,
+              totalAmount: booking.totalAmount,
+              paidAmount: booking.paidAmount,
+              balanceAmount: Math.max(0, booking.totalAmount - booking.paidAmount),
             },
           });
         }
-      }
 
-      if (status === "NO_SHOW") {
-        await tx.customer.update({
-          where: { id: booking.customerId },
-          data: { noShowCount: { increment: 1 } },
-        });
-      }
+        // Create notification
+        const notificationMessages: Record<string, string> = {
+          CONFIRMED: `Booking ${booking.reference} confirmed`,
+          REJECTED: `Booking ${booking.reference} rejected`,
+          CANCELLED: `Booking ${booking.reference} cancelled`,
+          COMPLETED: `Booking ${booking.reference} completed`,
+          CHECKED_IN: `Customer checked in for ${booking.reference}`,
+          IN_PROGRESS: `Treatment started for ${booking.reference}`,
+        };
 
-      if (status === "CANCELLED" || status === "REJECTED") {
-        await tx.customer.update({
-          where: { id: booking.customerId },
-          data: { cancelCount: { increment: 1 } },
-        });
+        if (notificationMessages[status]) {
+          await tx.notification.create({
+            data: {
+              salonId: booking.salonId,
+              branchId: booking.branchId,
+              bookingId: id,
+              type:
+                (({
+                  CONFIRMED: "BOOKING_CONFIRMED",
+                  REJECTED: "BOOKING_REJECTED",
+                  CANCELLED: "BOOKING_CANCELLED",
+                  COMPLETED: "APPOINTMENT_COMPLETED",
+                } as Record<string, any>)[status]) || "GENERAL",
+              title: `Booking ${status.charAt(0) + status.slice(1).toLowerCase().replace("_", " ")}`,
+              message: notificationMessages[status],
+            },
+          });
+        }
 
-        // Reverse service product consumption if previously applied
-        const { reverseBookingConsumption } = await import("@/lib/ops/inventory");
-        await reverseBookingConsumption(tx, id, session.user.id);
-
-        // Void or offset any generated commissions
-        const { voidBookingCommissions } = await import("@/lib/ops/commission");
-        await voidBookingCommissions(tx, id, reason || `Booking ${status.toLowerCase()}`);
-      }
-
-      // Phase 1: Service Product Consumption trigger
-      const { getOpsSettings } = await import("@/lib/ops/settings");
-      const opsSettings = await getOpsSettings(booking.salonId, tx);
-      if (
-        (status === "COMPLETED" && opsSettings.consumeOn === "COMPLETED") ||
-        (status === "IN_PROGRESS" && opsSettings.consumeOn === "IN_PROGRESS")
-      ) {
-        const { applyBookingConsumption } = await import("@/lib/ops/inventory");
-        await applyBookingConsumption(tx, id, {
-          allowNegative: opsSettings.allowNegativeStock,
-          userId: session.user.id,
-        });
-      }
-
-      // Phase 1: Staff Commission evaluation
-      if (status === "COMPLETED") {
-        const { evaluateBookingCommissions } = await import("@/lib/ops/commission");
-        await evaluateBookingCommissions(tx, id);
-      }
-
-      // Generate invoice on completion with collision-safe unique invoice number
-      if (status === "COMPLETED") {
-        const slug = (booking.salon?.slug || "SAL").toUpperCase().substring(0, 3);
-        const dateStr = format(new Date(), "yyyyMMdd");
-        const invRandom = Math.random().toString(36).substring(2, 6).toUpperCase();
-        const invoiceNumber = `INV-${slug}-${dateStr}-${invRandom}`;
-
-        await tx.invoice.upsert({
-          where: { bookingId: id },
-          update: {
-            subtotal: booking.subtotal,
-            discountAmount: booking.discountAmount,
-            taxAmount: booking.taxAmount,
-            totalAmount: booking.totalAmount,
-            paidAmount: booking.paidAmount,
-            balanceAmount: Math.max(0, booking.totalAmount - booking.paidAmount),
-          },
-          create: {
-            invoiceNumber,
-            bookingId: id,
-            salonId: booking.salonId,
-            subtotal: booking.subtotal,
-            discountAmount: booking.discountAmount,
-            taxAmount: booking.taxAmount,
-            totalAmount: booking.totalAmount,
-            paidAmount: booking.paidAmount,
-            balanceAmount: Math.max(0, booking.totalAmount - booking.paidAmount),
-          },
-        });
-      }
-
-      // Create notification
-      const notificationMessages: Record<string, string> = {
-        CONFIRMED: `Booking ${booking.reference} confirmed`,
-        REJECTED: `Booking ${booking.reference} rejected`,
-        CANCELLED: `Booking ${booking.reference} cancelled`,
-        COMPLETED: `Booking ${booking.reference} completed`,
-        CHECKED_IN: `Customer checked in for ${booking.reference}`,
-        IN_PROGRESS: `Treatment started for ${booking.reference}`,
-      };
-
-      if (notificationMessages[status]) {
-        await tx.notification.create({
-          data: {
-            salonId: booking.salonId,
-            branchId: booking.branchId,
-            bookingId: id,
-            type: (`BOOKING_${status}` as any) || "GENERAL",
-            title: `Booking ${status.charAt(0) + status.slice(1).toLowerCase().replace("_", " ")}`,
-            message: notificationMessages[status],
-          },
-        });
-      }
-
-      return updatedBooking;
-    });
+        return updatedBooking;
+      },
+      { maxWait: 15000, timeout: 30000 }
+    );
 
     return NextResponse.json({ booking: updated });
   } catch (error) {

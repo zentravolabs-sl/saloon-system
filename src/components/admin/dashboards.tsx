@@ -29,10 +29,19 @@ function Greeting({ data, children }: { data: any; children?: React.ReactNode })
   const { t } = useT();
   const first = String(data.userName || "").split(" ")[0];
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">{t("dash.welcome", { name: first })}</h1>
-        <p className="text-base text-[#D1D5DB] mt-1">{data.today}</p>
+    <div
+      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-[24px] border border-white/90 px-5 sm:px-7 py-5 shadow-[0_10px_32px_rgba(91,33,182,0.06)]"
+      style={{
+        background:
+          "linear-gradient(90deg, #F1F0FE 0%, #E9E6FD 40%, #E5E6FB 52%, #E5E6FB 100%)",
+      }}
+    >
+      <div className="flex items-center gap-4">
+        <div className="w-[5px] h-14 rounded-full bg-gradient-to-b from-[#6D28D9] via-[#7C3AED] to-[#8B5CF6] shrink-0" />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#5B21B6]">{t("dash.welcome", { name: first })}</h1>
+          <p className="text-sm font-medium text-[#334155] mt-1">{data.today}</p>
+        </div>
       </div>
       {children && <div className="flex gap-3 flex-wrap">{children}</div>}
     </div>
@@ -149,7 +158,7 @@ export function OwnerDashboard({ data, reload }: Props) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Panel title={t("dash.upcomingAppointments")} action={<Link href="/admin/bookings" className="text-sm font-semibold text-[#C4B5FD] underline">{t("common.viewAll")}</Link>}>
+        <Panel title={t("dash.upcomingAppointments")} action={<Link href="/admin/bookings" className="text-sm font-bold text-[#6D28D9] hover:text-[#5B21B6]">{t("common.viewAll")}</Link>}>
           {data.upcoming.length === 0 ? (
             <EmptyState text={t("dash.noAppointmentsToday")} />
           ) : (
@@ -169,29 +178,29 @@ export function OwnerDashboard({ data, reload }: Props) {
               <ul className="space-y-4">
                 {data.staffPerformance.map((s: any) => (
                   <li key={s.staffId}>
-                    <div className="flex justify-between text-base text-white">
-                      <span className="font-semibold">{s.name}</span>
-                      <span>{formatMoney(s.revenue, cur)}</span>
+                    <div className="flex justify-between text-base text-[#0F172A]">
+                      <span className="font-bold">{s.name}</span>
+                      <span className="font-semibold text-[#334155]">{formatMoney(s.revenue, cur)}</span>
                     </div>
-                    <div className="mt-1.5 h-3 rounded-full bg-white/10" aria-hidden>
-                      <div className="h-3 rounded-full bg-[#8B5CF6]" style={{ width: `${Math.max(4, (s.revenue / maxRevenue) * 100)}%` }} />
+                    <div className="mt-1.5 h-3 rounded-full bg-[#F1F5F9]" aria-hidden>
+                      <div className="h-3 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9]" style={{ width: `${Math.max(4, (s.revenue / maxRevenue) * 100)}%` }} />
                     </div>
-                    <p className="text-sm text-[#9CA3AF] mt-1">{s.completed} ✓</p>
+                    <p className="text-sm text-[#64748B] mt-1">{s.completed} ✓</p>
                   </li>
                 ))}
               </ul>
             )}
           </Panel>
 
-          <Panel title={t("dash.lowStock")} action={<Link href="/admin/inventory" className="text-sm font-semibold text-[#C4B5FD] underline">{t("common.viewAll")}</Link>}>
+          <Panel title={t("dash.lowStock")} action={<Link href="/admin/inventory" className="text-sm font-bold text-[#6D28D9] hover:text-[#5B21B6]">{t("common.viewAll")}</Link>}>
             {data.lowStock.items.length === 0 ? (
               <EmptyState icon={Package} text={t("dash.lowStockNone")} />
             ) : (
-              <ul className="divide-y divide-white/10">
+              <ul className="divide-y divide-[#E2E8F0]">
                 {data.lowStock.items.map((i: any, idx: number) => (
                   <li key={idx} className="py-2.5 flex justify-between gap-3 text-base">
-                    <span className="text-white">{i.name} <span className="text-sm text-[#9CA3AF]">· {i.branch}</span></span>
-                    <span className="font-bold text-amber-200">{i.quantity} {i.unit}</span>
+                    <span className="text-[#0F172A] font-medium">{i.name} <span className="text-sm text-[#64748B]">· {i.branch}</span></span>
+                    <span className="font-bold text-[#D97706]">{i.quantity} {i.unit}</span>
                   </li>
                 ))}
               </ul>
@@ -218,10 +227,10 @@ export function ManagerDashboard({ data }: Props) {
   if (a.lowStockCount) alerts.push(t("dash.lowStockCount", { n: a.lowStockCount }));
 
   const stateStyle: Record<string, string> = {
-    available: "bg-emerald-500/20 text-emerald-100",
-    busy: "bg-cyan-500/20 text-cyan-100",
-    leave: "bg-amber-500/20 text-amber-100",
-    off: "bg-zinc-500/25 text-zinc-100",
+    available: "bg-[#DCFCE7] text-[#15803D]",
+    busy: "bg-[#E0F2FE] text-[#0284C7]",
+    leave: "bg-[#FEF3C7] text-[#D97706]",
+    off: "bg-[#F1F5F9] text-[#475569]",
   };
   const stateLabel: Record<string, string> = {
     available: t("dash.available"),
@@ -256,7 +265,7 @@ export function ManagerDashboard({ data }: Props) {
         ) : (
           <ul className="space-y-2">
             {alerts.map((text) => (
-              <li key={text} className="flex items-center gap-3 text-base text-amber-100 bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-3">
+              <li key={text} className="flex items-center gap-3 text-base font-medium text-[#B45309] bg-[#FEF3C7] border border-[#FDE68A] rounded-xl px-4 py-3">
                 <AlertTriangle className="w-5 h-5 shrink-0" aria-hidden /> {text}
               </li>
             ))}
@@ -265,18 +274,18 @@ export function ManagerDashboard({ data }: Props) {
       </Panel>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Panel title={t("dash.staffAvailability")} action={<Link href="/admin/staff" className="text-sm font-semibold text-[#C4B5FD] underline">{t("common.viewAll")}</Link>}>
+        <Panel title={t("dash.staffAvailability")} action={<Link href="/admin/staff" className="text-sm font-bold text-[#6D28D9] hover:text-[#5B21B6]">{t("common.viewAll")}</Link>}>
           {data.staff.length === 0 ? (
             <EmptyState icon={Users} text={t("common.noData")} />
           ) : (
-            <ul className="divide-y divide-white/10">
+            <ul className="divide-y divide-[#E2E8F0]">
               {data.staff.map((s: any) => (
                 <li key={s.id} className="py-3 flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-base font-semibold text-white">{s.name}</p>
-                    {s.hours && <p className="text-sm text-[#9CA3AF] flex items-center gap-1"><Clock className="w-3.5 h-3.5" aria-hidden />{s.hours}</p>}
+                    <p className="text-base font-bold text-[#0F172A]">{s.name}</p>
+                    {s.hours && <p className="text-sm text-[#64748B] flex items-center gap-1"><Clock className="w-3.5 h-3.5" aria-hidden />{s.hours}</p>}
                   </div>
-                  <span className={`px-2.5 py-1 rounded-lg text-sm font-semibold ${stateStyle[s.state]}`}>{stateLabel[s.state]}</span>
+                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${stateStyle[s.state]}`}>{stateLabel[s.state]}</span>
                 </li>
               ))}
             </ul>
@@ -289,12 +298,12 @@ export function ManagerDashboard({ data }: Props) {
           ) : (
             <ul className="space-y-3">
               {data.branches.map((br: any) => (
-                <li key={br.id} className="rounded-xl bg-[#131524] border border-white/10 p-4">
-                  <p className="text-base font-bold text-white">{br.name}</p>
-                  <div className="mt-2 grid grid-cols-3 gap-2 text-sm text-[#D1D5DB]">
-                    <div><p className="text-xl font-extrabold text-white">{br.todayBookings}</p>{t("common.today")}</div>
-                    <div><p className="text-xl font-extrabold text-white">{br.monthCompleted}</p>{t("dash.completed")}</div>
-                    <div><p className="text-xl font-extrabold text-white">{formatMoney(br.monthRevenue, cur)}</p>{t("dash.revenue")}</div>
+                <li key={br.id} className="rounded-xl bg-[#F8FAFC] border border-[#EEF2F6] p-4">
+                  <p className="text-base font-bold text-[#0F172A]">{br.name}</p>
+                  <div className="mt-2 grid grid-cols-3 gap-2 text-sm text-[#475569]">
+                    <div><p className="text-xl font-extrabold text-[#0F172A]">{br.todayBookings}</p>{t("common.today")}</div>
+                    <div><p className="text-xl font-extrabold text-[#0F172A]">{br.monthCompleted}</p>{t("dash.completed")}</div>
+                    <div><p className="text-xl font-extrabold text-[#0F172A]">{formatMoney(br.monthRevenue, cur)}</p>{t("dash.revenue")}</div>
                   </div>
                 </li>
               ))}
@@ -360,10 +369,10 @@ export function StaffDashboard({ data, reload }: Props) {
             ) : (
               <ul className="space-y-3">
                 {data.upcoming.map((a: DashAppointment) => (
-                  <li key={a.id} className="rounded-xl bg-[#131524] border border-white/10 p-4">
-                    <p className="text-sm font-semibold text-[#C4B5FD]">{a.date} · {a.startTime}</p>
-                    <p className="text-base font-semibold text-white">{a.customerName}</p>
-                    <p className="text-sm text-[#D1D5DB]">{a.services.join(", ")}</p>
+                  <li key={a.id} className="rounded-xl bg-[#F8FAFC] border border-[#EEF2F6] p-4">
+                    <p className="text-sm font-bold text-[#6D28D9]">{a.date} · {a.startTime}</p>
+                    <p className="text-base font-bold text-[#0F172A]">{a.customerName}</p>
+                    <p className="text-sm text-[#475569]">{a.services.join(", ")}</p>
                   </li>
                 ))}
               </ul>
@@ -374,12 +383,12 @@ export function StaffDashboard({ data, reload }: Props) {
         <div>
           <Panel
             title={t("dash.myEarnings")}
-            action={<Link href="/admin/my-commissions" className="text-sm font-semibold text-[#C4B5FD] underline">{t("common.viewAll")}</Link>}
+            action={<Link href="/admin/my-commissions" className="text-sm font-bold text-[#6D28D9] hover:text-[#5B21B6]">{t("common.viewAll")}</Link>}
           >
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div><p className="text-sm text-[#D1D5DB]">{t("dash.earnedPending")}</p><p className="text-xl font-extrabold text-white">{formatMoney(e.pending, cur)}</p></div>
-              <div><p className="text-sm text-[#D1D5DB]">{t("dash.earnedApproved")}</p><p className="text-xl font-extrabold text-white">{formatMoney(e.approved, cur)}</p></div>
-              <div><p className="text-sm text-[#D1D5DB]">{t("dash.earnedPaid")}</p><p className="text-xl font-extrabold text-emerald-200">{formatMoney(e.paid, cur)}</p></div>
+              <div><p className="text-sm text-[#475569]">{t("dash.earnedPending")}</p><p className="text-xl font-extrabold text-[#0F172A]">{formatMoney(e.pending, cur)}</p></div>
+              <div><p className="text-sm text-[#475569]">{t("dash.earnedApproved")}</p><p className="text-xl font-extrabold text-[#0F172A]">{formatMoney(e.approved, cur)}</p></div>
+              <div><p className="text-sm text-[#475569]">{t("dash.earnedPaid")}</p><p className="text-xl font-extrabold text-[#15803D]">{formatMoney(e.paid, cur)}</p></div>
             </div>
           </Panel>
         </div>
@@ -387,4 +396,3 @@ export function StaffDashboard({ data, reload }: Props) {
     </div>
   );
 }
-

@@ -79,13 +79,13 @@ export default function AdminCategoriesPage() {
           <div className="flex items-center gap-2 mb-1">
             <Link
               href="/admin/services"
-              className="text-xs text-[var(--text-muted)] hover:text-white flex items-center gap-1"
+              className="text-xs text-[var(--text-muted)] hover:text-[#6D28D9] flex items-center gap-1"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Back to Services</span>
             </Link>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Service Categories
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -105,9 +105,9 @@ export default function AdminCategoriesPage() {
           <button
             disabled
             title="Salon registration is pending Super Admin approval. Adding categories is locked."
-            className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 text-amber-300/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
+            className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] text-[#D97706]/80 border border-amber-500/20 cursor-not-allowed flex items-center gap-1.5 opacity-80"
           >
-            <Lock className="w-3.5 h-3.5 text-amber-400" />
+            <Lock className="w-3.5 h-3.5 text-[#D97706]" />
             <span>Add Category (Pending Approval)</span>
           </button>
         )}
@@ -124,11 +124,11 @@ export default function AdminCategoriesPage() {
           {categories.map((c) => (
             <div
               key={c.id}
-              className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-2 hover:border-white/20 transition-colors"
+              className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-2 hover:border-[#E2E8F0] transition-colors"
             >
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-white text-sm">{c.name}</h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/5 text-[var(--text-muted)]">
+                <h3 className="font-bold text-[#0F172A] text-sm">{c.name}</h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#F8FAFC] text-[var(--text-muted)]">
                   {c._count?.services || 0} services
                 </span>
               </div>
@@ -142,23 +142,23 @@ export default function AdminCategoriesPage() {
 
       {/* Add Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-4 animate-scaleIn">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-4 animate-scaleIn">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+              <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                 <FolderTree className="w-4 h-4 text-[#8B5CF6]" />
                 Add Category
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                 {error}
               </div>
             )}
@@ -172,7 +172,7 @@ export default function AdminCategoriesPage() {
                   placeholder="e.g. Spa & Massage"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -183,15 +183,15 @@ export default function AdminCategoriesPage() {
                   placeholder="e.g. Body care, head massage, aromatherapy"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                 />
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[#E2E8F0] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

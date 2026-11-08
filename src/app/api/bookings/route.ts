@@ -36,8 +36,8 @@ export async function GET(req: Request) {
     const status = searchParams.get("status");
     const date = searchParams.get("date");
     const search = searchParams.get("search");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "20");
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
+    const limit = Math.max(1, parseInt(searchParams.get("limit") || "20", 10) || 20);
 
     const where: any = { salonId };
 
@@ -67,6 +67,7 @@ export async function GET(req: Request) {
         { reference: { contains: search, mode: "insensitive" } },
         { customer: { name: { contains: search, mode: "insensitive" } } },
         { customer: { phone: { contains: search, mode: "insensitive" } } },
+        { staff: { name: { contains: search, mode: "insensitive" } } },
       ];
     }
 
@@ -88,7 +89,21 @@ export async function GET(req: Request) {
       prisma.booking.count({ where }),
     ]);
 
-    return NextResponse.json({ bookings, total, page, limit });
+    const totalPages = Math.max(1, Math.ceil(total / limit));
+
+    return NextResponse.json({
+      bookings,
+      total,
+      page,
+      limit,
+      totalPages,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+      },
+    });
   } catch (error) {
     console.error("Fetch bookings error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

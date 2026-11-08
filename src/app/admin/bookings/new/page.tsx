@@ -238,12 +238,12 @@ export default function NewBookingPage() {
       <div className="max-w-xl mx-auto">
         <Panel>
           <div className="text-center space-y-4 py-4">
-            <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto" aria-hidden />
-            <h1 className="text-2xl font-extrabold text-white" role="status">{t("book.created")}</h1>
-            <p className="text-lg text-[#E5E7EB]">
+            <CheckCircle2 className="w-16 h-16 text-[#15803D] mx-auto" aria-hidden />
+            <h1 className="text-2xl font-extrabold text-[#0F172A]" role="status">{t("book.created")}</h1>
+            <p className="text-lg text-[#0F172A]">
               {t("book.createdFor", { customer: created.customer, date: created.date, time: created.time })}
             </p>
-            {created.staff && <p className="text-base text-[#D1D5DB]">{created.staff}</p>}
+            {created.staff && <p className="text-base text-[#334155]">{created.staff}</p>}
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
               <button className={btnPrimary} onClick={reset}>{t("book.another")}</button>
               <Link href="/admin/bookings" className={btnSecondary}>{t("book.viewAppointments")}</Link>
@@ -264,14 +264,14 @@ export default function NewBookingPage() {
   const current = !customer ? 0 : chosen.length === 0 ? 1 : !slot ? 3 : 4;
 
   return (
-    <div className="max-w-3xl mx-auto space-y-5">
+    <div className="w-full space-y-5">
       <h1 className="sr-only">{t("book.title")}</h1>
 
       <ol className="flex items-center gap-1 sm:gap-2" aria-label={t("book.title")}>
         {steps.map((s, i) => (
           <li key={s.label} className="flex-1 min-w-0" aria-current={i === current ? "step" : undefined}>
-            <div className={`h-2 rounded-full ${s.done || i < current ? "bg-[#8B5CF6]" : i === current ? "bg-[#8B5CF6]/60" : "bg-white/15"}`} />
-            <p className={`mt-1.5 text-xs sm:text-sm truncate ${i === current ? "text-white font-bold" : "text-[#9CA3AF]"}`}>
+            <div className={`h-2 rounded-full ${s.done || i < current ? "bg-[#8B5CF6]" : i === current ? "bg-[#8B5CF6]/60" : "bg-[#F8FAFC]"}`} />
+            <p className={`mt-1.5 text-xs sm:text-sm truncate ${i === current ? "text-[#0F172A] font-bold" : "text-[#64748B]"}`}>
               {i + 1}. {s.label}
             </p>
           </li>
@@ -286,8 +286,8 @@ export default function NewBookingPage() {
         {customer ? (
           <div className="flex items-center justify-between gap-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-4">
             <div>
-              <p className="text-lg font-bold text-white">{customer.name}</p>
-              <p className="text-base text-[#D1D5DB]">{customer.phone}</p>
+              <p className="text-lg font-bold text-[#0F172A]">{customer.name}</p>
+              <p className="text-base text-[#334155]">{customer.phone}</p>
             </div>
             <button className={btnSecondary} onClick={() => setCustomer(null)}>
               <X className="w-4 h-4" aria-hidden /> {t("book.change")}
@@ -298,7 +298,7 @@ export default function NewBookingPage() {
             <div>
               <label htmlFor="cust-search" className={labelClass}>{t("book.searchCustomer")}</label>
               <div className="relative">
-                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#9CA3AF]" aria-hidden />
+                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#64748B]" aria-hidden />
                 <input
                   id="cust-search"
                   type="search"
@@ -310,7 +310,7 @@ export default function NewBookingPage() {
                   className={`${inputClass} pl-12`}
                   placeholder="07X XXX XXXX"
                 />
-                {searching && <Loader2 className="w-5 h-5 animate-spin absolute right-4 top-1/2 -translate-y-1/2 text-[#A78BFA]" aria-hidden />}
+                {searching && <Loader2 className="w-5 h-5 animate-spin absolute right-4 top-1/2 -translate-y-1/2 text-[#6D28D9]" aria-hidden />}
               </div>
             </div>
 
@@ -320,13 +320,13 @@ export default function NewBookingPage() {
                   <li key={c.id}>
                     <button
                       onClick={() => pickCustomer(c)}
-                      className="w-full text-left rounded-xl bg-[#131524] border border-white/15 hover:border-[#A78BFA] px-4 min-h-14 py-2 flex items-center justify-between gap-3"
+                      className="w-full text-left rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#A78BFA] px-4 min-h-14 py-2 flex items-center justify-between gap-3"
                     >
                       <span>
-                        <span className="block text-base font-bold text-white">{c.name}</span>
-                        <span className="block text-sm text-[#D1D5DB]">{c.phone}</span>
+                        <span className="block text-base font-bold text-[#0F172A]">{c.name}</span>
+                        <span className="block text-sm text-[#334155]">{c.phone}</span>
                       </span>
-                      <span className="text-sm text-[#C4B5FD] font-semibold">{t("book.useThisCustomer")}</span>
+                      <span className="text-sm text-[#6D28D9] font-semibold">{t("book.useThisCustomer")}</span>
                     </button>
                   </li>
                 ))}
@@ -334,7 +334,7 @@ export default function NewBookingPage() {
             )}
 
             {query.trim().length >= 2 && !searching && results.length === 0 && !showNew && (
-              <p className="text-base text-[#D1D5DB]">{t("book.noCustomerFound")}</p>
+              <p className="text-base text-[#334155]">{t("book.noCustomerFound")}</p>
             )}
 
             {!showNew ? (
@@ -350,8 +350,8 @@ export default function NewBookingPage() {
                 <UserPlus className="w-5 h-5" aria-hidden /> {t("book.registerNew")}
               </button>
             ) : (
-              <div className="rounded-xl border border-white/15 p-4 space-y-3">
-                <p className="font-bold text-white">{t("book.newCustomer")}</p>
+              <div className="rounded-xl border border-[#E2E8F0] p-4 space-y-3">
+                <p className="font-bold text-[#0F172A]">{t("book.newCustomer")}</p>
                 <div>
                   <label htmlFor="nc-name" className={labelClass}>{t("book.customerName")}</label>
                   <input id="nc-name" className={inputClass} value={newName} onChange={(e) => setNewName(e.target.value)} autoComplete="off" />
@@ -396,14 +396,14 @@ export default function NewBookingPage() {
                         aria-checked={on}
                         onClick={() => toggleService(s.id)}
                         className={`w-full text-left rounded-xl border px-4 min-h-16 py-3 flex items-center justify-between gap-3 transition-colors ${
-                          on ? "bg-[#8B5CF6]/20 border-[#A78BFA]" : "bg-[#131524] border-white/15 hover:border-white/40"
+                          on ? "bg-[#8B5CF6]/20 border-[#A78BFA]" : "bg-[#F8FAFC] border-[#E2E8F0] hover:border-[#CBD5E1]"
                         }`}
                       >
                         <span>
-                          <span className="block text-base font-bold text-white">{s.name}</span>
-                          <span className="block text-sm text-[#D1D5DB]">{t("book.duration", { n: s.duration })} · {formatMoney(s.price)}</span>
+                          <span className="block text-base font-bold text-[#0F172A]">{s.name}</span>
+                          <span className="block text-sm text-[#334155]">{t("book.duration", { n: s.duration })} · {formatMoney(s.price)}</span>
                         </span>
-                        <span className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${on ? "bg-[#8B5CF6] border-[#8B5CF6]" : "border-white/30"}`}>
+                        <span className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${on ? "bg-[#8B5CF6] border-[#8B5CF6]" : "border-[#E2E8F0]"}`}>
                           {on && <Check className="w-5 h-5 text-white" aria-hidden />}
                         </span>
                       </button>
@@ -429,8 +429,8 @@ export default function NewBookingPage() {
                   role="radio"
                   aria-checked={staffChoice === s.id}
                   onClick={() => setStaffChoice(s.id)}
-                  className={`text-left rounded-xl border px-4 min-h-14 py-2 text-base font-bold text-white transition-colors ${
-                    staffChoice === s.id ? "bg-[#8B5CF6]/20 border-[#A78BFA]" : "bg-[#131524] border-white/15 hover:border-white/40"
+                  className={`text-left rounded-xl border px-4 min-h-14 py-2 text-base font-bold text-[#0F172A] transition-colors ${
+                    staffChoice === s.id ? "bg-[#8B5CF6]/20 border-[#A78BFA]" : "bg-[#F8FAFC] border-[#E2E8F0] hover:border-[#CBD5E1]"
                   }`}
                 >
                   {s.name}
@@ -464,7 +464,7 @@ export default function NewBookingPage() {
             <div>
               <p className={labelClass}>{t("book.chooseTime")}</p>
               {slotsLoading ? (
-                <div className="flex items-center gap-2 text-base text-[#D1D5DB]" role="status">
+                <div className="flex items-center gap-2 text-base text-[#334155]" role="status">
                   <Loader2 className="w-5 h-5 animate-spin" aria-hidden /> {t("common.loading")}
                 </div>
               ) : slots.length === 0 ? (
@@ -478,7 +478,7 @@ export default function NewBookingPage() {
                       aria-checked={time === s.time}
                       onClick={() => setTime(s.time)}
                       className={`min-h-12 rounded-xl border text-base font-bold transition-colors ${
-                        time === s.time ? "bg-[#8B5CF6] border-[#8B5CF6] text-white" : "bg-[#131524] border-white/15 text-white hover:border-[#A78BFA]"
+                        time === s.time ? "bg-[#8B5CF6] border-[#8B5CF6] text-white" : "bg-[#F8FAFC] border-[#E2E8F0] text-[#0F172A] hover:border-[#A78BFA]"
                       }`}
                     >
                       {s.time}
@@ -495,15 +495,15 @@ export default function NewBookingPage() {
       {ready && customer && slot && (
         <Panel title={`5. ${t("book.summary")}`}>
           <dl className="space-y-2 text-base">
-            <div className="flex justify-between gap-4"><dt className="text-[#D1D5DB]">{t("book.step.customer")}</dt><dd className="font-bold text-white text-right">{customer.name} · {customer.phone}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-[#D1D5DB]">{t("book.step.service")}</dt><dd className="font-bold text-white text-right">{chosen.map((s) => s.name).join(", ")}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-[#D1D5DB]">{t("book.step.staff")}</dt><dd className="font-bold text-white text-right">{staffName}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-[#D1D5DB]">{t("book.step.time")}</dt><dd className="font-bold text-white text-right">{date} · {slot.time} ({t("book.duration", { n: minutes })})</dd></div>
-            <div className="flex justify-between gap-4 pt-2 border-t border-white/10"><dt className="text-[#D1D5DB]">{t("common.total")}</dt><dd className="text-xl font-extrabold text-white">{formatMoney(total)}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[#334155]">{t("book.step.customer")}</dt><dd className="font-bold text-[#0F172A] text-right">{customer.name} · {customer.phone}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[#334155]">{t("book.step.service")}</dt><dd className="font-bold text-[#0F172A] text-right">{chosen.map((s) => s.name).join(", ")}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[#334155]">{t("book.step.staff")}</dt><dd className="font-bold text-[#0F172A] text-right">{staffName}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[#334155]">{t("book.step.time")}</dt><dd className="font-bold text-[#0F172A] text-right">{date} · {slot.time} ({t("book.duration", { n: minutes })})</dd></div>
+            <div className="flex justify-between gap-4 pt-2 border-t border-[#E2E8F0]"><dt className="text-[#334155]">{t("common.total")}</dt><dd className="text-xl font-extrabold text-[#0F172A]">{formatMoney(total)}</dd></div>
           </dl>
 
           <details className="mt-4">
-            <summary className="cursor-pointer text-base font-semibold text-[#C4B5FD] min-h-11 flex items-center">{t("common.advanced")}</summary>
+            <summary className="cursor-pointer text-base font-semibold text-[#6D28D9] min-h-11 flex items-center">{t("common.advanced")}</summary>
             <div className="mt-2">
               <label htmlFor="notes" className={labelClass}>{t("book.notes")} ({t("common.optional")})</label>
               <textarea id="notes" rows={2} className={`${inputClass} py-3`} value={notes} onChange={(e) => setNotes(e.target.value)} />

@@ -6,12 +6,40 @@ import { audit } from "@/lib/ops/audit";
 
 const schema = z.object({ name: z.string().trim().min(2).max(60) });
 
+const DEFAULT_PRODUCT_CATEGORIES = [
+  "Shampoo",
+  "Conditioner",
+  "Hair Color",
+  "Developer",
+  "Hair Treatment",
+  "Styling",
+  "Skin & Facial",
+  "Wax & Consumables",
+];
+
 export const GET = route({ permission: ["inventory.view", "pos.sell"] }, async ({ ctx }) => {
-  const categories = await prisma.productCategory.findMany({
+  let categories = await prisma.productCategory.findMany({
     where: { salonId: ctx.salonId },
     orderBy: { name: "asc" },
     include: { _count: { select: { products: true } } },
   });
+
+  if (categories.length === 0) {
+    await prisma.productCategory.createMany({
+      data: DEFAULT_PRODUCT_CATEGORIES.map((name) => ({
+        salonId: ctx.salonId,
+        name,
+        isActive: true,
+      })),
+      skipDuplicates: true,
+    });
+    categories = await prisma.productCategory.findMany({
+      where: { salonId: ctx.salonId },
+      orderBy: { name: "asc" },
+      include: { _count: { select: { products: true } } },
+    });
+  }
+
   return { categories };
 });
 

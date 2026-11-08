@@ -47,7 +47,7 @@ export default function SuperAdminReportsPage() {
   return (
     <div className="space-y-8 animate-fadeIn w-full">
       <div>
-        <h1 className="text-2xl font-black text-white tracking-tight">
+        <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
           Platform-Wide SaaS Intelligence
         </h1>
         <p className="text-xs text-[var(--text-secondary)]">
@@ -57,55 +57,55 @@ export default function SuperAdminReportsPage() {
 
       {loading ? (
         <div className="py-20 text-center text-xs text-[var(--text-muted)] flex items-center justify-center gap-2">
-          <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
+          <Loader2 className="w-5 h-5 animate-spin text-[#D97706]" />
           <span>Generating platform intelligence...</span>
         </div>
       ) : (
         <>
           {/* Key Metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+            <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
               <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
                 Platform GMV Revenue
               </span>
-              <p className="text-2xl font-black text-white">
+              <p className="text-2xl font-black text-[#0F172A]">
                 LKR {(stats?.platformRevenue || 0).toLocaleString()}
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+            <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
               <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
                 Active Tenant Salons
               </span>
-              <p className="text-2xl font-black text-emerald-400">
+              <p className="text-2xl font-black text-[#15803D]">
                 {stats?.activeSalons || 0}
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+            <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
               <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
                 Registered Clients
               </span>
-              <p className="text-2xl font-black text-white">
+              <p className="text-2xl font-black text-[#0F172A]">
                 {stats?.totalCustomers || 0}
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+            <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
               <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
                 Month-to-Date Bookings
               </span>
-              <p className="text-2xl font-black text-amber-400">
+              <p className="text-2xl font-black text-[#D97706]">
                 {stats?.monthlyBookings || 0}
               </p>
             </div>
           </div>
 
           {/* Salon Comparison Chart */}
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4">
+          <div className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-amber-400" />
+              <h3 className="text-sm font-bold text-[#0F172A] flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-[#D97706]" />
                 Tenant Capacity & Bookings Comparison
               </h3>
               <p className="text-[11px] text-[var(--text-muted)]">

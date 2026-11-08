@@ -102,13 +102,13 @@ export default function StaffLeavesPage() {
           <div className="flex items-center gap-2 mb-1">
             <Link
               href="/admin/staff"
-              className="text-xs text-[var(--text-muted)] hover:text-white flex items-center gap-1"
+              className="text-xs text-[var(--text-muted)] hover:text-[#6D28D9] flex items-center gap-1"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Back to Staff</span>
             </Link>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Staff Leave Management
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -126,7 +126,7 @@ export default function StaffLeavesPage() {
       </div>
 
       {/* Leaves Table */}
-      <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden">
+      <div className="rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-xs text-[var(--text-muted)] flex items-center justify-center gap-2">
             <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6]" />
@@ -135,7 +135,7 @@ export default function StaffLeavesPage() {
         ) : leaves.length === 0 ? (
           <div className="py-16 text-center space-y-2">
             <CalendarOff className="w-8 h-8 text-[var(--text-muted)] mx-auto" />
-            <p className="text-sm font-semibold text-white">No Leave Records</p>
+            <p className="text-sm font-semibold text-[#0F172A]">No Leave Records</p>
             <p className="text-xs text-[var(--text-muted)]">
               All staff members are on normal duty. Record leave using the button above.
             </p>
@@ -144,7 +144,7 @@ export default function StaffLeavesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 bg-white/[0.01] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                <tr className="border-b border-[#E2E8F0] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                   <th className="py-3 px-4">Stylist</th>
                   <th className="py-3 px-4">Type</th>
                   <th className="py-3 px-4">Period</th>
@@ -153,20 +153,20 @@ export default function StaffLeavesPage() {
                   <th className="py-3 px-4">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {leaves.map((l) => (
-                  <tr key={l.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-white">
+                  <tr key={l.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#0F172A]">
                       {l.staff?.name}
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded bg-white/5 font-semibold text-[11px] text-[var(--text-secondary)]">
+                      <span className="px-2 py-0.5 rounded bg-[#F8FAFC] font-semibold text-[11px] text-[var(--text-secondary)]">
                         {l.leaveType}
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-white">
+                    <td className="py-3.5 px-4 text-[#0F172A]">
                       {new Date(l.startDate).toLocaleDateString()}
                       {l.startDate !== l.endDate && (
                         <span> – {new Date(l.endDate).toLocaleDateString()}</span>
@@ -175,7 +175,7 @@ export default function StaffLeavesPage() {
 
                     <td className="py-3.5 px-4 text-[var(--text-secondary)]">
                       {l.isFullDay ? (
-                        <span className="text-amber-400 font-semibold">Full Day</span>
+                        <span className="text-[#D97706] font-semibold">Full Day</span>
                       ) : (
                         <span>
                           {l.startTime} – {l.endTime}
@@ -188,7 +188,7 @@ export default function StaffLeavesPage() {
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-[#15803D] border border-emerald-500/20">
                         APPROVED
                       </span>
                     </td>
@@ -202,23 +202,23 @@ export default function StaffLeavesPage() {
 
       {/* Record Leave Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-4 animate-scaleIn">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-4 animate-scaleIn">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+              <h3 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                 <CalendarOff className="w-4 h-4 text-[#EC4899]" />
                 Record Staff Leave
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#6D28D9]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                 {error}
               </div>
             )}
@@ -229,10 +229,10 @@ export default function StaffLeavesPage() {
                 <select
                   value={staffId}
                   onChange={(e) => setStaffId(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                 >
                   {staffList.map((st) => (
-                    <option key={st.id} value={st.id} className="bg-[#111827]">
+                    <option key={st.id} value={st.id} className="bg-white text-[#0F172A]">
                       {st.name} ({st.specialization || "Stylist"})
                     </option>
                   ))}
@@ -245,24 +245,24 @@ export default function StaffLeavesPage() {
                   <select
                     value={leaveType}
                     onChange={(e) => setLeaveType(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                   >
-                    <option value="ANNUAL" className="bg-[#111827]">Annual Leave</option>
-                    <option value="SICK" className="bg-[#111827]">Sick Leave</option>
-                    <option value="PERSONAL" className="bg-[#111827]">Personal Leave</option>
-                    <option value="EMERGENCY" className="bg-[#111827]">Emergency Leave</option>
-                    <option value="OTHER" className="bg-[#111827]">Other</option>
+                    <option value="ANNUAL" className="bg-white text-[#0F172A]">Annual Leave</option>
+                    <option value="SICK" className="bg-white text-[#0F172A]">Sick Leave</option>
+                    <option value="PERSONAL" className="bg-white text-[#0F172A]">Personal Leave</option>
+                    <option value="EMERGENCY" className="bg-white text-[#0F172A]">Emergency Leave</option>
+                    <option value="OTHER" className="bg-white text-[#0F172A]">Other</option>
                   </select>
                 </div>
 
                 <div className="space-y-1 flex flex-col justify-end">
-                  <label className="flex items-center gap-2 p-2 rounded-xl bg-white/[0.02] border border-white/10 cursor-pointer">
+                  <label className="flex items-center gap-2 p-2 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={isFullDay}
                       onChange={(e) => setIsFullDay(e.target.checked)}
                     />
-                    <span className="text-white">Full Day Leave</span>
+                    <span className="text-[#0F172A]">Full Day Leave</span>
                   </label>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function StaffLeavesPage() {
                     required
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                   />
                 </div>
 
@@ -287,7 +287,7 @@ export default function StaffLeavesPage() {
                       required
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                     />
                   </div>
                 ) : (
@@ -298,7 +298,7 @@ export default function StaffLeavesPage() {
                         type="time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
-                        className="w-full px-2 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                        className="w-full px-2 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                       />
                     </div>
                     <div className="space-y-1">
@@ -307,7 +307,7 @@ export default function StaffLeavesPage() {
                         type="time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
-                        className="w-full px-2 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                        className="w-full px-2 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -321,15 +321,15 @@ export default function StaffLeavesPage() {
                   placeholder="e.g. Medical checkup, family commitment"
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none"
                 />
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[#E2E8F0] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

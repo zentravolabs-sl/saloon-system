@@ -62,13 +62,13 @@ export default function PendingSalonsPage() {
           <div className="flex items-center gap-2 mb-1">
             <Link
               href="/super-admin/salons"
-              className="text-xs text-[var(--text-muted)] hover:text-white flex items-center gap-1"
+              className="text-xs text-[var(--text-muted)] hover:text-[#6D28D9] flex items-center gap-1"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Back to All Salons</span>
             </Link>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Pending Salon Approvals Queue
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -79,13 +79,13 @@ export default function PendingSalonsPage() {
 
       {loading ? (
         <div className="py-20 text-center text-xs text-[var(--text-muted)] flex items-center justify-center gap-2">
-          <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
+          <Loader2 className="w-5 h-5 animate-spin text-[#D97706]" />
           <span>Checking pending submissions...</span>
         </div>
       ) : salons.length === 0 ? (
-        <div className="p-8 text-center rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
-          <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
-          <h3 className="text-base font-bold text-white">No Pending Registrations</h3>
+        <div className="p-8 text-center rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-3">
+          <CheckCircle2 className="w-10 h-10 text-[#15803D] mx-auto" />
+          <h3 className="text-base font-bold text-[#0F172A]">No Pending Registrations</h3>
           <p className="text-xs text-[var(--text-muted)]">
             All submitted salon registrations have been reviewed.
           </p>
@@ -95,15 +95,15 @@ export default function PendingSalonsPage() {
           {salons.map((s) => (
             <div
               key={s.id}
-              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 hover:border-amber-500/30 transition-colors flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4 hover:border-amber-500/30 transition-colors flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-bold text-lg text-white">{s.name}</h3>
-                    <span className="text-xs text-amber-400 font-semibold">{s.city}</span>
+                    <h3 className="font-bold text-lg text-[#0F172A]">{s.name}</h3>
+                    <span className="text-xs text-[#D97706] font-semibold">{s.city}</span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-[#D97706] border border-amber-500/20">
                     PENDING REVIEW
                   </span>
                 </div>
@@ -112,9 +112,9 @@ export default function PendingSalonsPage() {
                   <p className="text-xs text-[var(--text-secondary)]">{s.description}</p>
                 )}
 
-                <div className="space-y-1.5 text-xs text-[var(--text-muted)] pt-2 border-t border-white/5">
+                <div className="space-y-1.5 text-xs text-[var(--text-muted)] pt-2 border-t border-[#E2E8F0]">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-medium">Owner:</span>
+                    <span className="text-[#0F172A] font-medium">Owner:</span>
                     <span>{s.owner?.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -132,14 +132,14 @@ export default function PendingSalonsPage() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-2">
+              <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-end gap-2">
                 <button
                   disabled={actionLoading === s.id}
                   onClick={() => {
                     const reason = prompt("Rejection reason:") || "Incomplete requirements";
                     handleUpdateStatus(s.id, "REJECTED", reason);
                   }}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-red-500/15 hover:bg-red-500/25 text-red-300 border border-red-500/30 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-red-500/15 hover:bg-red-500/25 text-[#B91C1C] border border-red-500/30 transition-colors"
                 >
                   Reject Registration
                 </button>

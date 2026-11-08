@@ -35,7 +35,6 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
     return today.toISOString().split("T")[0];
   });
 
-  // Build unique city list
   const citySet = new Set<string>();
   salons.forEach((s) => {
     if (s.city) citySet.add(s.city);
@@ -45,7 +44,6 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
   });
   const cities = Array.from(citySet).sort();
 
-  // Filter salons by selectedCity
   const filteredSalons = selectedCity
     ? salons.filter(
         (s) =>
@@ -83,12 +81,12 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
     <div className="w-full max-w-5xl mx-auto mt-8">
       <form
         onSubmit={handleSearch}
-        className="p-3 sm:p-4 rounded-3xl bg-[#111322]/90 border border-white/[0.12] shadow-2xl shadow-black/80 backdrop-blur-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center"
+        className="p-3 sm:p-4 rounded-3xl bg-white/95 border border-white shadow-[0_12px_36px_rgba(15,23,42,0.06)] backdrop-blur-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center"
       >
         {/* City / District Filter */}
-        <div className="flex flex-col px-3 py-2 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:border-violet-500/40 transition-colors">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-violet-300 flex items-center gap-1.5 mb-1">
-            <MapPin className="w-3 h-3 text-violet-400" />
+        <div className="flex flex-col px-3 py-2 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#7C3AED]/40 transition-colors">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#6D28D9] flex items-center gap-1.5 mb-1">
+            <MapPin className="w-3 h-3 text-[#7C3AED]" />
             <span>Area / District</span>
           </label>
           <select
@@ -98,13 +96,13 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
               setSelectedSalonId("");
               setSelectedBranchId("");
             }}
-            className="bg-transparent text-sm font-semibold text-white focus:outline-none cursor-pointer truncate"
+            className="bg-transparent text-sm font-bold text-[#0F172A] focus:outline-none cursor-pointer truncate"
           >
-            <option value="" className="bg-[#111322] text-white">
+            <option value="" className="bg-white text-[#0F172A]">
               Any Area
             </option>
             {cities.map((c) => (
-              <option key={c} value={c} className="bg-[#111322] text-white">
+              <option key={c} value={c} className="bg-white text-[#0F172A]">
                 📍 {c}
               </option>
             ))}
@@ -112,9 +110,9 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
         </div>
 
         {/* Salon Selector */}
-        <div className="flex flex-col px-3 py-2 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:border-white/20 transition-colors">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-pink-300 flex items-center gap-1.5 mb-1">
-            <Sparkles className="w-3 h-3 text-pink-400" />
+        <div className="flex flex-col px-3 py-2 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#7C3AED]/40 transition-colors">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#DB2777] flex items-center gap-1.5 mb-1">
+            <Sparkles className="w-3 h-3 text-[#EC4899]" />
             <span>Salon / Studio</span>
           </label>
           <select
@@ -123,13 +121,13 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
               setSelectedSalonId(e.target.value);
               setSelectedBranchId("");
             }}
-            className="bg-transparent text-sm font-semibold text-white focus:outline-none cursor-pointer truncate"
+            className="bg-transparent text-sm font-bold text-[#0F172A] focus:outline-none cursor-pointer truncate"
           >
-            <option value="" className="bg-[#111322] text-white">
+            <option value="" className="bg-white text-[#0F172A]">
               All Salons
             </option>
             {filteredSalons.map((salon) => (
-              <option key={salon.id} value={salon.id} className="bg-[#111322] text-white">
+              <option key={salon.id} value={salon.id} className="bg-white text-[#0F172A]">
                 {salon.name}
                 {salon.city ? ` (${salon.city})` : ""}
               </option>
@@ -138,21 +136,21 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
         </div>
 
         {/* Branch / Location Selector */}
-        <div className="flex flex-col px-3 py-2 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:border-white/20 transition-colors">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5 mb-1">
-            <Building2 className="w-3 h-3 text-cyan-400" />
+        <div className="flex flex-col px-3 py-2 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#7C3AED]/40 transition-colors">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#0284C7] flex items-center gap-1.5 mb-1">
+            <Building2 className="w-3 h-3 text-[#0EA5E9]" />
             <span>Branch</span>
           </label>
           <select
             value={selectedBranchId}
             onChange={(e) => setSelectedBranchId(e.target.value)}
-            className="bg-transparent text-sm font-semibold text-white focus:outline-none cursor-pointer truncate"
+            className="bg-transparent text-sm font-bold text-[#0F172A] focus:outline-none cursor-pointer truncate"
           >
-            <option value="" className="bg-[#111322] text-white">
+            <option value="" className="bg-white text-[#0F172A]">
               Any Branch
             </option>
             {branches.map((b) => (
-              <option key={b.id} value={b.id} className="bg-[#111322] text-white">
+              <option key={b.id} value={b.id} className="bg-white text-[#0F172A]">
                 {b.name}
                 {b.city ? ` (${b.city})` : ""}
               </option>
@@ -161,9 +159,9 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
         </div>
 
         {/* Date Selector */}
-        <div className="flex flex-col px-3 py-2 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:border-white/20 transition-colors">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5 mb-1">
-            <CalendarIcon className="w-3 h-3 text-amber-400" />
+        <div className="flex flex-col px-3 py-2 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#7C3AED]/40 transition-colors">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[#D97706] flex items-center gap-1.5 mb-1">
+            <CalendarIcon className="w-3 h-3 text-[#F59E0B]" />
             <span>Date</span>
           </label>
           <input
@@ -171,14 +169,14 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
             value={date}
             min={new Date().toISOString().split("T")[0]}
             onChange={(e) => setDate(e.target.value)}
-            className="bg-transparent text-sm font-semibold text-white focus:outline-none cursor-pointer"
+            className="bg-transparent text-sm font-bold text-[#0F172A] focus:outline-none cursor-pointer"
           />
         </div>
 
         {/* Submit CTA */}
         <button
           type="submit"
-          className="h-[58px] px-6 rounded-2xl font-heading font-bold text-sm bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 group cursor-pointer"
+          className="h-[58px] px-6 rounded-2xl font-heading font-bold text-sm bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_8px_20px_rgba(124,58,237,0.3)] hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 group cursor-pointer"
         >
           <Search className="w-4 h-4" />
           <span>Find Slots</span>
@@ -186,10 +184,9 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
         </button>
       </form>
 
-      {/* Quick city chips below the widget */}
       {cities.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2 justify-center">
-          <span className="text-[11px] text-zinc-500 font-semibold">
+          <span className="text-[11px] text-[#64748B] font-bold">
             Quick:
           </span>
           {cities.slice(0, 6).map((c) => (
@@ -203,8 +200,8 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
               }}
               className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${
                 selectedCity === c
-                  ? "bg-violet-600 border-violet-600 text-white"
-                  : "bg-white/[0.04] border-white/10 text-zinc-400 hover:border-white/20 hover:text-white"
+                  ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                  : "bg-white/90 border-white text-[#475569] hover:border-[#DDD6FE] hover:text-[#6D28D9] shadow-xs"
               }`}
             >
               📍 {c}
@@ -218,7 +215,7 @@ export function HeroSearchWidget({ salons }: { salons: SalonOption[] }) {
                 setSelectedSalonId("");
                 setSelectedBranchId("");
               }}
-              className="px-3 py-1 rounded-full text-[11px] font-bold border border-white/10 text-zinc-500 hover:text-white hover:border-white/20 transition-all"
+              className="px-3 py-1 rounded-full text-[11px] font-bold border border-[#E2E8F0] bg-white text-[#64748B] hover:text-[#0F172A] transition-all"
             >
               ✕ Clear
             </button>

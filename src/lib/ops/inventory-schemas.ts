@@ -5,20 +5,22 @@ export const productSchema = z.object({
   name: z.string().trim().min(2, "Product name is required").max(150),
   description: optionalText(1000),
   brand: optionalText(80),
-  sku: z.string().trim().min(1).max(60).optional().nullable().transform((v) => (v ? v : null)),
-  barcode: z.string().trim().max(60).optional().nullable().transform((v) => (v ? v : null)),
-  categoryId: idStr.optional().nullable(),
-  unit: z.string().trim().min(1).max(20).default("pcs"),
+  sku: z.string().trim().max(60).optional().nullable().transform((v) => (v && v.trim() ? v.trim() : null)),
+  barcode: z.string().trim().max(60).optional().nullable().transform((v) => (v && v.trim() ? v.trim() : null)),
+  categoryId: z.string().trim().optional().nullable().transform((v) => (v && v.trim() ? v.trim() : null)),
+  unit: z.string().trim().min(1).max(20).default("bottle"),
   costPrice: moneyNonNeg.default("0"),
   sellingPrice: moneyNonNeg.default("0"),
   taxRate: percentStr.default("0"),
   minStock: qtyNonNeg.default("0"),
+  lowStockAlert: qtyNonNeg.optional(),
+  currentStock: qtyNonNeg.optional(),
   trackBatches: z.boolean().default(false),
   isActive: z.boolean().default(true),
   openingStock: z
     .array(
       z.object({
-        branchId: idStr,
+        branchId: idStr.optional().nullable(),
         quantity: qtyPositive,
         unitCost: moneyNonNeg.optional(),
       })
@@ -26,30 +28,31 @@ export const productSchema = z.object({
     .optional(),
 });
 
-export const productUpdateSchema = productSchema.omit({ openingStock: true }).partial();
+export const productUpdateSchema = productSchema.omit({ openingStock: true, currentStock: true }).partial();
 
 export const stockOperationSchema = z.discriminatedUnion("operation", [
   z.object({
     operation: z.literal("IN"),
-    branchId: idStr,
+    branchId: idStr.optional().nullable(),
     productId: idStr,
     quantity: qtyPositive,
-    unitCost: moneyNonNeg,
-    supplierId: idStr.optional().nullable(),
+    unitCost: moneyNonNeg.optional(),
+    supplierId: z.string().trim().optional().nullable().transform((v) => (v && v.trim() ? v.trim() : null)),
+    supplierName: optionalText(150),
     batchNumber: optionalText(60),
-    expiryDate: dayStr.optional().nullable(),
+    expiryDate: z.string().trim().optional().nullable().transform((v) => (v && v.trim() ? v.trim() : null)),
     reason: optionalText(300),
   }),
   z.object({
     operation: z.literal("OUT"),
-    branchId: idStr,
+    branchId: idStr.optional().nullable(),
     productId: idStr,
     quantity: qtyPositive,
     reason: z.string().trim().min(2, "A reason is required").max(300),
   }),
   z.object({
     operation: z.literal("ADJUST"),
-    branchId: idStr,
+    branchId: idStr.optional().nullable(),
     productId: idStr,
     newQuantity: qtyNonNeg,
     reason: z.string().trim().min(2, "A reason is required").max(300),

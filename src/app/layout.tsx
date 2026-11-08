@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["400", "500", "600", "700", "800"],
+const plusJakarta = localFont({
+  src: "./fonts/PlusJakartaSans-Variable.woff2",
+  variable: "--font-plus-jakarta",
+  weight: "200 800",
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700", "800"],
+const inter = localFont({
+  src: "./fonts/Inter-Variable.woff2",
+  variable: "--font-inter",
+  weight: "100 900",
   display: "swap",
 });
 
@@ -39,10 +39,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${plusJakarta.variable} dark`}
+      className={`${inter.variable} ${plusJakarta.variable}`}
       suppressHydrationWarning
     >
-      <body className="font-sans antialiased bg-[#080911] text-[#F9FAFB] min-h-screen selection:bg-[#8B5CF6]/30 selection:text-white">
+      <body
+        className="font-sans antialiased bg-[#EEF0F9] text-[#0F172A] min-h-screen selection:bg-[#7C3AED]/20 selection:text-[#0F172A]"
+        style={{
+          background:
+            "radial-gradient(circle at 10% 10%, #F5F3FF 0%, #EEF0F9 45%, #E9ECF8 100%)",
+        }}
+      >
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

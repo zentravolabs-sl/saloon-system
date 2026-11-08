@@ -109,14 +109,14 @@ export default function CustomerProfilePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <PublicNavbar />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
         <div className="flex items-center justify-between">
           <Link
             href="/customer/bookings"
-            className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[#6D28D9] transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Back to Appointments</span>
@@ -124,7 +124,7 @@ export default function CustomerProfilePage() {
 
           <button
             onClick={handleLogout}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-red-500/10 text-[var(--text-muted)] hover:text-red-400 border border-white/10 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-red-500/10 text-[var(--text-muted)] hover:text-[#B91C1C] border border-[#E2E8F0] transition-colors flex items-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
@@ -137,42 +137,42 @@ export default function CustomerProfilePage() {
             <span>Loading customer profile...</span>
           </div>
         ) : !profile ? (
-          <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/10 text-center">
+          <div className="p-8 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] text-center">
             <p className="text-xs text-[var(--text-muted)]">Profile not found.</p>
           </div>
         ) : (
           <div className="space-y-6">
             {/* Stats Overview Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#A78BFA] shrink-0">
+              <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#6D28D9] shrink-0">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <div>
                   <span className="text-xs text-[var(--text-muted)]">Total Bookings</span>
-                  <h3 className="text-xl font-bold text-white">{profile.totalBookings}</h3>
+                  <h3 className="text-xl font-bold text-[#0F172A]">{profile.totalBookings}</h3>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-[#15803D] shrink-0">
                   <DollarSign className="w-6 h-6" />
                 </div>
                 <div>
                   <span className="text-xs text-[var(--text-muted)]">Total Spent</span>
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-[#0F172A]">
                     Rs. {profile.totalSpent.toLocaleString()}
                   </h3>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-amber-500/30 bg-gradient-to-tr from-[#0C0E1A] to-amber-500/10 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+              <div className="p-5 rounded-2xl bg-white border border-amber-500/30 bg-gradient-to-tr from-[#F1F0FE] to-amber-500/10 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[#D97706] shrink-0">
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xs text-amber-300 font-semibold">Loyalty Rewards</span>
-                  <h3 className="text-xl font-bold text-white">
+                  <span className="text-xs text-[#D97706] font-semibold">Loyalty Rewards</span>
+                  <h3 className="text-xl font-bold text-[#0F172A]">
                     {profile.totalPoints} <span className="text-xs font-normal text-[var(--text-muted)]">pts</span>
                   </h3>
                 </div>
@@ -180,21 +180,21 @@ export default function CustomerProfilePage() {
             </div>
 
             {/* Profile Edit Form */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0C0E1A] border border-white/10 space-y-5">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2E8F0] space-y-5">
+              <h2 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
                 <User className="w-4 h-4 text-[#8B5CF6]" />
                 Personal Information
               </h2>
 
               {saveSuccess && (
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[#15803D] text-xs flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>Profile updated successfully!</span>
                 </div>
               )}
 
               {error && (
-                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs">
                   {error}
                 </div>
               )}
@@ -208,7 +208,7 @@ export default function CustomerProfilePage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
 
@@ -218,7 +218,7 @@ export default function CustomerProfilePage() {
                       type="tel"
                       disabled
                       value={profile.phone}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/[0.02] border border-white/5 text-[var(--text-muted)] cursor-not-allowed"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] text-[var(--text-muted)] cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -230,7 +230,7 @@ export default function CustomerProfilePage() {
                     placeholder="e.g. name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                   />
                 </div>
 
@@ -252,18 +252,18 @@ export default function CustomerProfilePage() {
             </div>
 
             {/* Loyalty Transactions Ledger (Section 43) */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/10 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
                 <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Award className="w-4 h-4 text-amber-400" />
+                  <h3 className="text-sm font-bold text-[#0F172A] flex items-center gap-2">
+                    <Award className="w-4 h-4 text-[#D97706]" />
                     Loyalty Rewards Points Ledger
                   </h3>
                   <p className="text-xs text-[var(--text-muted)]">
                     Earn 1 point for every Rs. 100 spent. Redeem points on upcoming bookings.
                   </p>
                 </div>
-                <span className="font-mono text-xs font-bold text-amber-400">
+                <span className="font-mono text-xs font-bold text-[#D97706]">
                   {profile.totalPoints} Points Active
                 </span>
               </div>
@@ -277,10 +277,10 @@ export default function CustomerProfilePage() {
                   {profile.recentTransactions?.map((t: any) => (
                     <div
                       key={t.id}
-                      className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between"
+                      className="p-3 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] flex items-center justify-between"
                     >
                       <div>
-                        <span className="font-semibold text-white block">
+                        <span className="font-semibold text-[#0F172A] block">
                           {t.description || "Booking reward"}
                         </span>
                         <span className="text-[11px] text-[var(--text-muted)]">
@@ -289,7 +289,7 @@ export default function CustomerProfilePage() {
                       </div>
                       <span
                         className={`font-mono font-bold ${
-                          t.points >= 0 ? "text-emerald-400" : "text-red-400"
+                          t.points >= 0 ? "text-[#15803D]" : "text-[#B91C1C]"
                         }`}
                       >
                         {t.points >= 0 ? `+${t.points}` : t.points} pts

@@ -71,7 +71,7 @@ export default function SuperAdminSalonsPage() {
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
             Salon Directory & Tenants
           </h1>
           <p className="text-xs text-[var(--text-secondary)]">
@@ -81,7 +81,7 @@ export default function SuperAdminSalonsPage() {
 
         <button
           onClick={fetchSalons}
-          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[var(--text-muted)] hover:text-white border border-white/10 self-start sm:self-auto"
+          className="p-2 rounded-xl bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[var(--text-muted)] hover:text-[#6D28D9] border border-[#E2E8F0] self-start sm:self-auto"
           title="Refresh"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -89,7 +89,7 @@ export default function SuperAdminSalonsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="p-4 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:w-72">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
           <input
@@ -97,28 +97,28 @@ export default function SuperAdminSalonsPage() {
             placeholder="Search by salon name or owner..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-amber-400"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-amber-400"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none w-full sm:w-auto"
+          className="px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none w-full sm:w-auto"
         >
-          <option value="" className="bg-[#111827]">All Statuses</option>
-          <option value="APPROVED" className="bg-[#111827]">Approved</option>
-          <option value="PENDING" className="bg-[#111827]">Pending Review</option>
-          <option value="SUSPENDED" className="bg-[#111827]">Suspended</option>
-          <option value="REJECTED" className="bg-[#111827]">Rejected</option>
+          <option value="" className="bg-white text-[#0F172A]">All Statuses</option>
+          <option value="APPROVED" className="bg-white text-[#0F172A]">Approved</option>
+          <option value="PENDING" className="bg-white text-[#0F172A]">Pending Review</option>
+          <option value="SUSPENDED" className="bg-white text-[#0F172A]">Suspended</option>
+          <option value="REJECTED" className="bg-white text-[#0F172A]">Rejected</option>
         </select>
       </div>
 
       {/* Salons Table */}
-      <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden">
+      <div className="rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] overflow-hidden">
         {loading ? (
           <div className="py-20 text-center text-xs text-[var(--text-muted)] flex items-center justify-center gap-2">
-            <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
+            <Loader2 className="w-5 h-5 animate-spin text-[#D97706]" />
             <span>Loading salons...</span>
           </div>
         ) : filtered.length === 0 ? (
@@ -129,7 +129,7 @@ export default function SuperAdminSalonsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 bg-white/[0.01] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                <tr className="border-b border-[#E2E8F0] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                   <th className="py-3 px-4">Salon</th>
                   <th className="py-3 px-4">Owner</th>
                   <th className="py-3 px-4">Contact</th>
@@ -140,15 +140,15 @@ export default function SuperAdminSalonsPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {filtered.map((s) => (
-                  <tr key={s.id} className="hover:bg-white/[0.02] transition-colors">
+                  <tr key={s.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition-colors">
                     <td className="py-3.5 px-4">
-                      <span className="font-bold text-white block">{s.name}</span>
+                      <span className="font-bold text-[#0F172A] block">{s.name}</span>
                       <span className="text-[11px] text-[var(--text-muted)]">{s.city}</span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-white font-medium">
+                    <td className="py-3.5 px-4 text-[#0F172A] font-medium">
                       {s.owner?.name}
                     </td>
 
@@ -156,16 +156,16 @@ export default function SuperAdminSalonsPage() {
                       <span>{s.phone || s.owner?.phone}</span>
                     </td>
 
-                    <td className="py-3.5 px-4 font-semibold text-white">
+                    <td className="py-3.5 px-4 font-semibold text-[#0F172A]">
                       {s._count?.branches || 0}
                     </td>
 
-                    <td className="py-3.5 px-4 font-semibold text-white">
+                    <td className="py-3.5 px-4 font-semibold text-[#0F172A]">
                       {s._count?.staff || 0}
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 text-amber-300 border border-white/10">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F8FAFC] text-[#D97706] border border-[#E2E8F0]">
                         {s.subscription?.plan || "TRIAL"}
                       </span>
                     </td>
@@ -174,10 +174,10 @@ export default function SuperAdminSalonsPage() {
                       <span
                         className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                           s.status === "APPROVED"
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                            ? "bg-emerald-500/10 text-[#15803D] border-emerald-500/20"
                             : s.status === "PENDING"
-                            ? "bg-amber-500/10 text-amber-300 border-amber-500/20"
-                            : "bg-red-500/10 text-red-400 border-red-500/20"
+                            ? "bg-amber-500/10 text-[#D97706] border-amber-500/20"
+                            : "bg-red-500/10 text-[#B91C1C] border-red-500/20"
                         }`}
                       >
                         {s.status}
@@ -186,14 +186,14 @@ export default function SuperAdminSalonsPage() {
 
                     <td className="py-3.5 px-4 text-right">
                       {actionLoading === s.id ? (
-                        <Loader2 className="w-4 h-4 animate-spin text-amber-400 inline-block" />
+                        <Loader2 className="w-4 h-4 animate-spin text-[#D97706] inline-block" />
                       ) : (
                         <div className="flex items-center justify-end gap-1.5">
                           {s.status === "PENDING" && (
                             <>
                               <button
                                 onClick={() => handleUpdateStatus(s.id, "APPROVED")}
-                                className="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-[11px] font-bold border border-emerald-500/30"
+                                className="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-[#15803D] text-[11px] font-bold border border-emerald-500/30"
                               >
                                 Approve
                               </button>
@@ -202,7 +202,7 @@ export default function SuperAdminSalonsPage() {
                                   const reason = prompt("Rejection reason:") || "Incomplete details";
                                   handleUpdateStatus(s.id, "REJECTED", reason);
                                 }}
-                                className="px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 text-[11px] font-bold border border-red-500/30"
+                                className="px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-[#B91C1C] text-[11px] font-bold border border-red-500/30"
                               >
                                 Reject
                               </button>
@@ -212,7 +212,7 @@ export default function SuperAdminSalonsPage() {
                           {s.status === "APPROVED" && (
                             <button
                               onClick={() => handleUpdateStatus(s.id, "SUSPENDED")}
-                              className="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 font-semibold text-[11px]"
+                              className="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-[#B91C1C] border border-red-500/20 font-semibold text-[11px]"
                             >
                               Suspend
                             </button>
@@ -221,7 +221,7 @@ export default function SuperAdminSalonsPage() {
                           {s.status === "SUSPENDED" && (
                             <button
                               onClick={() => handleUpdateStatus(s.id, "APPROVED")}
-                              className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 font-semibold text-[11px]"
+                              className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[#15803D] border border-emerald-500/20 font-semibold text-[11px]"
                             >
                               Activate
                             </button>

@@ -9,9 +9,9 @@ import { Banner, PageLoading, Panel } from "@/components/admin/ui";
 
 function Row({ label, value }: { label: string; value?: string | null }) {
   return (
-    <div className="py-3 flex justify-between gap-4 border-b border-white/10 last:border-0">
-      <dt className="text-base text-[#D1D5DB]">{label}</dt>
-      <dd className="text-base font-semibold text-white text-right">{value || "—"}</dd>
+    <div className="py-3 flex justify-between gap-4 border-b border-[#E2E8F0] last:border-0">
+      <dt className="text-base text-[#334155]">{label}</dt>
+      <dd className="text-base font-semibold text-[#0F172A] text-right">{value || "—"}</dd>
     </div>
   );
 }
@@ -33,7 +33,7 @@ export default function MyProfilePage() {
   if (me.loading) return <PageLoading label={t("common.loading")} />;
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-6 w-full">
       <Panel title={t("nav.myProfile")}>
         <dl>
           <Row label={t("my.name")} value={session?.user?.name} />
@@ -50,7 +50,7 @@ export default function MyProfilePage() {
         </dl>
       </Panel>
       {!me.staffId && <Banner kind="info">{t("dash.noStaffProfile")}</Banner>}
-      <p className="text-base text-[#D1D5DB]">{t("my.askOwnerToChange")}</p>
+      <p className="text-base text-[#334155]">{t("my.askOwnerToChange")}</p>
     </div>
   );
 }

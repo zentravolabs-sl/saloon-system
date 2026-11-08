@@ -138,13 +138,13 @@ function CustomerLoginContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <PublicNavbar />
 
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 my-8">
         <div className="w-full max-w-md space-y-6">
           {/* Card */}
-          <div className="p-8 rounded-3xl bg-[#0C0E1A] border border-white/10 shadow-2xl space-y-6 relative overflow-hidden">
+          <div className="p-8 rounded-3xl bg-white border border-[#E2E8F0] shadow-2xl space-y-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-[#8B5CF6]/15 blur-3xl pointer-events-none" />
 
             {/* Header */}
@@ -152,7 +152,7 @@ function CustomerLoginContent() {
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#8B5CF6] to-[#EC4899] flex items-center justify-center mx-auto shadow-lg shadow-[#8B5CF6]/30">
                 <Scissors className="w-7 h-7 text-white -rotate-45" />
               </div>
-              <h1 className="text-2xl font-black text-white">Customer Portal</h1>
+              <h1 className="text-2xl font-black text-[#0F172A]">Customer Portal</h1>
               <p className="text-xs text-[var(--text-secondary)]">
                 {step === "phone"
                   ? "Enter your mobile number to view and manage your appointments"
@@ -161,14 +161,14 @@ function CustomerLoginContent() {
             </div>
 
             {error && (
-              <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2">
+              <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
             {demoCodeNotice && step === "otp" && (
-              <div className="p-3 rounded-xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 text-xs text-[#A78BFA] flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 text-xs text-[#6D28D9] flex items-center justify-between">
                 <span>Demo Code: <strong>{demoCodeNotice}</strong></span>
                 <span className="text-[10px] bg-[#8B5CF6]/20 px-2 py-0.5 rounded font-mono">Auto-filled</span>
               </div>
@@ -188,20 +188,20 @@ function CustomerLoginContent() {
                       placeholder="e.g. 077 123 4567 or +94 77 123 4567"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-[var(--text-muted)] text-sm focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder-[var(--text-muted)] text-sm focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                 </div>
 
                 {/* Quick Selection Chips */}
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Quick Fill:</span>
+                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider">Quick Fill:</span>
                   <div className="flex flex-wrap gap-1.5 text-[11px]">
                     {recentPhone && (
                       <button
                         type="button"
                         onClick={() => setPhone(recentPhone)}
-                        className="px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-300 font-mono"
+                        className="px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-[#DB2777] font-mono"
                       >
                         Recent: {recentPhone}
                       </button>
@@ -209,14 +209,14 @@ function CustomerLoginContent() {
                     <button
                       type="button"
                       onClick={() => setPhone("+94771234102")}
-                      className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300"
+                      className="px-2.5 py-1 rounded-lg bg-[#F8FAFC] hover:bg-[#F8FAFC] border border-[#E2E8F0] text-[#334155]"
                     >
                       Chamara (+94771234102)
                     </button>
                     <button
                       type="button"
                       onClick={() => setPhone("+94771234100")}
-                      className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300"
+                      className="px-2.5 py-1 rounded-lg bg-[#F8FAFC] hover:bg-[#F8FAFC] border border-[#E2E8F0] text-[#334155]"
                     >
                       Harsha (+94771234100)
                     </button>
@@ -232,7 +232,7 @@ function CustomerLoginContent() {
                     placeholder="e.g. Kasun Silva"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-[var(--text-muted)] text-sm focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder-[var(--text-muted)] text-sm focus:outline-none focus:border-[#8B5CF6]"
                   />
                 </div>
 
@@ -266,7 +266,7 @@ function CustomerLoginContent() {
                       placeholder="123456"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-[var(--text-muted)] text-center text-lg tracking-widest font-mono font-bold focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder-[var(--text-muted)] text-center text-lg tracking-widest font-mono font-bold focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                 </div>
@@ -293,7 +293,7 @@ function CustomerLoginContent() {
                       setStep("phone");
                       setError("");
                     }}
-                    className="text-xs text-[var(--text-muted)] hover:text-white transition-colors"
+                    className="text-xs text-[var(--text-muted)] hover:text-[#6D28D9] transition-colors"
                   >
                     Change mobile number
                   </button>
@@ -301,12 +301,12 @@ function CustomerLoginContent() {
               </form>
             )}
 
-            <div className="pt-4 border-t border-white/10 text-center space-y-2 text-xs text-[var(--text-muted)]">
+            <div className="pt-4 border-t border-[#E2E8F0] text-center space-y-2 text-xs text-[var(--text-muted)]">
               <div>
                 Looking for a single appointment?{" "}
                 <Link
                   href="/booking/lookup"
-                  className="text-[#A78BFA] hover:underline font-semibold"
+                  className="text-[#6D28D9] hover:underline font-semibold"
                 >
                   Instant Lookup
                 </Link>
@@ -315,7 +315,7 @@ function CustomerLoginContent() {
                 Staff or Salon Owner?{" "}
                 <Link
                   href="/auth/login"
-                  className="text-white hover:underline font-semibold"
+                  className="text-[#0F172A] hover:underline font-semibold"
                 >
                   Staff Portal Sign In
                 </Link>
@@ -334,7 +334,7 @@ export default function CustomerLoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#0A0B14] text-white">
+        <div className="min-h-screen flex items-center justify-center bg-transparent text-[#0F172A]">
           <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
         </div>
       }

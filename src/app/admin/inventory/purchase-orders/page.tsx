@@ -246,7 +246,7 @@ export default function PurchaseOrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <FileText className="w-7 h-7 text-[#8B5CF6]" />
             Purchase Orders & Goods Receipts
           </h1>
@@ -275,7 +275,7 @@ export default function PurchaseOrdersPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="p-3.5 rounded-2xl bg-[#0C0E1A] border border-white/10 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-3.5 rounded-2xl bg-white border border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
         <div className="relative flex-1 min-w-[240px]">
           <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
           <input
@@ -283,29 +283,29 @@ export default function PurchaseOrdersPage() {
             placeholder="Search PO number or supplier..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
+            className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl pl-9 pr-3 py-1.5 text-xs text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8B5CF6]"
+          className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-1.5 text-xs text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
         >
-          <option value="ALL" className="bg-[#0C0E1A]">All Statuses</option>
-          <option value="DRAFT" className="bg-[#0C0E1A]">Draft</option>
-          <option value="ORDERED" className="bg-[#0C0E1A]">Ordered</option>
-          <option value="RECEIVED" className="bg-[#0C0E1A]">Received</option>
-          <option value="CANCELLED" className="bg-[#0C0E1A]">Cancelled</option>
+          <option value="ALL" className="bg-white">All Statuses</option>
+          <option value="DRAFT" className="bg-white">Draft</option>
+          <option value="ORDERED" className="bg-white">Ordered</option>
+          <option value="RECEIVED" className="bg-white">Received</option>
+          <option value="CANCELLED" className="bg-white">Cancelled</option>
         </select>
       </div>
 
       {/* Purchase Orders Table */}
-      <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+      <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+              <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                 <th className="p-3.5 font-bold">PO #</th>
                 <th className="p-3.5 font-bold">Supplier</th>
                 <th className="p-3.5 font-bold">Destination Branch</th>
@@ -317,7 +317,7 @@ export default function PurchaseOrdersPage() {
                 <th className="p-3.5 font-bold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-[#E2E8F0]">
               {loading ? (
                 <tr>
                   <td colSpan={9} className="p-8 text-center text-[var(--text-muted)]">
@@ -333,9 +333,9 @@ export default function PurchaseOrdersPage() {
                 </tr>
               ) : (
                 filteredOrders.map((po) => (
-                  <tr key={po.id} className="hover:bg-white/[0.02]">
-                    <td className="p-3.5 font-bold text-white font-mono">{po.poNumber}</td>
-                    <td className="p-3.5 font-semibold text-white">{po.supplier.name}</td>
+                  <tr key={po.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                    <td className="p-3.5 font-bold text-[#0F172A] font-mono">{po.poNumber}</td>
+                    <td className="p-3.5 font-semibold text-[#0F172A]">{po.supplier.name}</td>
                     <td className="p-3.5 text-[var(--text-secondary)]">
                       {po.branch?.name || "HQ / Central"}
                     </td>
@@ -350,19 +350,19 @@ export default function PurchaseOrdersPage() {
                     <td className="p-3.5 text-right font-mono text-[var(--text-secondary)]">
                       {po.items.length} item(s)
                     </td>
-                    <td className="p-3.5 text-right font-bold text-white font-mono">
+                    <td className="p-3.5 text-right font-bold text-[#0F172A] font-mono">
                       {formatLKR(po.totalAmount)}
                     </td>
                     <td className="p-3.5 text-center">
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                           po.status === "RECEIVED"
-                            ? "bg-emerald-500/20 text-emerald-400"
+                            ? "bg-emerald-500/20 text-[#15803D]"
                             : po.status === "ORDERED"
-                            ? "bg-blue-500/20 text-blue-400"
+                            ? "bg-blue-500/20 text-[#1D4ED8]"
                             : po.status === "DRAFT"
-                            ? "bg-amber-500/20 text-amber-300"
-                            : "bg-red-500/20 text-red-400"
+                            ? "bg-amber-500/20 text-[#D97706]"
+                            : "bg-red-500/20 text-[#B91C1C]"
                         }`}
                       >
                         {po.status}
@@ -372,14 +372,14 @@ export default function PurchaseOrdersPage() {
                       {po.status !== "RECEIVED" && po.status !== "CANCELLED" && (
                         <button
                           onClick={() => openReceiveModal(po)}
-                          className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors flex items-center gap-1 ml-auto"
+                          className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-[#15803D] hover:bg-emerald-500/20 transition-colors flex items-center gap-1 ml-auto"
                         >
                           <PackageCheck className="w-3.5 h-3.5" />
                           <span>Receive Goods (GRN)</span>
                         </button>
                       )}
                       {po.status === "RECEIVED" && po.goodsReceipts?.[0] && (
-                        <span className="text-[10px] text-emerald-400 font-mono">
+                        <span className="text-[10px] text-[#15803D] font-mono">
                           GRN: {po.goodsReceipts[0].receiptNumber}
                         </span>
                       )}
@@ -394,14 +394,14 @@ export default function PurchaseOrdersPage() {
 
       {/* CREATE PURCHASE ORDER MODAL */}
       {showPOModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h2 className="font-bold text-base text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl rounded-2xl bg-white border border-[#E2E8F0] p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+              <h2 className="font-bold text-base text-[#0F172A] flex items-center gap-2">
                 <FileText className="w-5 h-5 text-[#8B5CF6]" />
                 New Purchase Order
               </h2>
-              <button onClick={() => setShowPOModal(false)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setShowPOModal(false)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -414,11 +414,11 @@ export default function PurchaseOrdersPage() {
                     required
                     value={poForm.supplierId}
                     onChange={(e) => setPoForm({ ...poForm, supplierId: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">Select Supplier</option>
+                    <option value="" className="bg-white">Select Supplier</option>
                     {suppliers.map((s) => (
-                      <option key={s.id} value={s.id} className="bg-[#0C0E1A]">{s.name}</option>
+                      <option key={s.id} value={s.id} className="bg-white">{s.name}</option>
                     ))}
                   </select>
                 </div>
@@ -428,11 +428,11 @@ export default function PurchaseOrdersPage() {
                   <select
                     value={poForm.branchId}
                     onChange={(e) => setPoForm({ ...poForm, branchId: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   >
-                    <option value="" className="bg-[#0C0E1A]">All Branches / HQ</option>
+                    <option value="" className="bg-white">All Branches / HQ</option>
                     {branches.map((b) => (
-                      <option key={b.id} value={b.id} className="bg-[#0C0E1A]">{b.name}</option>
+                      <option key={b.id} value={b.id} className="bg-white">{b.name}</option>
                     ))}
                   </select>
                 </div>
@@ -443,7 +443,7 @@ export default function PurchaseOrdersPage() {
                     type="date"
                     value={poForm.expectedDeliveryDate}
                     onChange={(e) => setPoForm({ ...poForm, expectedDeliveryDate: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                   />
                 </div>
               </div>
@@ -451,11 +451,11 @@ export default function PurchaseOrdersPage() {
               {/* Items Table */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="font-semibold text-white">Order Items</label>
+                  <label className="font-semibold text-[#0F172A]">Order Items</label>
                   <button
                     type="button"
                     onClick={addItemRow}
-                    className="text-xs text-[#A78BFA] hover:text-white flex items-center gap-1 font-semibold"
+                    className="text-xs text-[#6D28D9] hover:text-[#6D28D9] flex items-center gap-1 font-semibold"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Item</span>
@@ -464,17 +464,17 @@ export default function PurchaseOrdersPage() {
 
                 <div className="space-y-2">
                   {poForm.items.map((row, idx) => (
-                    <div key={idx} className="flex items-center gap-2 bg-white/5 p-2 rounded-xl border border-white/5">
+                    <div key={idx} className="flex items-center gap-2 bg-[#F8FAFC] p-2 rounded-xl border border-[#E2E8F0]">
                       <div className="flex-1">
                         <select
                           required
                           value={row.productId}
                           onChange={(e) => handleProductSelect(idx, e.target.value)}
-                          className="w-full bg-transparent text-white focus:outline-none"
+                          className="w-full bg-transparent text-[#0F172A] focus:outline-none"
                         >
-                          <option value="" className="bg-[#0C0E1A]">Select product...</option>
+                          <option value="" className="bg-white">Select product...</option>
                           {products.map((p) => (
-                            <option key={p.id} value={p.id} className="bg-[#0C0E1A]">
+                            <option key={p.id} value={p.id} className="bg-white">
                               {p.name} ({p.sku})
                             </option>
                           ))}
@@ -490,7 +490,7 @@ export default function PurchaseOrdersPage() {
                           placeholder="Qty"
                           value={row.quantity}
                           onChange={(e) => handleItemChange(idx, "quantity", Number(e.target.value))}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white text-right"
+                          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2 py-1 text-[#0F172A] text-right"
                         />
                       </div>
 
@@ -502,11 +502,11 @@ export default function PurchaseOrdersPage() {
                           placeholder="Unit Cost"
                           value={row.unitCost}
                           onChange={(e) => handleItemChange(idx, "unitCost", Number(e.target.value))}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white text-right"
+                          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2 py-1 text-[#0F172A] text-right"
                         />
                       </div>
 
-                      <div className="w-24 text-right font-mono font-bold text-emerald-400">
+                      <div className="w-24 text-right font-mono font-bold text-[#15803D]">
                         {formatLKR(row.quantity * row.unitCost)}
                       </div>
 
@@ -514,7 +514,7 @@ export default function PurchaseOrdersPage() {
                         type="button"
                         onClick={() => removeItemRow(idx)}
                         disabled={poForm.items.length <= 1}
-                        className="p-1 rounded text-[var(--text-muted)] hover:text-red-400 disabled:opacity-30"
+                        className="p-1 rounded text-[var(--text-muted)] hover:text-[#B91C1C] disabled:opacity-30"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -523,9 +523,9 @@ export default function PurchaseOrdersPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <span className="font-semibold text-white">Estimated Total:</span>
-                <span className="font-mono font-bold text-base text-emerald-400">
+              <div className="flex items-center justify-between pt-2 border-t border-[#E2E8F0]">
+                <span className="font-semibold text-[#0F172A]">Estimated Total:</span>
+                <span className="font-mono font-bold text-base text-[#15803D]">
                   {formatLKR(poCalculatedTotal)}
                 </span>
               </div>
@@ -537,15 +537,15 @@ export default function PurchaseOrdersPage() {
                   placeholder="Special instructions for the vendor..."
                   value={poForm.notes}
                   onChange={(e) => setPoForm({ ...poForm, notes: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-2 text-[#0F172A]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setShowPOModal(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 text-white"
+                  className="px-4 py-2 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>
@@ -564,19 +564,19 @@ export default function PurchaseOrdersPage() {
 
       {/* GOODS RECEIPT (GRN) MODAL */}
       {receiveModalPO && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-xl rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-xl rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
               <div>
-                <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                  <PackageCheck className="w-4 h-4 text-emerald-400" />
+                <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
+                  <PackageCheck className="w-4 h-4 text-[#15803D]" />
                   Goods Receipt Note (GRN)
                 </h3>
                 <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
-                  Receiving PO: <b className="text-white">{receiveModalPO.poNumber}</b> from {receiveModalPO.supplier.name}
+                  Receiving PO: <b className="text-[#0F172A]">{receiveModalPO.poNumber}</b> from {receiveModalPO.supplier.name}
                 </p>
               </div>
-              <button onClick={() => setReceiveModalPO(null)} className="text-[var(--text-muted)] hover:text-white">
+              <button onClick={() => setReceiveModalPO(null)} className="text-[var(--text-muted)] hover:text-[#6D28D9]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -584,11 +584,11 @@ export default function PurchaseOrdersPage() {
             <form onSubmit={handleGoodsReceipt} className="space-y-3.5 text-xs">
               <div className="space-y-3">
                 {grnItems.map((gi, idx) => (
-                  <div key={gi.poItemId} className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-2">
+                  <div key={gi.poItemId} className="p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white">{gi.productName}</span>
+                      <span className="font-bold text-[#0F172A]">{gi.productName}</span>
                       <span className="text-[var(--text-muted)]">
-                        Ordered: <b className="text-white">{gi.quantityOrdered}</b>
+                        Ordered: <b className="text-[#0F172A]">{gi.quantityOrdered}</b>
                       </span>
                     </div>
 
@@ -605,7 +605,7 @@ export default function PurchaseOrdersPage() {
                             updated[idx].quantityReceived = Number(e.target.value);
                             setGrnItems(updated);
                           }}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white"
+                          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2.5 py-1.5 text-[#0F172A]"
                         />
                       </div>
                       <div>
@@ -618,7 +618,7 @@ export default function PurchaseOrdersPage() {
                             updated[idx].batchNumber = e.target.value;
                             setGrnItems(updated);
                           }}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2.5 py-1.5 text-[#0F172A] font-mono"
                         />
                       </div>
                       <div>
@@ -631,7 +631,7 @@ export default function PurchaseOrdersPage() {
                             updated[idx].expiryDate = e.target.value;
                             setGrnItems(updated);
                           }}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white"
+                          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2.5 py-1.5 text-[#0F172A]"
                         />
                       </div>
                     </div>
@@ -639,15 +639,15 @@ export default function PurchaseOrdersPage() {
                 ))}
               </div>
 
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px]">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[#15803D] text-[11px]">
                 Upon confirming receipt, items will be added directly into stock, stock batches will be registered, and weighted-average COGS will be updated.
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => setReceiveModalPO(null)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/5 text-white"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-[#0F172A]"
                 >
                   Cancel
                 </button>

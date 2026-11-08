@@ -21,7 +21,7 @@ function StarRating({ value, onChange, label }: { value: number; onChange: (v: n
             className="p-0.5 transition-transform hover:scale-110"
           >
             <Star
-              className={`w-8 h-8 ${(hover || value) >= n ? "text-yellow-400 fill-yellow-400" : "text-white/20"} transition-colors`}
+              className={`w-8 h-8 ${(hover || value) >= n ? "text-[#D97706] fill-yellow-400" : "text-[#64748B]"} transition-colors`}
             />
           </button>
         ))}
@@ -88,8 +88,8 @@ function ReviewFormContent() {
   if (!bookingId) {
     return (
       <div className="text-center py-16">
-        <p className="text-white font-semibold">Invalid review link</p>
-        <Link href="/" className="text-[#A78BFA] text-sm mt-2 inline-block hover:underline">Go home</Link>
+        <p className="text-[#0F172A] font-semibold">Invalid review link</p>
+        <Link href="/" className="text-[#6D28D9] text-sm mt-2 inline-block hover:underline">Go home</Link>
       </div>
     );
   }
@@ -98,16 +98,16 @@ function ReviewFormContent() {
     return (
       <div className="max-w-md mx-auto text-center py-16 space-y-5">
         <div className="w-20 h-20 rounded-full bg-green-400/20 border-2 border-green-400/30 flex items-center justify-center mx-auto">
-          <CheckCircle2 className="w-10 h-10 text-green-400" />
+          <CheckCircle2 className="w-10 h-10 text-[#15803D]" />
         </div>
         <div>
-          <h2 className="text-2xl font-black text-white">Thank You!</h2>
+          <h2 className="text-2xl font-black text-[#0F172A]">Thank You!</h2>
           <p className="text-[var(--text-muted)] mt-2">Your review has been submitted. We appreciate your feedback!</p>
         </div>
         <div className="flex gap-3 justify-center">
           <Link
             href={`/booking/lookup`}
-            className="px-4 py-2.5 rounded-xl border border-white/10 text-sm font-semibold text-[var(--text-secondary)] hover:text-white"
+            className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm font-semibold text-[var(--text-secondary)] hover:text-[#6D28D9]"
           >
             View Booking
           </Link>
@@ -129,8 +129,8 @@ function ReviewFormContent() {
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-yellow-400/20">
           <Star className="w-8 h-8 text-white fill-white" />
         </div>
-        <h1 className="text-2xl font-black text-white">How was your experience?</h1>
-        {ref && <p className="text-sm text-[var(--text-muted)] mt-1">Booking: <span className="font-mono font-semibold text-white">{ref}</span></p>}
+        <h1 className="text-2xl font-black text-[#0F172A]">How was your experience?</h1>
+        {ref && <p className="text-sm text-[var(--text-muted)] mt-1">Booking: <span className="font-mono font-semibold text-[#0F172A]">{ref}</span></p>}
       </div>
 
       <form onSubmit={handleSubmit} className="card p-6 space-y-6">
@@ -148,13 +148,13 @@ function ReviewFormContent() {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             maxLength={1000}
-            className="w-full px-3 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50 resize-none"
+            className="w-full px-3 py-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50 resize-none"
           />
           <p className="text-xs text-right text-[var(--text-muted)]">{comment.length}/1000</p>
         </div>
 
         {error && (
-          <div className="p-3 rounded-xl bg-red-400/10 border border-red-400/20 text-sm text-red-400">{error}</div>
+          <div className="p-3 rounded-xl bg-red-400/10 border border-red-400/20 text-sm text-[#B91C1C]">{error}</div>
         )}
 
         <button
@@ -172,15 +172,15 @@ function ReviewFormContent() {
 
 export default function ReviewPage() {
   return (
-    <div className="min-h-screen bg-[#0A0B14] text-white">
+    <div className="min-h-screen bg-transparent text-[#0F172A]">
       {/* Nav */}
-      <nav className="border-b border-white/10 bg-[#0C0E1A]/80 backdrop-blur-md sticky top-0 z-40">
+      <nav className="border-b border-[#E2E8F0] bg-white/95 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#8B5CF6] to-[#EC4899] flex items-center justify-center">
               <Scissors className="w-4 h-4 text-white -rotate-45" />
             </div>
-            <span className="font-black text-base text-white">Zentravo</span>
+            <span className="font-black text-base text-[#0F172A]">Zentravo</span>
           </Link>
         </div>
       </nav>

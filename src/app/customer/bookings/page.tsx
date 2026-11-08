@@ -34,49 +34,49 @@ const STATUS_CONFIG: Record<
   PENDING: {
     label: "Pending Confirmation",
     bg: "bg-amber-500/10",
-    text: "text-amber-400",
+    text: "text-[#D97706]",
     border: "border-amber-500/30",
   },
   CONFIRMED: {
     label: "Confirmed",
     bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
+    text: "text-[#15803D]",
     border: "border-emerald-500/30",
   },
   CHECKED_IN: {
     label: "Checked In",
     bg: "bg-purple-500/10",
-    text: "text-purple-400",
+    text: "text-[#6D28D9]",
     border: "border-purple-500/30",
   },
   IN_PROGRESS: {
     label: "In Progress",
     bg: "bg-cyan-500/10",
-    text: "text-cyan-400",
+    text: "text-[#0284C7]",
     border: "border-cyan-500/30",
   },
   COMPLETED: {
     label: "Completed",
     bg: "bg-blue-500/10",
-    text: "text-blue-400",
+    text: "text-[#1D4ED8]",
     border: "border-blue-500/30",
   },
   CANCELLED: {
     label: "Cancelled",
     bg: "bg-red-500/10",
-    text: "text-red-400",
+    text: "text-[#B91C1C]",
     border: "border-red-500/30",
   },
   REJECTED: {
     label: "Declined",
     bg: "bg-red-500/10",
-    text: "text-red-400",
+    text: "text-[#B91C1C]",
     border: "border-red-500/30",
   },
   NO_SHOW: {
     label: "No Show",
     bg: "bg-zinc-500/10",
-    text: "text-zinc-400",
+    text: "text-[#64748B]",
     border: "border-zinc-500/30",
   },
 };
@@ -214,7 +214,7 @@ function CustomerBookingsContent() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <PublicNavbar />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
@@ -222,9 +222,9 @@ function CustomerBookingsContent() {
         {lastBookedPhone && lastBookedPhone !== customerSession?.phone && (
           <div className="p-4 rounded-2xl bg-gradient-to-r from-violet-600/20 via-pink-600/20 to-purple-600/20 border border-violet-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-lg">
             <div className="flex items-center gap-2.5">
-              <Sparkles className="w-4 h-4 text-pink-400 shrink-0" />
+              <Sparkles className="w-4 h-4 text-[#DB2777] shrink-0" />
               <span>
-                Recent booking detected for mobile <strong className="text-white font-mono">{lastBookedPhone}</strong>. Currently viewing <span className="text-zinc-400">{customerSession?.phone}</span>.
+                Recent booking detected for mobile <strong className="text-[#0F172A] font-mono">{lastBookedPhone}</strong>. Currently viewing <span className="text-[#64748B]">{customerSession?.phone}</span>.
               </span>
             </div>
             <button
@@ -237,26 +237,26 @@ function CustomerBookingsContent() {
         )}
 
         {/* Customer Header Banner */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#0C0E1A] via-[#111428] to-[#0C0E1A] border border-white/10 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#F1F0FE] via-[#E9E6FD] to-[#E5E6FB] border border-[#E2E8F0] shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#8B5CF6]/10 blur-3xl pointer-events-none" />
 
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#8B5CF6]/20 text-[#A78BFA] border border-[#8B5CF6]/30">
+              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#8B5CF6]/20 text-[#6D28D9] border border-[#8B5CF6]/30">
                 Customer Portal
               </span>
-              <span className="text-xs font-mono font-semibold text-white/80 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+              <span className="text-xs font-mono font-semibold text-[#334155] bg-[#F8FAFC] px-2.5 py-1 rounded-lg border border-[#E2E8F0]">
                 {customerSession?.phone || "No phone"}
               </span>
               <button
                 onClick={() => setShowPhoneSwitcher(!showPhoneSwitcher)}
-                className="text-xs text-pink-400 hover:text-pink-300 underline font-medium ml-1 transition-colors"
+                className="text-xs text-[#DB2777] hover:text-[#DB2777] underline font-medium ml-1 transition-colors"
               >
                 {showPhoneSwitcher ? "Cancel" : "Change Mobile"}
               </button>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A]">
               Welcome back, {customerSession?.name || "Customer"}!
             </h1>
             <p className="text-xs text-[var(--text-secondary)]">
@@ -274,13 +274,13 @@ function CustomerBookingsContent() {
                   className="flex items-center gap-2"
                 >
                   <div className="relative flex-1">
-                    <Phone className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+                    <Phone className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B]" />
                     <input
                       type="text"
                       placeholder="e.g. 0779876543 or +94771234567"
                       value={switchInput}
                       onChange={(e) => setSwitchInput(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl text-xs bg-white/10 border border-white/20 text-white placeholder-zinc-500 focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-9 pr-3 py-2 rounded-xl text-xs bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder:text-[#64748B] focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                   <button
@@ -297,7 +297,7 @@ function CustomerBookingsContent() {
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
               onClick={() => fetchBookings(customerSession?.phone)}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
+              className="p-2.5 rounded-xl bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors"
               title="Refresh Bookings"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#8B5CF6]" : ""}`} />
@@ -313,14 +313,14 @@ function CustomerBookingsContent() {
 
             <Link
               href="/customer/profile"
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
+              className="px-4 py-2.5 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors"
             >
               My Profile
             </Link>
 
             <button
               onClick={handleLogout}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-red-500/10 text-[var(--text-muted)] hover:text-red-400 border border-white/10 transition-colors"
+              className="p-2.5 rounded-xl bg-[#F8FAFC] hover:bg-red-500/10 text-[var(--text-muted)] hover:text-[#B91C1C] border border-[#E2E8F0] transition-colors"
               title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -329,7 +329,7 @@ function CustomerBookingsContent() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10 text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#E2E8F0] text-xs">
           {[
             { id: "ALL", label: "All Bookings", count: bookings.length },
             {
@@ -358,11 +358,11 @@ function CustomerBookingsContent() {
               className={`px-4 py-2 rounded-xl font-bold transition-all flex items-center gap-2 shrink-0 ${
                 filterTab === tab.id
                   ? "bg-[#8B5CF6] text-white shadow-md shadow-[#8B5CF6]/30"
-                  : "bg-white/[0.03] text-[var(--text-secondary)] hover:text-white hover:bg-white/5 border border-white/5"
+                  : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] text-[var(--text-secondary)] hover:text-[#6D28D9] hover:bg-[#F8FAFC] border border-[#E2E8F0]"
               }`}
             >
               <span>{tab.label}</span>
-              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-black/20">
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#F8FAFC]">
                 {tab.count}
               </span>
             </button>
@@ -376,21 +376,21 @@ function CustomerBookingsContent() {
             <span>Loading appointments for {customerSession?.phone}...</span>
           </div>
         ) : filteredBookings.length === 0 ? (
-          <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/[0.02] border border-white/10 space-y-6 max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-2xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center mx-auto text-[#A78BFA]">
+          <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-6 max-w-2xl mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center mx-auto text-[#6D28D9]">
               <Calendar className="w-7 h-7" />
             </div>
             
             <div className="space-y-1">
-              <h3 className="text-lg font-bold text-white">No Bookings Found</h3>
+              <h3 className="text-lg font-bold text-[#0F172A]">No Bookings Found</h3>
               <p className="text-xs text-[var(--text-muted)]">
-                No appointments found for mobile <strong className="text-white font-mono">{customerSession?.phone}</strong> under &quot;{filterTab.toLowerCase()}&quot;.
+                No appointments found for mobile <strong className="text-[#0F172A] font-mono">{customerSession?.phone}</strong> under &quot;{filterTab.toLowerCase()}&quot;.
               </p>
             </div>
 
             {/* Quick Phone Switch Form in Empty State */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 text-left space-y-3">
-              <span className="text-xs font-semibold text-white flex items-center gap-1.5">
+            <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] text-left space-y-3">
+              <span className="text-xs font-semibold text-[#0F172A] flex items-center gap-1.5">
                 <Search className="w-3.5 h-3.5 text-[#8B5CF6]" />
                 <span>Booked with a different mobile number?</span>
               </span>
@@ -405,13 +405,13 @@ function CustomerBookingsContent() {
                 className="flex flex-col sm:flex-row items-center gap-2 pt-1"
               >
                 <div className="relative w-full">
-                  <Phone className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <Phone className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B]" />
                   <input
                     type="text"
                     placeholder="e.g. 0779876543 or 0775545456"
                     value={switchInput}
                     onChange={(e) => setSwitchInput(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-black/40 border border-white/15 text-white placeholder-zinc-500 focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl text-xs bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] placeholder:text-[#64748B] focus:outline-none focus:border-[#8B5CF6]"
                   />
                 </div>
                 <button
@@ -426,7 +426,7 @@ function CustomerBookingsContent() {
             <div className="pt-2">
               <Link
                 href="/booking"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/10"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0]"
               >
                 <Plus className="w-4 h-4" />
                 <span>Book New Appointment</span>
@@ -438,24 +438,24 @@ function CustomerBookingsContent() {
             {filteredBookings.map((b) => {
               const statusCfg = STATUS_CONFIG[b.status] || {
                 label: b.status,
-                bg: "bg-white/10",
-                text: "text-white",
-                border: "border-white/20",
+                bg: "bg-[#F8FAFC]",
+                text: "text-[#0F172A]",
+                border: "border-[#E2E8F0]",
               };
 
               return (
                 <div
                   key={b.id}
-                  className="p-6 rounded-3xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-5 shadow-xl relative overflow-hidden"
+                  className="p-6 rounded-3xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] hover:border-[#E2E8F0] transition-all flex flex-col justify-between space-y-5 shadow-xl relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     {/* Header */}
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <span className="font-mono text-xs font-black text-[#A78BFA]">
+                        <span className="font-mono text-xs font-black text-[#6D28D9]">
                           {b.reference}
                         </span>
-                        <h3 className="text-lg font-bold text-white mt-0.5">
+                        <h3 className="text-lg font-bold text-[#0F172A] mt-0.5">
                           {b.salon.name}
                         </h3>
                         <p className="text-xs text-[var(--text-muted)] flex items-center gap-1.5 mt-0.5">
@@ -472,21 +472,21 @@ function CustomerBookingsContent() {
                     </div>
 
                     {/* Appointment Details */}
-                    <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2 text-xs">
+                    <div className="p-3.5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-2 text-xs">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-white font-medium">
+                        <div className="flex items-center gap-2 text-[#0F172A] font-medium">
                           <Calendar className="w-3.5 h-3.5 text-[var(--text-muted)]" />
                           <span>{new Date(b.bookingDate).toISOString().split("T")[0]}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-white font-medium">
+                        <div className="flex items-center gap-2 text-[#0F172A] font-medium">
                           <Clock className="w-3.5 h-3.5 text-[var(--text-muted)]" />
                           <span>{b.startTime} - {b.endTime}</span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 text-[var(--text-secondary)] pt-1 border-t border-white/5">
+                      <div className="flex items-center gap-2 text-[var(--text-secondary)] pt-1 border-t border-[#E2E8F0]">
                         <User className="w-3.5 h-3.5 text-[var(--text-muted)]" />
-                        <span>Stylist: <strong className="text-white">{b.staff?.name || "Unassigned"}</strong></span>
+                        <span>Stylist: <strong className="text-[#0F172A]">{b.staff?.name || "Unassigned"}</strong></span>
                       </div>
                     </div>
 
@@ -499,7 +499,7 @@ function CustomerBookingsContent() {
                         {b.services?.map((bs: any) => (
                           <div
                             key={bs.id}
-                            className="flex items-center justify-between text-white/90"
+                            className="flex items-center justify-between text-[#334155]"
                           >
                             <span>{bs.service.name} ({bs.duration}m)</span>
                             <span className="font-semibold">Rs. {bs.price.toLocaleString()}</span>
@@ -507,18 +507,18 @@ function CustomerBookingsContent() {
                         ))}
                       </div>
 
-                      <div className="pt-2 border-t border-white/10 flex items-center justify-between font-bold text-white text-sm">
+                      <div className="pt-2 border-t border-[#E2E8F0] flex items-center justify-between font-bold text-[#0F172A] text-sm">
                         <span>Total Amount</span>
-                        <span className="text-emerald-400">Rs. {b.totalAmount.toLocaleString()}</span>
+                        <span className="text-[#15803D]">Rs. {b.totalAmount.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                  <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-3">
                     <Link
                       href={`/customer/bookings/${b.id}`}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors flex items-center gap-1.5"
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors flex items-center gap-1.5"
                     >
                       <Eye className="w-3.5 h-3.5" />
                       <span>View Details</span>
@@ -527,7 +527,7 @@ function CustomerBookingsContent() {
                     {b.status === "COMPLETED" && (
                       <Link
                         href={`/customer/bookings/${b.id}#invoice`}
-                        className="px-4 py-2 rounded-xl text-xs font-bold bg-[#8B5CF6]/20 text-[#A78BFA] hover:bg-[#8B5CF6]/30 border border-[#8B5CF6]/30 transition-colors flex items-center gap-1.5"
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-[#8B5CF6]/20 text-[#6D28D9] hover:bg-[#8B5CF6]/30 border border-[#8B5CF6]/30 transition-colors flex items-center gap-1.5"
                       >
                         <FileText className="w-3.5 h-3.5" />
                         <span>Receipt / Invoice</span>
@@ -550,7 +550,7 @@ export default function CustomerBookingsPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#0A0B14] text-white">
+        <div className="min-h-screen flex items-center justify-center bg-transparent text-[#0F172A]">
           <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
         </div>
       }

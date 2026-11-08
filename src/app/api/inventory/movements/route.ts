@@ -13,13 +13,34 @@ const STOCK_TYPES = [
 ] as const;
 
 const query = pageQuery.extend({
+  limit: z.coerce.number().int().min(1).max(500).default(100),
   branchId: z.string().optional(),
   productId: z.string().optional(),
   type: z.enum(STOCK_TYPES).optional(),
+  reason: z.string().max(100).optional(),
   from: dayStr.optional(),
   to: dayStr.optional(),
   export: z.enum(["csv"]).optional(),
 });
+
+function formatSimpleReason(type: string, reason?: string | null): string {
+  const r = (reason || "").trim();
+  const rLow = r.toLowerCase();
+  if (type === "SERVICE_CONSUMPTION" || rLow.startsWith("service consumption") || rLow === "used in salon") {
+    return "Used in salon";
+  }
+  if (type === "PURCHASE_RECEIPT" || rLow.startsWith("new purchase") || rLow === "purchased" || rLow.startsWith("initial supplier")) {
+    return r || "Purchased";
+  }
+  if (type === "SALE") return "Sold to customer";
+  if (type === "SALE_RETURN") return "Customer return";
+  if (type === "CONSUMPTION_REVERSAL") return "Service cancelled (returned)";
+  if (r) return r;
+  if (type === "MANUAL_IN") return "Purchased";
+  if (type === "MANUAL_OUT") return "Used in salon";
+  if (type === "ADJUSTMENT") return "Stock Correction";
+  return "Stock update";
+}
 
 /** Stock movement history (the audit trail of every quantity change) */
 export const GET = route({ permission: "inventory.view" }, async ({ ctx, req }) => {
@@ -39,7 +60,7 @@ export const GET = route({ permission: "inventory.view" }, async ({ ctx, req }) 
       : {}),
   };
   const include = {
-    product: { select: { name: true, sku: true, unit: true } },
+    product: { select: { id: true, name: true, sku: true, unit: true } },
     branch: { select: { name: true } },
     batch: { select: { batchNumber: true, expiryDate: true } },
   } satisfies Prisma.StockMovementInclude;
@@ -48,12 +69,11 @@ export const GET = route({ permission: "inventory.view" }, async ({ ctx, req }) 
     const rows = await prisma.stockMovement.findMany({ where, include, orderBy: { createdAt: "desc" }, take: 20000 });
     const names = await userNames(rows.map((r) => r.createdById));
     return csvResponse("stock-movements.csv", [
-      ["Date", "Branch", "SKU", "Product", "Type", "Quantity", "Balance after", "Unit cost", "Batch", "Reference", "Reason", "By"],
+      ["Date", "SKU", "Product", "Change", "Unit", "Balance after", "Reason", "By"],
       ...rows.map((r) => [
-        r.createdAt.toISOString(), r.branch.name, r.product.sku, r.product.name, r.type,
-        String(r.quantity), String(r.balanceAfter), r.unitCost ? String(r.unitCost) : "",
-        r.batch?.batchNumber, r.referenceType ? `${r.referenceType}:${r.referenceId ?? ""}` : "",
-        r.reason, r.createdById ? names[r.createdById] || "" : "",
+        r.createdAt.toISOString(), r.product.sku, r.product.name,
+        String(r.quantity), r.product.unit, String(r.balanceAfter),
+        formatSimpleReason(r.type, r.reason), r.createdById ? names[r.createdById] || "" : "",
       ]),
     ]);
   }
@@ -65,8 +85,25 @@ export const GET = route({ permission: "inventory.view" }, async ({ ctx, req }) 
     prisma.stockMovement.count({ where }),
   ]);
   const names = await userNames(movements.map((m) => m.createdById));
+  let mapped = movements.map((m) => ({
+    ...m,
+    displayReason: formatSimpleReason(m.type, m.reason),
+    createdByName: m.createdById ? names[m.createdById] || null : null,
+  }));
+
+  if (q.reason && q.reason !== "ALL") {
+    const target = q.reason.toLowerCase();
+    mapped = mapped.filter(
+      (m) =>
+        m.displayReason.toLowerCase().includes(target) ||
+        (m.reason && m.reason.toLowerCase().includes(target))
+    );
+  }
+
   return {
-    movements: movements.map((m) => ({ ...m, createdByName: m.createdById ? names[m.createdById] || null : null })),
-    total, page: q.page, limit: q.limit,
+    movements: mapped,
+    total: q.reason && q.reason !== "ALL" ? mapped.length : total,
+    page: q.page,
+    limit: q.limit,
   };
 });

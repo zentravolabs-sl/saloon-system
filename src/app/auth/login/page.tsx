@@ -83,7 +83,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080911] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A] selection:bg-violet-500/30">
       <PublicNavbar />
 
       <main className="flex-1 flex items-center justify-center px-4 py-16">
@@ -93,10 +93,10 @@ function LoginForm() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-pink-600 mx-auto flex items-center justify-center text-white shadow-lg shadow-violet-600/30">
               <Scissors className="w-6 h-6 transform -rotate-45" />
             </div>
-            <h1 className="font-heading text-2xl font-black text-white tracking-tight">
+            <h1 className="font-heading text-2xl font-black text-[#0F172A] tracking-tight">
               {activeTab === "admin" ? "Sign In to Your Salon" : "Customer Access Portal"}
             </h1>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-[#64748B]">
               {activeTab === "admin"
                 ? "Access your salon owner, staff, or super-admin management portal."
                 : "Look up appointments, download receipts, and manage loyalty points."}
@@ -104,14 +104,14 @@ function LoginForm() {
           </div>
 
           {/* Portal Switcher Tabs */}
-          <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-[#111322] border border-white/[0.08]">
+          <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-white border border-[#E2E8F0]">
             <button
               type="button"
               onClick={() => setActiveTab("admin")}
               className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === "admin"
                   ? "bg-violet-600 text-white shadow-md shadow-violet-600/25"
-                  : "text-zinc-400 hover:text-white"
+                  : "text-[#64748B] hover:text-[#6D28D9]"
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ function LoginForm() {
               className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === "customer"
                   ? "bg-pink-600 text-white shadow-md shadow-pink-600/25"
-                  : "text-zinc-400 hover:text-white"
+                  : "text-[#64748B] hover:text-[#6D28D9]"
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
@@ -133,16 +133,16 @@ function LoginForm() {
 
           {activeTab === "customer" ? (
             /* Customer Portal Quick View */
-            <div className="p-6 rounded-3xl bg-[#111322] border border-white/[0.08] space-y-5">
+            <div className="p-6 rounded-3xl bg-white border border-[#E2E8F0] space-y-5">
               <div className="space-y-2 text-center">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/10 text-pink-300 text-xs font-bold border border-pink-500/20">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/10 text-[#DB2777] text-xs font-bold border border-pink-500/20">
                   <Smartphone className="w-3.5 h-3.5" />
                   <span>Mobile OTP Login</span>
                 </span>
-                <h3 className="font-heading text-lg font-bold text-white">
+                <h3 className="font-heading text-lg font-bold text-[#0F172A]">
                   Customer Appointment Ledger
                 </h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#64748B] leading-relaxed">
                   Log in with your mobile phone number to view all your upcoming bookings, history, and loyalty points across all partner salons.
                 </p>
               </div>
@@ -158,8 +158,8 @@ function LoginForm() {
               </button>
 
               <div className="relative flex items-center justify-center">
-                <div className="border-t border-white/[0.06] w-full" />
-                <span className="bg-[#111322] px-3 text-[11px] text-zinc-500 uppercase font-semibold">
+                <div className="border-t border-[#E2E8F0] w-full" />
+                <span className="bg-white px-3 text-[11px] text-[#64748B] uppercase font-semibold">
                   Or
                 </span>
               </div>
@@ -167,14 +167,14 @@ function LoginForm() {
               <div className="space-y-3">
                 <Link
                   href="/customer/login"
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/[0.08] transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] transition-colors flex items-center justify-center gap-2"
                 >
-                  <Smartphone className="w-3.5 h-3.5 text-pink-400" />
+                  <Smartphone className="w-3.5 h-3.5 text-[#DB2777]" />
                   <span>Enter Custom Mobile Number with OTP →</span>
                 </Link>
                 <Link
                   href="/booking/lookup"
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border border-white/[0.08] transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#334155] hover:text-[#6D28D9] border border-[#E2E8F0] transition-colors flex items-center justify-center gap-2"
                 >
                   <span>Quick Reference Code Lookup (No Login) →</span>
                 </Link>
@@ -184,53 +184,53 @@ function LoginForm() {
             /* Staff & Salon Admin Portal */
             <>
               {/* Quick Demo Login Buttons */}
-              <div className="p-4 rounded-3xl bg-[#111322] border border-white/[0.08] space-y-2.5">
-                <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">
+              <div className="p-4 rounded-3xl bg-white border border-[#E2E8F0] space-y-2.5">
+                <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider block">
                   1-Click Demo Admin Logins
                 </span>
                 <div className="grid grid-cols-1 gap-2">
                   <button
                     type="button"
                     onClick={() => handleQuickDemo("admin@zentravo.com")}
-                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/30 text-white flex items-center justify-between transition-colors"
+                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/30 text-[#0F172A] flex items-center justify-between transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-violet-400" />
+                      <ShieldCheck className="w-4 h-4 text-[#6D28D9]" />
                       <span className="font-bold">Super Admin Portal</span>
                     </div>
-                    <span className="text-[11px] text-zinc-400 font-mono">admin@zentravo.com</span>
+                    <span className="text-[11px] text-[#64748B] font-mono">admin@zentravo.com</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleQuickDemo("rajesh@glamourcuts.lk")}
-                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-white flex items-center justify-between transition-colors"
+                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-[#0F172A] flex items-center justify-between transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-pink-400" />
+                      <Building2 className="w-4 h-4 text-[#DB2777]" />
                       <span className="font-bold">Glamour Cuts Owner</span>
                     </div>
-                    <span className="text-[11px] text-zinc-400 font-mono">rajesh@glamourcuts.lk</span>
+                    <span className="text-[11px] text-[#64748B] font-mono">rajesh@glamourcuts.lk</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleQuickDemo("malith@stylezone.lk")}
-                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-white flex items-center justify-between transition-colors"
+                    className="w-full py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-[#0F172A] flex items-center justify-between transition-colors"
                   >
                     <div className="flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-cyan-400" />
+                      <Building2 className="w-4 h-4 text-[#0284C7]" />
                       <span className="font-bold">Style Zone Owner</span>
                     </div>
-                    <span className="text-[11px] text-zinc-400 font-mono">malith@stylezone.lk</span>
+                    <span className="text-[11px] text-[#64748B] font-mono">malith@stylezone.lk</span>
                   </button>
                 </div>
               </div>
 
               {/* Form */}
-              <div className="p-6 rounded-3xl bg-[#111322] border border-white/[0.08] space-y-4">
+              <div className="p-6 rounded-3xl bg-white border border-[#E2E8F0] space-y-4">
                 {error && (
-                  <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2">
+                  <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     <span>{error}</span>
                   </div>
@@ -244,35 +244,35 @@ function LoginForm() {
                   className="space-y-4"
                 >
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-zinc-300">
+                    <label className="text-xs font-semibold text-[#334155]">
                       Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+                      <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#64748B]" />
                       <input
                         type="email"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="e.g. rajesh@glamourcuts.lk"
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-violet-500"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-violet-500"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-zinc-300">
+                    <label className="text-xs font-semibold text-[#334155]">
                       Password
                     </label>
                     <div className="relative">
-                      <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+                      <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#64748B]" />
                       <input
                         type="password"
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-violet-500"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-violet-500"
                       />
                     </div>
                   </div>
@@ -293,11 +293,11 @@ function LoginForm() {
                   </button>
                 </form>
 
-                <div className="pt-4 border-t border-white/[0.06] text-center text-xs text-zinc-400">
+                <div className="pt-4 border-t border-[#E2E8F0] text-center text-xs text-[#64748B]">
                   New Salon Owner?{" "}
                   <Link
                     href="/auth/register"
-                    className="text-violet-300 hover:text-white font-semibold transition-colors"
+                    className="text-[#6D28D9] hover:text-[#6D28D9] font-semibold transition-colors"
                   >
                     Register Your Salon
                   </Link>
@@ -317,7 +317,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#080911] text-white">
+        <div className="min-h-screen flex items-center justify-center bg-transparent text-[#0F172A]">
           <Loader2 className="w-8 h-8 animate-spin text-violet-500" />
         </div>
       }

@@ -164,9 +164,68 @@ export async function allowedBranchIds(ctx: AccessContext): Promise<string[]> {
       salonId: ctx.salonId,
       ...(ctx.branchScope === "ALL" ? {} : { id: { in: ctx.branchScope } }),
     },
+    orderBy: { createdAt: "asc" },
     select: { id: true },
   });
   return branches.map((b) => b.id);
+}
+
+/**
+ * Resolves the salon's default branch ID when the UI does not ask the user to pick a branch
+ * (Phase 1 single-location experience). Preserves full branchId support in the database.
+ */
+export async function resolveDefaultBranchId(
+  ctx: AccessContext,
+  requestedBranchId?: string | null
+): Promise<string> {
+  if (requestedBranchId) {
+    return assertBranchAccess(ctx, requestedBranchId);
+  }
+  const allowed = await allowedBranchIds(ctx);
+  if (allowed.length > 0) {
+    return allowed[0];
+  }
+  const existing = await prisma.branch.findFirst({
+    where: { salonId: ctx.salonId },
+    orderBy: { createdAt: "asc" },
+    select: { id: true },
+  });
+  if (existing) return existing.id;
+
+  const created = await prisma.branch.create({
+    data: {
+      salonId: ctx.salonId,
+      name: "Main Location",
+      status: "ACTIVE",
+    },
+    select: { id: true },
+  });
+  return created.id;
+}
+
+/**
+ * Resolves the best branch to use for a product's stock operation when no branchId is specified.
+ * Prefers a branch that already holds stock for the product so single-location UI actions
+ * always target the active stock balance.
+ */
+export async function resolveStockBranchForProduct(
+  ctx: AccessContext,
+  productId: string,
+  requestedBranchId?: string | null
+): Promise<string> {
+  if (requestedBranchId) {
+    return assertBranchAccess(ctx, requestedBranchId);
+  }
+  const branchIds = await allowedBranchIds(ctx);
+  if (branchIds.length > 0) {
+    const existingLevel = await prisma.stockLevel.findFirst({
+      where: { productId, branchId: { in: branchIds } },
+      orderBy: [{ quantity: "desc" }, { updatedAt: "desc" }],
+      select: { branchId: true },
+    });
+    if (existingLevel) return existingLevel.branchId;
+  }
+  return resolveDefaultBranchId(ctx);
 }
 
 /** Verifies a client-supplied branch belongs to the caller's salon AND is within their scope */

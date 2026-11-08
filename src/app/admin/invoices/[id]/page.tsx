@@ -28,7 +28,7 @@ export default function InvoicePrintPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0B14] flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
       </div>
     );
@@ -36,10 +36,10 @@ export default function InvoicePrintPage() {
 
   if (error || !invoice) {
     return (
-      <div className="min-h-screen bg-[#0A0B14] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-[#0F172A]">
         <div className="text-center">
           <p className="text-lg font-bold mb-2">Invoice not found</p>
-          <Link href="/admin/invoices" className="text-[#A78BFA] text-sm hover:underline">← Back to Invoices</Link>
+          <Link href="/admin/invoices" className="text-[#6D28D9] text-sm hover:underline">← Back to Invoices</Link>
         </div>
       </div>
     );
@@ -52,13 +52,13 @@ export default function InvoicePrintPage() {
   const staff = booking?.staff;
 
   return (
-    <div className="min-h-screen bg-[#0A0B14] text-white">
+    <div className="min-h-screen bg-transparent text-[#0F172A]">
       {/* Print controls - hidden during print */}
-      <div className="print:hidden sticky top-0 z-10 bg-[#0C0E1A]/90 backdrop-blur-md border-b border-white/10 px-6 py-4">
+      <div className="print:hidden sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link
             href="/admin/invoices"
-            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-white transition-colors"
+            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[#6D28D9] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Invoices
@@ -66,7 +66,7 @@ export default function InvoicePrintPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-[var(--text-secondary)] hover:text-white hover:border-white/20 transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm font-semibold text-[var(--text-secondary)] hover:text-[#6D28D9] hover:border-[#E2E8F0] transition-all"
             >
               <Printer className="w-4 h-4" />
               Print
@@ -91,21 +91,21 @@ export default function InvoicePrintPage() {
               {salon?.logo && (
                 <img src={salon.logo} alt={salon.name} className="w-16 h-16 object-contain rounded-xl mb-3" />
               )}
-              <h2 className="text-xl font-black text-white print:text-black">{salon?.name}</h2>
+              <h2 className="text-xl font-black text-[#0F172A] print:text-black">{salon?.name}</h2>
               {branch && <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{branch.name}</p>}
               {salon?.phone && <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{salon.phone}</p>}
               {salon?.email && <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{salon.email}</p>}
               {salon?.address && <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{salon.address}</p>}
             </div>
             <div className="text-right">
-              <div className="text-3xl font-black text-white print:text-black">INVOICE</div>
+              <div className="text-3xl font-black text-[#0F172A] print:text-black">INVOICE</div>
               <div className="mt-2 space-y-1">
                 <p className="text-sm text-[var(--text-muted)] print:text-gray-600">Invoice #</p>
-                <p className="text-base font-bold text-white print:text-black font-mono">{invoice.invoiceNumber}</p>
+                <p className="text-base font-bold text-[#0F172A] print:text-black font-mono">{invoice.invoiceNumber}</p>
                 <p className="text-xs text-[var(--text-muted)] print:text-gray-600 mt-2">Booking Ref</p>
-                <p className="text-xs font-semibold text-white print:text-black font-mono">{booking?.reference}</p>
+                <p className="text-xs font-semibold text-[#0F172A] print:text-black font-mono">{booking?.reference}</p>
                 <p className="text-xs text-[var(--text-muted)] print:text-gray-600 mt-2">Date Issued</p>
-                <p className="text-xs font-semibold text-white print:text-black">
+                <p className="text-xs font-semibold text-[#0F172A] print:text-black">
                   {new Date(invoice.issuedAt).toLocaleDateString("en-LK", { day: "numeric", month: "long", year: "numeric" })}
                 </p>
               </div>
@@ -113,10 +113,10 @@ export default function InvoicePrintPage() {
           </div>
 
           {/* Customer & Booking Details */}
-          <div className="grid grid-cols-2 gap-6 p-4 rounded-xl bg-white/5 print:bg-gray-50 border border-white/5 print:border-gray-200">
+          <div className="grid grid-cols-2 gap-6 p-4 rounded-xl bg-[#F8FAFC] print:bg-gray-50 border border-[#E2E8F0] print:border-gray-200">
             <div>
               <p className="text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider mb-2">Billed To</p>
-              <p className="text-sm font-bold text-white print:text-black">{customer?.name}</p>
+              <p className="text-sm font-bold text-[#0F172A] print:text-black">{customer?.name}</p>
               <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{customer?.phone}</p>
               {customer?.email && <p className="text-sm text-[var(--text-muted)] print:text-gray-600">{customer.email}</p>}
             </div>
@@ -134,20 +134,20 @@ export default function InvoicePrintPage() {
           <div>
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 print:border-gray-200">
+                <tr className="border-b border-[#E2E8F0] print:border-gray-200">
                   <th className="text-left py-3 text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider">Service</th>
                   <th className="text-left py-3 text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider">Category</th>
                   <th className="text-center py-3 text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider">Duration</th>
                   <th className="text-right py-3 text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider">Price</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 print:divide-gray-100">
+              <tbody className="divide-y divide-[#E2E8F0] print:divide-gray-100">
                 {booking?.services?.map((bs: any) => (
                   <tr key={bs.id}>
-                    <td className="py-3 font-medium text-white print:text-black">{bs.service?.name}</td>
+                    <td className="py-3 font-medium text-[#0F172A] print:text-black">{bs.service?.name}</td>
                     <td className="py-3 text-[var(--text-muted)] print:text-gray-600">{bs.service?.category?.name}</td>
                     <td className="py-3 text-center text-[var(--text-muted)] print:text-gray-600">{bs.duration} min</td>
-                    <td className="py-3 text-right font-semibold text-white print:text-black">LKR {bs.price?.toLocaleString()}</td>
+                    <td className="py-3 text-right font-semibold text-[#0F172A] print:text-black">LKR {bs.price?.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -158,27 +158,27 @@ export default function InvoicePrintPage() {
           <div className="ml-auto max-w-xs space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-[var(--text-muted)] print:text-gray-600">Subtotal</span>
-              <span className="text-white print:text-black">LKR {invoice.subtotal?.toLocaleString()}</span>
+              <span className="text-[#0F172A] print:text-black">LKR {invoice.subtotal?.toLocaleString()}</span>
             </div>
             {invoice.discountAmount > 0 && (
               <div className="flex justify-between text-sm">
-                <span className="text-green-400">Discount</span>
-                <span className="text-green-400">- LKR {invoice.discountAmount?.toLocaleString()}</span>
+                <span className="text-[#15803D]">Discount</span>
+                <span className="text-[#15803D]">- LKR {invoice.discountAmount?.toLocaleString()}</span>
               </div>
             )}
             {invoice.taxAmount > 0 && (
               <div className="flex justify-between text-sm">
                 <span className="text-[var(--text-muted)] print:text-gray-600">Tax</span>
-                <span className="text-white print:text-black">LKR {invoice.taxAmount?.toLocaleString()}</span>
+                <span className="text-[#0F172A] print:text-black">LKR {invoice.taxAmount?.toLocaleString()}</span>
               </div>
             )}
-            <div className="flex justify-between text-base font-bold border-t border-white/10 print:border-gray-200 pt-3">
-              <span className="text-white print:text-black">Total</span>
-              <span className="text-white print:text-black">LKR {invoice.totalAmount?.toLocaleString()}</span>
+            <div className="flex justify-between text-base font-bold border-t border-[#E2E8F0] print:border-gray-200 pt-3">
+              <span className="text-[#0F172A] print:text-black">Total</span>
+              <span className="text-[#0F172A] print:text-black">LKR {invoice.totalAmount?.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-green-400">Paid</span>
-              <span className="text-green-400">LKR {invoice.paidAmount?.toLocaleString()}</span>
+              <span className="text-[#15803D]">Paid</span>
+              <span className="text-[#15803D]">LKR {invoice.paidAmount?.toLocaleString()}</span>
             </div>
             {invoice.balanceAmount > 0 && (
               <div className="flex justify-between text-sm font-bold">
@@ -194,14 +194,14 @@ export default function InvoicePrintPage() {
               <p className="text-xs font-semibold text-[var(--text-muted)] print:text-gray-500 uppercase tracking-wider mb-3">Payment History</p>
               <div className="space-y-2">
                 {booking.payments.map((p: any) => (
-                  <div key={p.id} className="flex items-center justify-between text-sm p-3 rounded-xl bg-white/5 print:bg-gray-50 border border-white/5 print:border-gray-200">
+                  <div key={p.id} className="flex items-center justify-between text-sm p-3 rounded-xl bg-[#F8FAFC] print:bg-gray-50 border border-[#E2E8F0] print:border-gray-200">
                     <div>
-                      <span className="font-medium text-white print:text-black">{p.method}</span>
+                      <span className="font-medium text-[#0F172A] print:text-black">{p.method}</span>
                       <span className="text-[var(--text-muted)] print:text-gray-600 ml-2 text-xs">
                         {new Date(p.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <span className="font-semibold text-green-400">LKR {p.amount?.toLocaleString()}</span>
+                    <span className="font-semibold text-[#15803D]">LKR {p.amount?.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
@@ -209,10 +209,10 @@ export default function InvoicePrintPage() {
           )}
 
           {/* Footer */}
-          <div className="text-center border-t border-white/10 print:border-gray-200 pt-6">
+          <div className="text-center border-t border-[#E2E8F0] print:border-gray-200 pt-6">
             <p className="text-sm text-[var(--text-muted)] print:text-gray-500">Thank you for choosing {salon?.name}!</p>
             {salon?.website && (
-              <p className="text-xs text-[#A78BFA] print:text-purple-600 mt-1">{salon.website}</p>
+              <p className="text-xs text-[#6D28D9] print:text-purple-600 mt-1">{salon.website}</p>
             )}
           </div>
         </div>

@@ -27,7 +27,6 @@ export interface DashAppointment {
 
 type Action = { label: MessageKey; next?: string; href?: string };
 
-/** The ONE obvious next step for an appointment, so nobody has to hunt through menus */
 export function nextActionFor(a: DashAppointment, canBill: boolean, canConfirm: boolean): Action | null {
   switch (a.status) {
     case "PENDING":
@@ -89,28 +88,28 @@ export function AppointmentRow({
   };
 
   return (
-    <li className="rounded-xl bg-[#131524] border border-white/10 p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+    <li className="rounded-xl bg-[#F8FAFC] border border-[#EEF2F6] p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between hover:bg-[#F1F5F9]/70 transition-colors">
       <div className="min-w-0 space-y-1">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 text-lg font-extrabold text-white">
-            <Clock className="w-4 h-4 text-[#A78BFA]" aria-hidden />
+          <span className="inline-flex items-center gap-1.5 text-lg font-extrabold text-[#0F172A]">
+            <Clock className="w-4 h-4 text-[#7C3AED]" aria-hidden />
             {appt.startTime}
           </span>
           <StatusBadge status={appt.status} />
         </div>
-        <p className="text-base font-semibold text-white flex items-center gap-1.5">
-          <User className="w-4 h-4 text-[#9CA3AF]" aria-hidden />
+        <p className="text-base font-bold text-[#0F172A] flex items-center gap-1.5">
+          <User className="w-4 h-4 text-[#64748B]" aria-hidden />
           <span className="truncate">{appt.customerName}</span>
         </p>
-        <p className="text-sm text-[#D1D5DB]">
+        <p className="text-sm font-medium text-[#475569]">
           {appt.services.join(", ")}
           {showStaff ? ` · ${appt.staffName}` : ""}
         </p>
-        <p className="text-sm text-[#9CA3AF] flex items-center gap-1.5">
+        <p className="text-sm text-[#64748B] flex items-center gap-1.5">
           <Phone className="w-3.5 h-3.5" aria-hidden />
           {appt.customerPhone}
           {appt.status === "COMPLETED" && appt.balance > 0 && (
-            <span className="ml-2 text-amber-200 font-semibold">{formatMoney(appt.balance)}</span>
+            <span className="ml-2 text-[#D97706] font-bold">{formatMoney(appt.balance)}</span>
           )}
         </p>
       </div>
@@ -127,4 +126,3 @@ export function AppointmentRow({
     </li>
   );
 }
-

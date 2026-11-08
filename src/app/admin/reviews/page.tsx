@@ -18,7 +18,7 @@ function StarDisplay({ rating }: { rating: number }) {
       {[1, 2, 3, 4, 5].map((n) => (
         <Star
           key={n}
-          className={`w-3.5 h-3.5 ${n <= rating ? "text-yellow-400 fill-yellow-400" : "text-white/20"}`}
+          className={`w-3.5 h-3.5 ${n <= rating ? "text-[#D97706] fill-yellow-400" : "text-[#64748B]"}`}
         />
       ))}
     </div>
@@ -85,16 +85,16 @@ export default function AdminReviewsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Customer Reviews</h1>
+        <h1 className="text-2xl font-bold text-[#0F172A]">Customer Reviews</h1>
         <p className="text-sm text-[var(--text-muted)] mt-0.5">Manage and moderate customer reviews and ratings</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Reviews", value: reviews.length, color: "text-purple-400 bg-purple-400/10" },
-          { label: "Avg. Rating", value: `⭐ ${avgRating}`, color: "text-yellow-400 bg-yellow-400/10" },
-          { label: "Published", value: publishedCount, color: "text-green-400 bg-green-400/10" },
+          { label: "Total Reviews", value: reviews.length, color: "text-[#6D28D9] bg-purple-400/10" },
+          { label: "Avg. Rating", value: `⭐ ${avgRating}`, color: "text-[#D97706] bg-yellow-400/10" },
+          { label: "Published", value: publishedCount, color: "text-[#15803D] bg-green-400/10" },
           { label: "Pending Moderation", value: pendingCount, color: "text-orange-400 bg-orange-400/10" },
         ].map((s) => (
           <div key={s.label} className="card p-5">
@@ -113,7 +113,7 @@ export default function AdminReviewsPage() {
             placeholder="Search by customer or review content..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
           />
         </div>
         <div className="flex gap-2">
@@ -124,7 +124,7 @@ export default function AdminReviewsPage() {
               className={`px-3 py-2 rounded-xl text-xs font-semibold capitalize transition-all ${
                 filter === f
                   ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white"
-                  : "bg-white/5 text-[var(--text-muted)] hover:text-white border border-white/5"
+                  : "bg-[#F8FAFC] text-[var(--text-muted)] hover:text-[#6D28D9] border border-[#E2E8F0]"
               }`}
             >
               {f}
@@ -140,10 +140,10 @@ export default function AdminReviewsPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="card flex flex-col items-center justify-center py-20 gap-3">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-[#F8FAFC] flex items-center justify-center">
             <MessageSquare className="w-8 h-8 text-[var(--text-muted)]" />
           </div>
-          <p className="text-white font-semibold">No reviews found</p>
+          <p className="text-[#0F172A] font-semibold">No reviews found</p>
           <p className="text-sm text-[var(--text-muted)]">Reviews appear here after customers complete bookings</p>
         </div>
       ) : (
@@ -158,14 +158,14 @@ export default function AdminReviewsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center flex-wrap gap-2 mb-1">
-                      <span className="text-sm font-bold text-white">{review.customer?.name}</span>
+                      <span className="text-sm font-bold text-[#0F172A]">{review.customer?.name}</span>
                       {!review.isModerated && (
                         <span className="px-2 py-0.5 rounded-lg bg-orange-400/10 border border-orange-400/20 text-orange-400 text-xs font-semibold">
                           Needs Review
                         </span>
                       )}
                       {!review.isPublished && (
-                        <span className="px-2 py-0.5 rounded-lg bg-red-400/10 border border-red-400/20 text-red-400 text-xs font-semibold">
+                        <span className="px-2 py-0.5 rounded-lg bg-red-400/10 border border-red-400/20 text-[#B91C1C] text-xs font-semibold">
                           Hidden
                         </span>
                       )}
@@ -192,7 +192,7 @@ export default function AdminReviewsPage() {
                     </div>
 
                     {review.staff && (
-                      <p className="text-xs text-[#A78BFA] mb-2">Staff: {review.staff.name}</p>
+                      <p className="text-xs text-[#6D28D9] mb-2">Staff: {review.staff.name}</p>
                     )}
 
                     {review.comment ? (
@@ -214,8 +214,8 @@ export default function AdminReviewsPage() {
                   title={review.isPublished ? "Hide Review" : "Publish Review"}
                   className={`p-2.5 rounded-xl transition-all flex items-center gap-1.5 text-xs font-semibold ${
                     review.isPublished
-                      ? "bg-red-400/10 text-red-400 hover:bg-red-400/20 border border-red-400/20"
-                      : "bg-green-400/10 text-green-400 hover:bg-green-400/20 border border-green-400/20"
+                      ? "bg-red-400/10 text-[#B91C1C] hover:bg-red-400/20 border border-red-400/20"
+                      : "bg-green-400/10 text-[#15803D] hover:bg-green-400/20 border border-green-400/20"
                   }`}
                 >
                   {updatingId === review.id ? (

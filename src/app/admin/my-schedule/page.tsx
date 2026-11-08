@@ -39,7 +39,7 @@ export default function MySchedulePage() {
   return (
     <div className="space-y-6 w-full">
       <Panel title={t("my.weeklyHours")}>
-        <ul className="divide-y divide-white/10">
+        <ul className="divide-y divide-[#E2E8F0]">
           {order.map((d) => {
             const s = byDay.get(d);
             const working = s?.isWorking;
@@ -48,14 +48,14 @@ export default function MySchedulePage() {
                 key={d}
                 className={`py-3.5 px-3 flex items-center justify-between rounded-lg ${d === todayDow ? "bg-[#8B5CF6]/15" : ""}`}
               >
-                <span className="text-base font-semibold text-white">
+                <span className="text-base font-semibold text-[#0F172A]">
                   {t(`day.${d}` as MessageKey)}
-                  {d === todayDow && <span className="ml-2 text-sm text-[#C4B5FD]">({t("common.today")})</span>}
+                  {d === todayDow && <span className="ml-2 text-sm text-[#6D28D9]">({t("common.today")})</span>}
                 </span>
                 {working ? (
-                  <span className="inline-flex items-center gap-1.5 text-base text-white"><Clock className="w-4 h-4 text-[#A78BFA]" aria-hidden />{s.startTime} - {s.endTime}</span>
+                  <span className="inline-flex items-center gap-1.5 text-base text-[#0F172A]"><Clock className="w-4 h-4 text-[#6D28D9]" aria-hidden />{s.startTime} - {s.endTime}</span>
                 ) : (
-                  <span className="text-base text-[#9CA3AF]">{t("dash.dayOff")}</span>
+                  <span className="text-base text-[#64748B]">{t("dash.dayOff")}</span>
                 )}
               </li>
             );
@@ -69,10 +69,10 @@ export default function MySchedulePage() {
         ) : (
           <ul className="space-y-2">
             {leaves.map((l: any) => (
-              <li key={l.id} className="rounded-xl bg-[#131524] border border-white/10 p-3 text-base text-white">
+              <li key={l.id} className="rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] p-3 text-base text-[#0F172A]">
                 {String(l.startDate).slice(0, 10)}
                 {String(l.endDate).slice(0, 10) !== String(l.startDate).slice(0, 10) && ` → ${String(l.endDate).slice(0, 10)}`}
-                <span className="ml-2 text-sm text-[#D1D5DB]">
+                <span className="ml-2 text-sm text-[#334155]">
                   {l.approved ? t("my.approved") : t("my.waitingApproval")}
                 </span>
               </li>

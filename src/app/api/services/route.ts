@@ -44,6 +44,13 @@ export async function GET(req: Request) {
             },
           },
         },
+        productUsages: {
+          include: {
+            product: {
+              select: { id: true, name: true, unit: true, costPrice: true },
+            },
+          },
+        },
       },
       orderBy: { name: "asc" },
     });
@@ -56,6 +63,13 @@ export async function GET(req: Request) {
         duration: s.duration,
         bufferTime: s.bufferTime,
         assignedStaff: s.staffServices.map((st: (typeof s.staffServices)[number]) => st.staff),
+        productsUsed: s.productUsages.map((pu: (typeof s.productUsages)[number]) => ({
+          id: pu.id,
+          productId: pu.productId,
+          productName: pu.product.name,
+          unit: pu.product.unit,
+          quantity: Number(pu.quantity),
+        })),
       };
     });
 

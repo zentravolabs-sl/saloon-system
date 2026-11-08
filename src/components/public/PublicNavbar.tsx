@@ -26,29 +26,27 @@ export function PublicNavbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-2xl bg-[#080911]/90 border-b border-white/[0.08] transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Emblem */}
-        <Link href="/" className="flex items-center gap-3.5 group">
-          <div className="relative">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-violet-600 via-purple-500 to-pink-500 p-[1px] shadow-lg shadow-violet-600/30 group-hover:shadow-violet-600/50 transition-all duration-300">
-              <div className="w-full h-full rounded-[15px] bg-[#0E101D] flex items-center justify-center group-hover:bg-opacity-80 transition-colors">
-                <Scissors className="w-5 h-5 text-violet-300 transform -rotate-45 group-hover:scale-110 transition-transform duration-300" />
-              </div>
-            </div>
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#080911]" />
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/75 border-b border-white/80 shadow-[0_4px_18px_rgba(15,23,42,0.03)] transition-all">
+      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+        {/* Brand Emblem (Matches HomePage) */}
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <div className="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[#A855F7] via-[#7C3AED] to-[#6D28D9] flex items-center justify-center text-white shadow-[0_6px_16px_rgba(124,58,237,0.32)] shrink-0 relative overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1/2 bg-white/15 rounded-t-[14px]" />
+            <Scissors className="w-5 h-5 -rotate-90 relative z-10" strokeWidth={2.2} />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-heading text-xl font-extrabold tracking-tight text-white group-hover:text-violet-300 transition-colors">
+              <span className="text-[22px] font-extrabold text-[#0F172A] tracking-tight leading-none">
                 Zentravo
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 border border-violet-500/20">
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#5B21B6] text-white leading-none">
                 SaaS
               </span>
             </div>
-            <p className="text-[11px] font-medium tracking-wide text-zinc-400">Salon & Barber Cloud</p>
+            <p className="text-[12px] font-medium text-[#475569] mt-1 leading-none">
+              Salon &amp; Barber Cloud
+            </p>
           </div>
         </Link>
 
@@ -60,10 +58,10 @@ export function PublicNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ${
                   active
-                    ? "bg-violet-600/20 text-violet-300 border border-violet-500/30 shadow-sm"
-                    : "text-zinc-300 hover:text-white hover:bg-white/[0.06] border border-transparent"
+                    ? "bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_4px_12px_rgba(124,58,237,0.28)]"
+                    : "text-[#334155] hover:text-[#6D28D9] hover:bg-white/90 border border-transparent"
                 }`}
               >
                 {link.label}
@@ -81,7 +79,7 @@ export function PublicNavbar() {
                   ? "/super-admin/dashboard"
                   : "/admin"
               }
-              className="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-600/25 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+              className="px-4 py-2.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_6px_16px_rgba(124,58,237,0.28)] hover:brightness-105 active:scale-95 transition-all flex items-center gap-2"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Admin Portal</span>
@@ -90,20 +88,20 @@ export function PublicNavbar() {
             <>
               <Link
                 href="/customer/login"
-                className="hidden xl:flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-pink-300 hover:text-white bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/25 transition-all"
+                className="hidden xl:flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-[#6D28D9] hover:text-[#5B21B6] bg-[#EDE9FE] hover:bg-[#DDD6FE] border border-[#DDD6FE] transition-all"
               >
                 <span>Customer Portal</span>
               </Link>
               <Link
                 href="/auth/login"
-                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors border border-white/[0.08] hover:border-white/20 flex items-center gap-2"
+                className="px-4 py-2.5 rounded-2xl text-xs font-bold text-[#0F172A] hover:text-[#6D28D9] bg-white/95 hover:bg-white transition-colors border border-white shadow-[0_4px_18px_rgba(15,23,42,0.04)] flex items-center gap-2"
               >
-                <LogIn className="w-3.5 h-3.5 text-zinc-400" />
+                <LogIn className="w-3.5 h-3.5 text-[#7C3AED]" />
                 <span>Salon Portal</span>
               </Link>
               <Link
                 href="/booking"
-                className="px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+                className="px-5 py-2.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_6px_16px_rgba(124,58,237,0.28)] hover:brightness-105 active:scale-95 transition-all flex items-center gap-2"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Book Appointment</span>
@@ -115,7 +113,7 @@ export function PublicNavbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-300 hover:text-white focus:outline-none"
+          className="lg:hidden p-2.5 rounded-2xl bg-white/95 border border-white shadow-[0_4px_18px_rgba(15,23,42,0.04)] text-[#0F172A] hover:text-[#6D28D9] focus:outline-none"
           aria-label="Toggle Navigation Menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -124,7 +122,7 @@ export function PublicNavbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/[0.08] bg-[#0E101D] px-4 pt-4 pb-6 space-y-3">
+        <div className="lg:hidden border-t border-[#E2E8F0] bg-white/95 backdrop-blur-md px-4 pt-4 pb-6 space-y-3 shadow-lg">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const active = isLinkActive(link.href);
@@ -133,10 +131,10 @@ export function PublicNavbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                  className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-colors ${
                     active
-                      ? "bg-violet-600/20 text-violet-300 border border-violet-500/30"
-                      : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      ? "bg-[#EDE9FE] text-[#6D28D9]"
+                      : "text-[#334155] hover:bg-[#F8FAFC] hover:text-[#6D28D9]"
                   }`}
                 >
                   {link.label}
@@ -145,7 +143,7 @@ export function PublicNavbar() {
             })}
           </nav>
 
-          <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2">
+          <div className="pt-3 border-t border-[#E2E8F0] flex flex-col gap-2">
             {session ? (
               <Link
                 href={
@@ -154,7 +152,7 @@ export function PublicNavbar() {
                     : "/admin"
                 }
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-violet-600 text-white"
+                className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-[#7C3AED] text-white"
               >
                 Go to Dashboard
               </Link>
@@ -163,21 +161,21 @@ export function PublicNavbar() {
                 <Link
                   href="/customer/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl text-center text-xs font-semibold text-pink-300 bg-pink-500/10 border border-pink-500/20"
+                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold text-[#6D28D9] bg-[#EDE9FE] border border-[#DDD6FE]"
                 >
                   Customer Login (Mobile OTP)
                 </Link>
                 <Link
                   href="/auth/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl text-center text-xs font-semibold text-zinc-300 bg-white/5 border border-white/10"
+                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold text-[#0F172A] bg-[#F8FAFC] border border-[#E2E8F0]"
                 >
                   Salon Portal Login
                 </Link>
                 <Link
                   href="/booking"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-gradient-to-r from-violet-600 to-pink-600 text-white"
+                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white"
                 >
                   Book Appointment Now
                 </Link>

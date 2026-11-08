@@ -435,22 +435,22 @@ function BookingWizard() {
   const btnPrimary =
     "px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-lg shadow-[#8B5CF6]/30 hover:brightness-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2";
   const btnBack =
-    "px-5 py-2.5 rounded-xl text-xs font-semibold text-[var(--text-secondary)] hover:text-white hover:bg-white/5 border border-white/10 transition-colors flex items-center gap-1.5";
+    "px-5 py-2.5 rounded-xl text-xs font-semibold text-[var(--text-secondary)] hover:text-[#6D28D9] hover:bg-[#F8FAFC] border border-[#E2E8F0] transition-colors flex items-center gap-1.5";
 
   // ── RENDER ───────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B14] text-white">
+    <div className="min-h-screen flex flex-col bg-transparent text-[#0F172A]">
       <PublicNavbar />
 
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
 
         {/* ─── Hero Header ───────────────────────────────────── */}
         <div className="space-y-4 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8B5CF6]/10 text-[#A78BFA] text-xs font-semibold border border-[#8B5CF6]/20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8B5CF6]/10 text-[#6D28D9] text-xs font-semibold border border-[#8B5CF6]/20">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Instant Reservation Engine</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
             Book Your Appointment
           </h1>
           <p className="text-[var(--text-secondary)] text-sm max-w-xl mx-auto">
@@ -470,9 +470,9 @@ function BookingWizard() {
                     disabled={step.num > currentStep}
                     className={`flex items-center gap-1.5 text-[11px] font-bold transition-all ${
                       currentStep === step.num
-                        ? "text-white"
+                        ? "text-[#0F172A]"
                         : currentStep > step.num
-                        ? "text-emerald-400 cursor-pointer"
+                        ? "text-[#15803D] cursor-pointer"
                         : "text-[var(--text-muted)] cursor-not-allowed"
                     }`}
                   >
@@ -481,8 +481,8 @@ function BookingWizard() {
                         currentStep === step.num
                           ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-md shadow-[#8B5CF6]/40"
                           : currentStep > step.num
-                          ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
-                          : "bg-white/5 text-[var(--text-muted)] border border-white/10"
+                          ? "bg-emerald-500/20 text-[#15803D] border border-emerald-500/40"
+                          : "bg-[#F8FAFC] text-[var(--text-muted)] border border-[#E2E8F0]"
                       }`}
                     >
                       {currentStep > step.num ? (
@@ -498,7 +498,7 @@ function BookingWizard() {
                       className={`w-4 sm:w-8 h-0.5 mx-1 rounded-full ${
                         currentStep > step.num
                           ? "bg-emerald-500/50"
-                          : "bg-white/10"
+                          : "bg-[#F8FAFC]"
                       }`}
                     />
                   )}
@@ -512,9 +512,9 @@ function BookingWizard() {
             ║  STEP 1 — LOCATION FILTER                            ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 1 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
                 <Navigation className="w-5 h-5 text-[#8B5CF6]" />
                 Select Your Area
               </h2>
@@ -532,7 +532,7 @@ function BookingWizard() {
                 placeholder="Search city / district..."
                 value={citySearch}
                 onChange={(e) => setCitySearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
               />
             </div>
 
@@ -551,7 +551,7 @@ function BookingWizard() {
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                     selectedCity === ""
                       ? "bg-[#8B5CF6] border-[#8B5CF6] text-white shadow-md shadow-[#8B5CF6]/30"
-                      : "bg-white/[0.04] border-white/10 text-[var(--text-secondary)] hover:border-white/20 hover:text-white"
+                      : "bg-[#F8FAFC] border-[#E2E8F0] text-[var(--text-secondary)] hover:border-[#E2E8F0] hover:text-[#6D28D9]"
                   }`}
                 >
                   🌍 All Areas
@@ -565,7 +565,7 @@ function BookingWizard() {
                     className={`px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1.5 ${
                       selectedCity === city
                         ? "bg-[#8B5CF6] border-[#8B5CF6] text-white shadow-md shadow-[#8B5CF6]/30"
-                        : "bg-white/[0.04] border-white/10 text-[var(--text-secondary)] hover:border-white/20 hover:text-white"
+                        : "bg-[#F8FAFC] border-[#E2E8F0] text-[var(--text-secondary)] hover:border-[#E2E8F0] hover:text-[#6D28D9]"
                     }`}
                   >
                     <MapPin className="w-3 h-3" />
@@ -583,11 +583,11 @@ function BookingWizard() {
 
             {/* Info */}
             {selectedCity && (
-              <div className="flex items-center gap-2 text-xs text-[#A78BFA] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-4 py-2.5 rounded-xl">
+              <div className="flex items-center gap-2 text-xs text-[#6D28D9] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-4 py-2.5 rounded-xl">
                 <MapPin className="w-3.5 h-3.5 shrink-0" />
                 <span>
                   Showing salons in{" "}
-                  <strong className="text-white">{selectedCity}</strong> —{" "}
+                  <strong className="text-[#0F172A]">{selectedCity}</strong> —{" "}
                   {filteredSalons.length} salon
                   {filteredSalons.length !== 1 ? "s" : ""} found
                 </span>
@@ -616,10 +616,10 @@ function BookingWizard() {
             ║  STEP 2 — SALON SELECTION                            ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 2 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div className="flex items-start justify-between flex-wrap gap-3">
               <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-[#8B5CF6]" />
                   Select Salon
                 </h2>
@@ -632,7 +632,7 @@ function BookingWizard() {
                 </p>
               </div>
               {selectedCity && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 text-[#A78BFA] text-[11px] font-bold">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 text-[#6D28D9] text-[11px] font-bold">
                   <MapPin className="w-3 h-3" />
                   {selectedCity}
                 </span>
@@ -646,7 +646,7 @@ function BookingWizard() {
               </div>
             ) : filteredSalons.length === 0 ? (
               <div className="py-10 text-center space-y-3">
-                <p className="text-sm text-amber-400">
+                <p className="text-sm text-[#D97706]">
                   No salons found{selectedCity ? ` in ${selectedCity}` : ""}.
                 </p>
                 <button
@@ -655,7 +655,7 @@ function BookingWizard() {
                     setSelectedCity("");
                     setCurrentStep(1);
                   }}
-                  className="text-xs text-[#A78BFA] underline"
+                  className="text-xs text-[#6D28D9] underline"
                 >
                   Clear location filter
                 </button>
@@ -686,7 +686,7 @@ function BookingWizard() {
                       className={`p-5 rounded-2xl border text-left transition-all group ${
                         selectedSalonId === salon.id
                           ? "bg-[#8B5CF6]/15 border-[#8B5CF6] shadow-lg shadow-[#8B5CF6]/20"
-                          : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
+                          : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0] hover:border-[#E2E8F0] hover:bg-[#F8FAFC]"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
@@ -695,7 +695,7 @@ function BookingWizard() {
                             {salon.name.charAt(0)}
                           </div>
                           <div>
-                            <p className="font-bold text-sm text-white group-hover:text-[#A78BFA] transition-colors">
+                            <p className="font-bold text-sm text-[#0F172A] group-hover:text-[#6D28D9] transition-colors">
                               {salon.name}
                             </p>
                             {salon.city && (
@@ -706,7 +706,7 @@ function BookingWizard() {
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 text-[11px] text-[var(--text-muted)] bg-white/5 border border-white/10 rounded-lg px-2 py-1 shrink-0">
+                        <div className="flex items-center gap-1 text-[11px] text-[var(--text-muted)] bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2 py-1 shrink-0">
                           <Building2 className="w-3 h-3" />
                           {salon.branches.length} branch
                           {salon.branches.length !== 1 ? "es" : ""}
@@ -727,7 +727,7 @@ function BookingWizard() {
                               className="flex items-center gap-1.5 text-[11px] text-[var(--text-muted)]"
                             >
                               <MapPin className="w-3 h-3 text-[#EC4899] shrink-0" />
-                              <span className="text-white/70">{b.name}</span>
+                              <span className="text-[#334155]">{b.name}</span>
                               {b.city && (
                                 <span className="text-[var(--text-muted)]">
                                   · {b.city}
@@ -742,7 +742,7 @@ function BookingWizard() {
                         <span className="text-[11px] text-[var(--text-muted)]">
                           {salon._count.staff} stylists
                         </span>
-                        <span className="text-xs font-bold text-[#A78BFA] flex items-center gap-1">
+                        <span className="text-xs font-bold text-[#6D28D9] flex items-center gap-1">
                           Select <ChevronRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
@@ -765,15 +765,15 @@ function BookingWizard() {
             ║  STEP 3 — BRANCH SELECTION                           ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 3 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-[#EC4899]" />
                 Select Branch
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-1">
                 Choose the closest branch of{" "}
-                <strong className="text-white">{selectedSalon?.name}</strong>
+                <strong className="text-[#0F172A]">{selectedSalon?.name}</strong>
                 {selectedCity && ` near ${selectedCity}`}.
               </p>
             </div>
@@ -784,7 +784,7 @@ function BookingWizard() {
                 Loading branches...
               </div>
             ) : filteredBranches.length === 0 ? (
-              <p className="text-xs text-amber-400 py-4">
+              <p className="text-xs text-[#D97706] py-4">
                 No active branches found
                 {selectedCity ? ` in ${selectedCity}` : ""} for this salon.
               </p>
@@ -801,11 +801,11 @@ function BookingWizard() {
                     className={`p-5 rounded-2xl border text-left transition-all ${
                       selectedBranchId === branch.id
                         ? "bg-[#EC4899]/15 border-[#EC4899] shadow-lg shadow-[#EC4899]/20"
-                        : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
+                        : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0] hover:border-[#E2E8F0] hover:bg-[#F8FAFC]"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <p className="font-bold text-sm text-white">
+                      <p className="font-bold text-sm text-[#0F172A]">
                         {branch.name}
                       </p>
                       {selectedBranchId === branch.id && (
@@ -819,7 +819,7 @@ function BookingWizard() {
                       </p>
                     )}
                     {branch.city && (
-                      <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#A78BFA] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-1 rounded-full">
+                      <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#6D28D9] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-1 rounded-full">
                         <MapPin className="w-2.5 h-2.5" />
                         {branch.city}
                       </span>
@@ -838,7 +838,7 @@ function BookingWizard() {
                 <button
                   type="button"
                   onClick={() => setSelectedCity("")}
-                  className="text-[#A78BFA] underline"
+                  className="text-[#6D28D9] underline"
                 >
                   Show all branches
                 </button>
@@ -867,10 +867,10 @@ function BookingWizard() {
             ║  STEP 4 — SERVICE SELECTION                          ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 4 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
                   <Scissors className="w-5 h-5 text-[#EC4899]" />
                   Select Services
                 </h2>
@@ -879,14 +879,14 @@ function BookingWizard() {
                 </p>
               </div>
               {selectedServices.length > 0 && (
-                <div className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white flex items-center gap-3">
+                <div className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] flex items-center gap-3">
                   <span>
                     <strong>{selectedServices.length}</strong> selected
                   </span>
                   <span>•</span>
                   <span>{totalDuration} mins</span>
                   <span>•</span>
-                  <span className="text-[#A78BFA] font-bold">
+                  <span className="text-[#6D28D9] font-bold">
                     LKR {subtotal.toLocaleString()}
                   </span>
                 </div>
@@ -899,7 +899,7 @@ function BookingWizard() {
                 Loading service menu...
               </div>
             ) : services.length === 0 ? (
-              <p className="text-xs text-amber-400 py-6">
+              <p className="text-xs text-[#D97706] py-6">
                 No services available for this branch.
               </p>
             ) : (
@@ -915,22 +915,22 @@ function BookingWizard() {
                       className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between gap-4 ${
                         isSelected
                           ? "bg-[#8B5CF6]/15 border-[#8B5CF6] shadow-md shadow-[#8B5CF6]/20"
-                          : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
+                          : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0] hover:border-[#E2E8F0] hover:bg-[#F8FAFC]"
                       }`}
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-bold text-sm text-white">
+                          <span className="font-bold text-sm text-[#0F172A]">
                             {service.name}
                           </span>
                           {service.category && (
-                            <span className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-[var(--text-muted)]">
+                            <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#F8FAFC] text-[var(--text-muted)]">
                               {service.category.name}
                             </span>
                           )}
                         </div>
                         <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
-                          <Clock className="w-3.5 h-3.5 text-[#06B6D4]" />
+                          <Clock className="w-3.5 h-3.5 text-[#0284C7]" />
                           <span>{service.duration} mins</span>
                           {service.bufferTime > 0 && (
                             <span>(+{service.bufferTime}m buffer)</span>
@@ -938,14 +938,14 @@ function BookingWizard() {
                         </div>
                       </div>
                       <div className="text-right shrink-0 flex items-center gap-3">
-                        <span className="font-bold text-sm text-white">
+                        <span className="font-bold text-sm text-[#0F172A]">
                           LKR {service.price.toLocaleString()}
                         </span>
                         <div
                           className={`w-6 h-6 rounded-lg flex items-center justify-center border transition-colors ${
                             isSelected
                               ? "bg-[#8B5CF6] border-[#8B5CF6] text-white"
-                              : "border-white/20 bg-white/5 text-transparent"
+                              : "border-[#E2E8F0] bg-[#F8FAFC] text-transparent"
                           }`}
                         >
                           <Check className="w-3.5 h-3.5" />
@@ -979,15 +979,15 @@ function BookingWizard() {
             ║  STEP 5 — BARBER / STYLIST SELECTION                ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 5 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                <User className="w-5 h-5 text-[#06B6D4]" />
+              <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
+                <User className="w-5 h-5 text-[#0284C7]" />
                 Select Barber / Stylist
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-1">
                 Choose your preferred barber or stylist at{" "}
-                <strong className="text-white">{selectedBranch?.name}</strong>.
+                <strong className="text-[#0F172A]">{selectedBranch?.name}</strong>.
               </p>
             </div>
 
@@ -997,7 +997,7 @@ function BookingWizard() {
                 Finding available stylists...
               </div>
             ) : staffList.length === 0 ? (
-              <p className="text-xs text-amber-400 py-6">
+              <p className="text-xs text-[#D97706] py-6">
                 No staff members found for this branch.
               </p>
             ) : (
@@ -1010,13 +1010,13 @@ function BookingWizard() {
                     className={`p-5 rounded-2xl border text-center transition-all ${
                       selectedStaffId === staff.id
                         ? "bg-[#06B6D4]/15 border-[#06B6D4] shadow-lg shadow-[#06B6D4]/20"
-                        : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
+                        : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border-[#E2E8F0] hover:border-[#E2E8F0] hover:bg-[#F8FAFC]"
                     }`}
                   >
                     <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#8B5CF6] to-[#06B6D4] mx-auto flex items-center justify-center text-white font-black text-lg mb-3 shadow-md">
                       {staff.name.charAt(0)}
                     </div>
-                    <h3 className="font-bold text-sm text-white">
+                    <h3 className="font-bold text-sm text-[#0F172A]">
                       {staff.name}
                     </h3>
                     <p className="text-xs text-[#22D3EE] font-medium mt-0.5">
@@ -1055,9 +1055,9 @@ function BookingWizard() {
             ║  STEP 6 — DATE & TIME                                ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 6 && (
-          <div className="space-y-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
                 <CalendarIcon className="w-5 h-5 text-[#8B5CF6]" />
                 Select Date &amp; Verified Time Slot
               </h2>
@@ -1078,18 +1078,18 @@ function BookingWizard() {
                 min={new Date().toISOString().split("T")[0]}
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full sm:w-64 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full sm:w-64 px-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
               />
             </div>
 
             {/* Slots */}
-            <div className="space-y-3 pt-4 border-t border-white/[0.06]">
+            <div className="space-y-3 pt-4 border-t border-[#E2E8F0]">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                   Available Slots for {selectedDate}
                 </label>
                 {selectedSlot && (
-                  <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                  <span className="text-xs text-[#15803D] font-semibold flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     {selectedSlot}
                   </span>
@@ -1102,12 +1102,12 @@ function BookingWizard() {
                   Checking branch schedule, breaks &amp; leaves...
                 </div>
               ) : slotError ? (
-                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2.5">
+                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2.5">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{slotError}</span>
                 </div>
               ) : availableSlots.length === 0 ? (
-                <div className="p-6 text-center text-xs text-[var(--text-muted)] bg-white/[0.01] rounded-xl border border-white/5">
+                <div className="p-6 text-center text-xs text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] rounded-xl border border-[#E2E8F0]">
                   No slots available on this date. Please choose another date.
                 </div>
               ) : (
@@ -1124,8 +1124,8 @@ function BookingWizard() {
                           isSelected
                             ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-lg shadow-[#8B5CF6]/30 scale-105"
                             : slot.available
-                            ? "bg-white/[0.04] border border-white/10 text-white hover:border-[#8B5CF6] hover:bg-white/10"
-                            : "bg-white/[0.01] border border-white/5 text-white/20 cursor-not-allowed line-through"
+                            ? "bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:border-[#8B5CF6] hover:bg-[#F8FAFC]"
+                            : "bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] text-[#64748B] cursor-not-allowed line-through"
                         }`}
                       >
                         {slot.startTime}
@@ -1158,10 +1158,10 @@ function BookingWizard() {
             ║  STEP 7 — CUSTOMER DETAILS & CONFIRMATION            ║
             ╚═══════════════════════════════════════════════════════╝ */}
         {currentStep === 7 && (
-          <div className="space-y-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 sm:p-8 animate-fadeIn">
+          <div className="space-y-8 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 sm:p-8 animate-fadeIn">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                <FileText className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#15803D]" />
                 Review &amp; Confirm
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -1171,7 +1171,7 @@ function BookingWizard() {
             </div>
 
             {submitError && (
-              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2.5">
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-[#B91C1C] text-xs flex items-center gap-2.5">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{submitError}</span>
               </div>
@@ -1180,14 +1180,14 @@ function BookingWizard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left — Contact inputs */}
               <div className="space-y-4">
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
                   Contact Information
                 </h3>
 
                 {/* Name */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-[var(--text-secondary)]">
-                    Full Name <span className="text-red-400">*</span>
+                    Full Name <span className="text-[#B91C1C]">*</span>
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
@@ -1197,7 +1197,7 @@ function BookingWizard() {
                       placeholder="e.g. Kasun Silva"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                 </div>
@@ -1205,7 +1205,7 @@ function BookingWizard() {
                 {/* Phone */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-[var(--text-secondary)]">
-                    Mobile Number <span className="text-red-400">*</span>
+                    Mobile Number <span className="text-[#B91C1C]">*</span>
                   </label>
                   <div className="relative">
                     <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
@@ -1215,7 +1215,7 @@ function BookingWizard() {
                       placeholder="e.g. +94771234567"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                 </div>
@@ -1232,7 +1232,7 @@ function BookingWizard() {
                       placeholder="e.g. kasun@example.com"
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CF6]"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                     />
                   </div>
                 </div>
@@ -1247,12 +1247,12 @@ function BookingWizard() {
                     placeholder="e.g. Please keep my usual style..."
                     value={customerNotes}
                     onChange={(e) => setCustomerNotes(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CF6] resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#8B5CF6] resize-none"
                   />
                 </div>
 
                 {/* Coupon */}
-                <div className="pt-2 border-t border-white/[0.06] space-y-2">
+                <div className="pt-2 border-t border-[#E2E8F0] space-y-2">
                   <label className="text-xs font-medium text-[var(--text-secondary)] flex items-center gap-1.5">
                     <Tag className="w-3.5 h-3.5 text-[#EC4899]" />
                     <span>Have a Promo Code?</span>
@@ -1263,53 +1263,53 @@ function BookingWizard() {
                       placeholder="Try WELCOME10"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
-                      className="flex-1 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white uppercase focus:outline-none focus:border-[#EC4899]"
+                      className="flex-1 px-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#0F172A] uppercase focus:outline-none focus:border-[#EC4899]"
                     />
                     <button
                       type="button"
                       disabled={validatingCoupon || !couponCode.trim()}
                       onClick={handleApplyCoupon}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 disabled:opacity-50 transition-colors"
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] disabled:opacity-50 transition-colors"
                     >
                       {validatingCoupon ? "Checking..." : "Apply"}
                     </button>
                   </div>
                   {couponApplied && (
-                    <p className="text-xs text-emerald-400 flex items-center gap-1">
+                    <p className="text-xs text-[#15803D] flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       {couponApplied.code} applied (−LKR{" "}
                       {couponApplied.discount.toLocaleString()})
                     </p>
                   )}
                   {couponError && (
-                    <p className="text-xs text-red-400">{couponError}</p>
+                    <p className="text-xs text-[#B91C1C]">{couponError}</p>
                   )}
                 </div>
               </div>
 
               {/* Right — Summary Card */}
-              <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 space-y-5 h-fit">
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider pb-3 border-b border-white/10">
+              <div className="p-6 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-5 h-fit">
+                <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider pb-3 border-b border-[#E2E8F0]">
                   Appointment Summary
                 </h3>
 
                 <div className="space-y-3 text-xs">
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Salon</span>
-                    <span className="font-semibold text-white text-right max-w-[55%]">
+                    <span className="font-semibold text-[#0F172A] text-right max-w-[55%]">
                       {selectedSalon?.name}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Branch</span>
-                    <span className="font-semibold text-white text-right max-w-[55%]">
+                    <span className="font-semibold text-[#0F172A] text-right max-w-[55%]">
                       {selectedBranch?.name}
                     </span>
                   </div>
                   {selectedBranch?.city && (
                     <div className="flex justify-between">
                       <span className="text-[var(--text-muted)]">Location</span>
-                      <span className="font-semibold text-[#A78BFA] flex items-center gap-1">
+                      <span className="font-semibold text-[#6D28D9] flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
                         {selectedBranch.city}
                       </span>
@@ -1317,7 +1317,7 @@ function BookingWizard() {
                   )}
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Stylist</span>
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold text-[#0F172A]">
                       {selectedStaff?.name}
                     </span>
                   </div>
@@ -1325,7 +1325,7 @@ function BookingWizard() {
                     <span className="text-[var(--text-muted)]">
                       Date &amp; Time
                     </span>
-                    <span className="font-semibold text-[#A78BFA] text-right">
+                    <span className="font-semibold text-[#6D28D9] text-right">
                       {selectedDate} at {selectedSlot}
                     </span>
                   </div>
@@ -1333,13 +1333,13 @@ function BookingWizard() {
                     <span className="text-[var(--text-muted)]">
                       Est. Duration
                     </span>
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold text-[#0F172A]">
                       {totalDuration} mins
                     </span>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-white/[0.06] space-y-2">
+                <div className="pt-3 border-t border-[#E2E8F0] space-y-2">
                   <p className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                     Services:
                   </p>
@@ -1348,27 +1348,27 @@ function BookingWizard() {
                       <span className="text-[var(--text-secondary)]">
                         {s.name}
                       </span>
-                      <span className="font-medium text-white">
+                      <span className="font-medium text-[#0F172A]">
                         LKR {s.price.toLocaleString()}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-3 border-t border-white/10 space-y-2">
+                <div className="pt-3 border-t border-[#E2E8F0] space-y-2">
                   <div className="flex justify-between text-xs text-[var(--text-muted)]">
                     <span>Subtotal</span>
                     <span>LKR {subtotal.toLocaleString()}</span>
                   </div>
                   {couponApplied && (
-                    <div className="flex justify-between text-xs text-emerald-400">
+                    <div className="flex justify-between text-xs text-[#15803D]">
                       <span>Discount ({couponApplied.code})</span>
                       <span>
                         − LKR {couponApplied.discount.toLocaleString()}
                       </span>
                     </div>
                   )}
-                  <div className="flex justify-between text-base font-black text-white pt-2 border-t border-white/10">
+                  <div className="flex justify-between text-base font-black text-[#0F172A] pt-2 border-t border-[#E2E8F0]">
                     <span>Total Payable</span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] to-[#EC4899]">
                       LKR {finalTotal.toLocaleString()}
@@ -1381,7 +1381,7 @@ function BookingWizard() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-6 border-t border-[#E2E8F0] flex items-center justify-between">
               <button type="button" onClick={goBack} className={btnBack}>
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -1418,7 +1418,7 @@ export default function BookingPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#0A0B14] text-white">
+        <div className="min-h-screen flex items-center justify-center bg-transparent text-[#0F172A]">
           <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
         </div>
       }

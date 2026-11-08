@@ -18,16 +18,16 @@ import {
 } from "lucide-react";
 
 const METHOD_LABELS: Record<string, { label: string; icon: any; color: string }> = {
-  CASH: { label: "Cash", icon: Banknote, color: "text-green-400 bg-green-400/10" },
-  CARD: { label: "Card", icon: CreditCard, color: "text-blue-400 bg-blue-400/10" },
-  ONLINE: { label: "Online", icon: Smartphone, color: "text-purple-400 bg-purple-400/10" },
-  BANK: { label: "Bank Transfer", icon: Building2, color: "text-yellow-400 bg-yellow-400/10" },
+  CASH: { label: "Cash", icon: Banknote, color: "text-[#15803D] bg-green-400/10" },
+  CARD: { label: "Card", icon: CreditCard, color: "text-[#1D4ED8] bg-blue-400/10" },
+  ONLINE: { label: "Online", icon: Smartphone, color: "text-[#6D28D9] bg-purple-400/10" },
+  BANK: { label: "Bank Transfer", icon: Building2, color: "text-[#D97706] bg-yellow-400/10" },
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  COMPLETED: "text-green-400 bg-green-400/10 border border-green-400/20",
-  PENDING: "text-yellow-400 bg-yellow-400/10 border border-yellow-400/20",
-  REFUNDED: "text-red-400 bg-red-400/10 border border-red-400/20",
+  COMPLETED: "text-[#15803D] bg-green-400/10 border border-green-400/20",
+  PENDING: "text-[#D97706] bg-yellow-400/10 border border-yellow-400/20",
+  REFUNDED: "text-[#B91C1C] bg-red-400/10 border border-red-400/20",
 };
 
 export default function PaymentsPage() {
@@ -121,7 +121,7 @@ export default function PaymentsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Payments</h1>
+          <h1 className="text-2xl font-bold text-[#0F172A]">Payments</h1>
           <p className="text-sm text-[var(--text-muted)] mt-0.5">Track and record all payment transactions</p>
         </div>
         <button
@@ -136,10 +136,10 @@ export default function PaymentsPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Revenue", value: `LKR ${totalRevenue.toLocaleString()}`, icon: DollarSign, color: "text-green-400 bg-green-400/10" },
-          { label: "Today's Revenue", value: `LKR ${totalToday.toLocaleString()}`, icon: Clock, color: "text-blue-400 bg-blue-400/10" },
-          { label: "Total Transactions", value: payments.length, icon: Receipt, color: "text-purple-400 bg-purple-400/10" },
-          { label: "Avg. Transaction", value: payments.length > 0 ? `LKR ${Math.round(totalRevenue / payments.length).toLocaleString()}` : "LKR 0", icon: CheckCircle2, color: "text-yellow-400 bg-yellow-400/10" },
+          { label: "Total Revenue", value: `LKR ${totalRevenue.toLocaleString()}`, icon: DollarSign, color: "text-[#15803D] bg-green-400/10" },
+          { label: "Today's Revenue", value: `LKR ${totalToday.toLocaleString()}`, icon: Clock, color: "text-[#1D4ED8] bg-blue-400/10" },
+          { label: "Total Transactions", value: payments.length, icon: Receipt, color: "text-[#6D28D9] bg-purple-400/10" },
+          { label: "Avg. Transaction", value: payments.length > 0 ? `LKR ${Math.round(totalRevenue / payments.length).toLocaleString()}` : "LKR 0", icon: CheckCircle2, color: "text-[#D97706] bg-yellow-400/10" },
         ].map((s) => (
           <div key={s.label} className="card p-5">
             <div className="flex items-center gap-3">
@@ -148,7 +148,7 @@ export default function PaymentsPage() {
               </div>
               <div>
                 <p className="text-xs text-[var(--text-muted)] font-medium">{s.label}</p>
-                <p className="text-lg font-bold text-white">{s.value}</p>
+                <p className="text-lg font-bold text-[#0F172A]">{s.value}</p>
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function PaymentsPage() {
             placeholder="Search by customer name, phone, or reference..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
           />
         </div>
       </div>
@@ -177,10 +177,10 @@ export default function PaymentsPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-[#F8FAFC] flex items-center justify-center">
               <CreditCard className="w-8 h-8 text-[var(--text-muted)]" />
             </div>
-            <p className="text-white font-semibold">No payments found</p>
+            <p className="text-[#0F172A] font-semibold">No payments found</p>
             <p className="text-sm text-[var(--text-muted)]">Record your first payment to get started</p>
             <button
               onClick={() => setShowModal(true)}
@@ -193,7 +193,7 @@ export default function PaymentsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/5">
+                <tr className="border-b border-[#E2E8F0]">
                   <th className="text-left py-3 px-4 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Customer</th>
                   <th className="text-left py-3 px-4 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Branch</th>
                   <th className="text-left py-3 px-4 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Method</th>
@@ -203,14 +203,14 @@ export default function PaymentsPage() {
                   <th className="text-left py-3 px-4 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {filtered.map((payment) => {
                   const methodInfo = METHOD_LABELS[payment.method] || METHOD_LABELS.CASH;
                   return (
-                    <tr key={payment.id} className="hover:bg-white/2 transition-colors">
+                    <tr key={payment.id} className="hover:bg-[#F1F5F9] transition-colors">
                       <td className="py-3 px-4">
                         <div>
-                          <p className="font-semibold text-white text-sm">{payment.booking?.customer?.name || "—"}</p>
+                          <p className="font-semibold text-[#0F172A] text-sm">{payment.booking?.customer?.name || "—"}</p>
                           <p className="text-xs text-[var(--text-muted)]">{payment.booking?.customer?.phone}</p>
                         </div>
                       </td>
@@ -224,7 +224,7 @@ export default function PaymentsPage() {
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className="text-white font-bold">LKR {payment.amount.toLocaleString()}</span>
+                        <span className="text-[#0F172A] font-bold">LKR {payment.amount.toLocaleString()}</span>
                       </td>
                       <td className="py-3 px-4">
                         <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${STATUS_COLORS[payment.status] || STATUS_COLORS.COMPLETED}`}>
@@ -250,11 +250,11 @@ export default function PaymentsPage() {
 
       {/* Record Payment Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md card p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-white">Record Payment</h2>
-              <button onClick={() => { setShowModal(false); setFoundBooking(null); setBookingSearch(""); }} className="p-2 hover:bg-white/5 rounded-xl">
+              <h2 className="text-lg font-bold text-[#0F172A]">Record Payment</h2>
+              <button onClick={() => { setShowModal(false); setFoundBooking(null); setBookingSearch(""); }} className="p-2 hover:bg-[#F8FAFC] rounded-xl">
                 <span className="text-[var(--text-muted)] text-lg leading-none">×</span>
               </button>
             </div>
@@ -269,20 +269,20 @@ export default function PaymentsPage() {
                   value={bookingSearch}
                   onChange={(e) => setBookingSearch(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && searchBooking()}
-                  className="flex-1 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
+                  className="flex-1 px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
                 />
                 <button
                   onClick={searchBooking}
                   disabled={searchingBooking}
-                  className="px-3 py-2.5 rounded-xl bg-[#8B5CF6]/20 text-[#A78BFA] text-sm font-semibold hover:bg-[#8B5CF6]/30"
+                  className="px-3 py-2.5 rounded-xl bg-[#8B5CF6]/20 text-[#6D28D9] text-sm font-semibold hover:bg-[#8B5CF6]/30"
                 >
                   {searchingBooking ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
                 </button>
               </div>
               {foundBooking && (
                 <div className="p-3 rounded-xl bg-green-400/10 border border-green-400/20 text-sm">
-                  <p className="text-green-400 font-semibold">{foundBooking.customer?.name} — {foundBooking.reference}</p>
-                  <p className="text-green-400/70 text-xs mt-0.5">
+                  <p className="text-[#15803D] font-semibold">{foundBooking.customer?.name} — {foundBooking.reference}</p>
+                  <p className="text-[#15803D]/70 text-xs mt-0.5">
                     Total: LKR {foundBooking.totalAmount?.toLocaleString()} · Paid: LKR {(foundBooking.paidAmount || 0).toLocaleString()}
                   </p>
                 </div>
@@ -297,7 +297,7 @@ export default function PaymentsPage() {
                 placeholder="0.00"
                 value={form.amount}
                 onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
               />
             </div>
 
@@ -311,8 +311,8 @@ export default function PaymentsPage() {
                     onClick={() => setForm((f) => ({ ...f, method: key }))}
                     className={`flex items-center gap-2 p-3 rounded-xl border text-sm font-semibold transition-all ${
                       form.method === key
-                        ? "border-[#8B5CF6] bg-[#8B5CF6]/20 text-white"
-                        : "border-white/10 bg-white/5 text-[var(--text-muted)] hover:border-white/20"
+                        ? "border-[#8B5CF6] bg-[#8B5CF6]/20 text-[#0F172A]"
+                        : "border-[#E2E8F0] bg-[#F8FAFC] text-[var(--text-muted)] hover:border-[#E2E8F0]"
                     }`}
                   >
                     <val.icon className="w-3.5 h-3.5" />
@@ -330,14 +330,14 @@ export default function PaymentsPage() {
                 placeholder="e.g. Cash received at counter"
                 value={form.notes}
                 onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]/50"
               />
             </div>
 
             <div className="flex gap-3 pt-2">
               <button
                 onClick={() => { setShowModal(false); setFoundBooking(null); setBookingSearch(""); }}
-                className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm font-semibold text-[var(--text-secondary)] hover:bg-white/5"
+                className="flex-1 py-2.5 rounded-xl border border-[#E2E8F0] text-sm font-semibold text-[var(--text-secondary)] hover:bg-[#F8FAFC]"
               >
                 Cancel
               </button>

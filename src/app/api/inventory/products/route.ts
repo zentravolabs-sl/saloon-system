@@ -2,7 +2,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import { route, parseBody, parseQuery, csvResponse } from "@/lib/ops/api";
-import { ApiError, allowedBranchIds, assertBranchAccess, can } from "@/lib/ops/access";
+import { ApiError, allowedBranchIds, assertBranchAccess, can, resolveDefaultBranchId } from "@/lib/ops/access";
 import { audit, nextNumber } from "@/lib/ops/audit";
 import { D, money, sum, valuate } from "@/lib/money";
 import { stockIn } from "@/lib/ops/inventory";
@@ -10,6 +10,7 @@ import { productSchema } from "@/lib/ops/inventory-schemas";
 import { pageQuery } from "@/lib/ops/schemas";
 
 const listQuery = pageQuery.extend({
+  limit: z.coerce.number().int().min(1).max(500).default(200),
   search: z.string().max(100).optional(),
   categoryId: z.string().optional(),
   branchId: z.string().optional(),
@@ -62,6 +63,9 @@ export const GET = route({ permission: ["inventory.view", "pos.sell"] }, async (
   const items = products.map((p) => {
     const onHand = sum(p.stockLevels.map((s) => s.quantity));
     const value = valuate(p.stockLevels.map((s) => ({ ...s, fallbackCost: p.costPrice })));
+    const minStockDec = D(p.minStock);
+    const isOut = onHand.lessThanOrEqualTo(0);
+    const isLow = !isOut && minStockDec.greaterThan(0) && onHand.lessThanOrEqualTo(minStockDec);
     const { stockLevels, ...rest } = p;
     return {
       ...rest,
@@ -69,7 +73,9 @@ export const GET = route({ permission: ["inventory.view", "pos.sell"] }, async (
       costPrice: canSeeCost ? rest.costPrice : null,
       onHand: onHand.toFixed(3),
       stockValue: canSeeCost ? money(value) : null,
-      isLow: onHand.lessThanOrEqualTo(D(p.minStock)) && D(p.minStock).greaterThan(0),
+      isOut,
+      isLow: onHand.lessThanOrEqualTo(minStockDec) && minStockDec.greaterThan(0),
+      stockStatus: isOut ? "OUT_OF_STOCK" : isLow ? "LOW_STOCK" : "IN_STOCK",
       branchStock: stockLevels.map((s) => ({ branchId: s.branchId, quantity: s.quantity })),
     };
   });
@@ -91,7 +97,24 @@ export const POST = route({ permission: "inventory.manage", write: true }, async
     const cat = await prisma.productCategory.findFirst({ where: { id: body.categoryId, salonId: ctx.salonId } });
     if (!cat) throw new ApiError(400, "Product category not found");
   }
-  for (const s of body.openingStock || []) await assertBranchAccess(ctx, s.branchId);
+
+  const defaultBranchId = await resolveDefaultBranchId(ctx);
+  const openingEntries: { branchId: string; quantity: string; unitCost?: string }[] = [];
+
+  if (body.openingStock && body.openingStock.length > 0) {
+    for (const s of body.openingStock) {
+      const bId = s.branchId ? await assertBranchAccess(ctx, s.branchId) : defaultBranchId;
+      openingEntries.push({ branchId: bId, quantity: s.quantity, unitCost: s.unitCost });
+    }
+  } else if (body.currentStock && D(body.currentStock).greaterThan(0)) {
+    openingEntries.push({
+      branchId: defaultBranchId,
+      quantity: body.currentStock,
+      unitCost: body.costPrice,
+    });
+  }
+
+  const effectiveMinStock = body.lowStockAlert !== undefined ? body.lowStockAlert : body.minStock;
 
   const product = await prisma.$transaction(
     async (tx) => {
@@ -116,20 +139,20 @@ export const POST = route({ permission: "inventory.manage", write: true }, async
           costPrice: money(body.costPrice),
           sellingPrice: money(body.sellingPrice),
           taxRate: String(body.taxRate),
-          minStock: body.minStock,
+          minStock: effectiveMinStock,
           trackBatches: body.trackBatches,
           isActive: body.isActive,
         },
       });
 
-      for (const s of body.openingStock || []) {
+      for (const s of openingEntries) {
         await stockIn(tx, {
           salonId: ctx.salonId,
           branchId: s.branchId,
           productId: created.id,
           quantity: D(s.quantity),
           unitCost: D(s.unitCost ?? body.costPrice),
-          type: "ADJUSTMENT",
+          type: "MANUAL_IN",
           referenceType: "MANUAL",
           reason: "Opening stock",
           userId: ctx.userId,

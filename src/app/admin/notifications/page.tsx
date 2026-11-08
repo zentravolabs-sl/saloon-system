@@ -14,15 +14,15 @@ import {
 } from "lucide-react";
 
 const TYPE_CONFIG: Record<string, { icon: any; color: string }> = {
-  BOOKING_CREATED: { icon: Calendar, color: "text-blue-400 bg-blue-400/10" },
-  BOOKING_CONFIRMED: { icon: CheckCircle2, color: "text-green-400 bg-green-400/10" },
-  BOOKING_REJECTED: { icon: XCircle, color: "text-red-400 bg-red-400/10" },
-  BOOKING_CANCELLED: { icon: XCircle, color: "text-red-400 bg-red-400/10" },
-  BOOKING_RESCHEDULED: { icon: RefreshCw, color: "text-blue-400 bg-blue-400/10" },
-  APPOINTMENT_REMINDER: { icon: Bell, color: "text-yellow-400 bg-yellow-400/10" },
+  BOOKING_CREATED: { icon: Calendar, color: "text-[#1D4ED8] bg-blue-400/10" },
+  BOOKING_CONFIRMED: { icon: CheckCircle2, color: "text-[#15803D] bg-green-400/10" },
+  BOOKING_REJECTED: { icon: XCircle, color: "text-[#B91C1C] bg-red-400/10" },
+  BOOKING_CANCELLED: { icon: XCircle, color: "text-[#B91C1C] bg-red-400/10" },
+  BOOKING_RESCHEDULED: { icon: RefreshCw, color: "text-[#1D4ED8] bg-blue-400/10" },
+  APPOINTMENT_REMINDER: { icon: Bell, color: "text-[#D97706] bg-yellow-400/10" },
   BRANCH_CLOSURE: { icon: AlertTriangle, color: "text-orange-400 bg-orange-400/10" },
-  APPOINTMENT_COMPLETED: { icon: CheckCircle2, color: "text-emerald-400 bg-emerald-400/10" },
-  GENERAL: { icon: Info, color: "text-purple-400 bg-purple-400/10" },
+  APPOINTMENT_COMPLETED: { icon: CheckCircle2, color: "text-[#15803D] bg-emerald-400/10" },
+  GENERAL: { icon: Info, color: "text-[#6D28D9] bg-purple-400/10" },
 };
 
 function timeAgo(date: string) {
@@ -97,7 +97,7 @@ export default function AdminNotificationsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-[#0F172A] flex items-center gap-3">
             Notifications
             {unreadCount > 0 && (
               <span className="px-2.5 py-0.5 rounded-xl bg-[#EC4899]/20 border border-[#EC4899]/30 text-[#EC4899] text-sm font-bold">
@@ -110,7 +110,7 @@ export default function AdminNotificationsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={fetchNotifications}
-            className="p-2 rounded-xl bg-white/5 border border-white/10 text-[var(--text-muted)] hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[var(--text-muted)] hover:text-[#6D28D9] transition-colors"
             title="Refresh"
           >
             <RefreshCw className="w-4 h-4" />
@@ -119,7 +119,7 @@ export default function AdminNotificationsPage() {
             <button
               onClick={markAllRead}
               disabled={markingAll}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-[var(--text-secondary)] hover:text-white transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-sm font-semibold text-[var(--text-secondary)] hover:text-[#6D28D9] transition-all"
             >
               {markingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCheck className="w-4 h-4" />}
               Mark All Read
@@ -141,7 +141,7 @@ export default function AdminNotificationsPage() {
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filter === tab.id
                 ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white shadow-md shadow-[#8B5CF6]/20"
-                : "bg-white/5 text-[var(--text-muted)] hover:text-white border border-white/5"
+                : "bg-[#F8FAFC] text-[var(--text-muted)] hover:text-[#6D28D9] border border-[#E2E8F0]"
             }`}
           >
             {tab.label}
@@ -156,14 +156,14 @@ export default function AdminNotificationsPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="card flex flex-col items-center justify-center py-20 gap-3">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-[#F8FAFC] flex items-center justify-center">
             <Bell className="w-8 h-8 text-[var(--text-muted)]" />
           </div>
-          <p className="text-white font-semibold">No notifications</p>
+          <p className="text-[#0F172A] font-semibold">No notifications</p>
           <p className="text-sm text-[var(--text-muted)]">You're all caught up!</p>
         </div>
       ) : (
-        <div className="card overflow-hidden divide-y divide-white/5">
+        <div className="card overflow-hidden divide-y divide-[#E2E8F0]">
           {filtered.map((notification) => {
             const config = TYPE_CONFIG[notification.type] || TYPE_CONFIG.GENERAL;
             const IconComp = config.icon;
@@ -174,7 +174,7 @@ export default function AdminNotificationsPage() {
                 className={`flex items-start gap-4 p-4 transition-colors cursor-pointer ${
                   !notification.isRead
                     ? "bg-[#8B5CF6]/5 hover:bg-[#8B5CF6]/10"
-                    : "hover:bg-white/2"
+                    : "hover:bg-[#F1F5F9]"
                 }`}
               >
                 <div className={`p-2.5 rounded-xl shrink-0 ${config.color}`}>
@@ -182,7 +182,7 @@ export default function AdminNotificationsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <p className={`text-sm font-semibold ${!notification.isRead ? "text-white" : "text-[var(--text-secondary)]"}`}>
+                    <p className={`text-sm font-semibold ${!notification.isRead ? "text-[#0F172A]" : "text-[var(--text-secondary)]"}`}>
                       {notification.title}
                     </p>
                     <div className="flex items-center gap-2 shrink-0">

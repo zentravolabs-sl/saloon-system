@@ -67,7 +67,7 @@ export default function SuperAdminDashboardPage() {
   if (loading) {
     return (
       <div className="py-24 flex items-center justify-center gap-2 text-xs text-[var(--text-muted)]">
-        <Loader2 className="w-6 h-6 animate-spin text-amber-400" />
+        <Loader2 className="w-6 h-6 animate-spin text-[#D97706]" />
         <span>Loading SaaS platform metrics...</span>
       </div>
     );
@@ -77,7 +77,7 @@ export default function SuperAdminDashboardPage() {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-white tracking-tight">
+        <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
           Multi-Tenant Platform Governance
         </h1>
         <p className="text-xs text-[var(--text-secondary)]">
@@ -87,76 +87,76 @@ export default function SuperAdminDashboardPage() {
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Total Salons
           </span>
-          <p className="text-2xl font-black text-white">{stats?.totalSalons || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.totalSalons || 0}</p>
         </div>
 
         <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-1">
-          <span className="text-[11px] text-emerald-400 font-semibold uppercase">
+          <span className="text-[11px] text-[#15803D] font-semibold uppercase">
             Active Salons
           </span>
-          <p className="text-2xl font-black text-emerald-300">{stats?.activeSalons || 0}</p>
+          <p className="text-2xl font-black text-[#15803D]">{stats?.activeSalons || 0}</p>
         </div>
 
         <div className="p-5 rounded-2xl bg-amber-500/[0.03] border border-amber-500/20 space-y-1">
-          <span className="text-[11px] text-amber-400 font-semibold uppercase">
+          <span className="text-[11px] text-[#D97706] font-semibold uppercase">
             Pending Approval
           </span>
-          <p className="text-2xl font-black text-amber-300">{stats?.pendingSalons || 0}</p>
+          <p className="text-2xl font-black text-[#D97706]">{stats?.pendingSalons || 0}</p>
         </div>
 
         <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-1">
-          <span className="text-[11px] text-red-400 font-semibold uppercase">
+          <span className="text-[11px] text-[#B91C1C] font-semibold uppercase">
             Suspended
           </span>
-          <p className="text-2xl font-black text-red-300">{stats?.suspendedSalons || 0}</p>
+          <p className="text-2xl font-black text-[#B91C1C]">{stats?.suspendedSalons || 0}</p>
         </div>
 
         <div className="p-5 rounded-2xl bg-gradient-to-tr from-amber-500/10 to-rose-500/10 border border-amber-500/30 space-y-1">
-          <span className="text-[11px] text-amber-300 font-semibold uppercase">
+          <span className="text-[11px] text-[#D97706] font-semibold uppercase">
             Platform Revenue
           </span>
-          <p className="text-2xl font-black text-white">
+          <p className="text-2xl font-black text-[#0F172A]">
             LKR {(stats?.platformRevenue || 0).toLocaleString()}
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Total Branches
           </span>
-          <p className="text-2xl font-black text-white">{stats?.totalBranches || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.totalBranches || 0}</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Total Stylists
           </span>
-          <p className="text-2xl font-black text-white">{stats?.totalStaff || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.totalStaff || 0}</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Total Clients
           </span>
-          <p className="text-2xl font-black text-white">{stats?.totalCustomers || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.totalCustomers || 0}</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Today's Bookings
           </span>
-          <p className="text-2xl font-black text-white">{stats?.todaysBookings || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.todaysBookings || 0}</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-1">
+        <div className="p-5 rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] space-y-1">
           <span className="text-[11px] text-[var(--text-muted)] font-semibold uppercase">
             Monthly Bookings
           </span>
-          <p className="text-2xl font-black text-white">{stats?.monthlyBookings || 0}</p>
+          <p className="text-2xl font-black text-[#0F172A]">{stats?.monthlyBookings || 0}</p>
         </div>
       </div>
 
@@ -165,14 +165,14 @@ export default function SuperAdminDashboardPage() {
         <div className="p-6 rounded-2xl bg-amber-500/[0.03] border border-amber-500/20 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-amber-400" />
-              <h2 className="text-base font-bold text-white">
+              <Clock className="w-5 h-5 text-[#D97706]" />
+              <h2 className="text-base font-bold text-[#0F172A]">
                 Pending Salon Registrations ({pendingSalons.length})
               </h2>
             </div>
             <Link
               href="/super-admin/salons/pending"
-              className="text-xs font-semibold text-amber-400 hover:text-white"
+              className="text-xs font-semibold text-[#D97706] hover:text-[#6D28D9]"
             >
               View All Queue →
             </Link>
@@ -182,10 +182,10 @@ export default function SuperAdminDashboardPage() {
             {pendingSalons.map((s) => (
               <div
                 key={s.id}
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between gap-4"
+                className="p-4 rounded-xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] flex items-center justify-between gap-4"
               >
                 <div>
-                  <h3 className="font-bold text-sm text-white">{s.name}</h3>
+                  <h3 className="font-bold text-sm text-[#0F172A]">{s.name}</h3>
                   <p className="text-xs text-[var(--text-muted)]">
                     Owner: {s.owner?.name} • {s.city}
                   </p>
@@ -198,7 +198,7 @@ export default function SuperAdminDashboardPage() {
                   <button
                     disabled={actionLoading === s.id}
                     onClick={() => handleUpdateStatus(s.id, "APPROVED")}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold border border-emerald-500/30"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-[#15803D] text-xs font-bold border border-emerald-500/30"
                   >
                     Approve
                   </button>
@@ -208,7 +208,7 @@ export default function SuperAdminDashboardPage() {
                       const reason = prompt("Rejection reason:") || "Incomplete documentation";
                       handleUpdateStatus(s.id, "REJECTED", reason);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 text-xs font-bold border border-red-500/30"
+                    className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-[#B91C1C] text-xs font-bold border border-red-500/30"
                   >
                     Reject
                   </button>
@@ -220,15 +220,15 @@ export default function SuperAdminDashboardPage() {
       )}
 
       {/* Salons Management Overview */}
-      <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-6 space-y-4">
+      <div className="rounded-2xl bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] border border-[#E2E8F0] p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-amber-400" />
+          <h2 className="text-base font-bold text-[#0F172A] flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-[#D97706]" />
             Registered Salons & SaaS Tenants
           </h2>
           <Link
             href="/super-admin/salons"
-            className="text-xs font-semibold text-amber-400 hover:text-white"
+            className="text-xs font-semibold text-[#D97706] hover:text-[#6D28D9]"
           >
             Manage All Salons →
           </Link>
@@ -237,7 +237,7 @@ export default function SuperAdminDashboardPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-white/10 bg-white/[0.01] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+              <tr className="border-b border-[#E2E8F0] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                 <th className="py-3 px-4">Salon</th>
                 <th className="py-3 px-4">Owner</th>
                 <th className="py-3 px-4">City</th>
@@ -247,28 +247,28 @@ export default function SuperAdminDashboardPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-[#E2E8F0]">
               {recentSalons.map((s) => (
-                <tr key={s.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-white">{s.name}</td>
+                <tr key={s.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-[#0F172A]">{s.name}</td>
                   <td className="py-3.5 px-4 text-[var(--text-secondary)]">
                     {s.owner?.name}
                   </td>
                   <td className="py-3.5 px-4 text-[var(--text-muted)]">{s.city}</td>
-                  <td className="py-3.5 px-4 font-semibold text-white">
+                  <td className="py-3.5 px-4 font-semibold text-[#0F172A]">
                     {s._count?.branches || 0}
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-white">
+                  <td className="py-3.5 px-4 font-semibold text-[#0F172A]">
                     {s._count?.staff || 0}
                   </td>
                   <td className="py-3.5 px-4">
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                         s.status === "APPROVED"
-                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                          ? "bg-emerald-500/10 text-[#15803D] border-emerald-500/20"
                           : s.status === "PENDING"
-                          ? "bg-amber-500/10 text-amber-300 border-amber-500/20"
-                          : "bg-red-500/10 text-red-400 border-red-500/20"
+                          ? "bg-amber-500/10 text-[#D97706] border-amber-500/20"
+                          : "bg-red-500/10 text-[#B91C1C] border-red-500/20"
                       }`}
                     >
                       {s.status}
@@ -278,7 +278,7 @@ export default function SuperAdminDashboardPage() {
                     {s.status === "APPROVED" && (
                       <button
                         onClick={() => handleUpdateStatus(s.id, "SUSPENDED")}
-                        className="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 font-semibold text-[11px]"
+                        className="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-[#B91C1C] border border-red-500/20 font-semibold text-[11px]"
                       >
                         Suspend
                       </button>
@@ -286,7 +286,7 @@ export default function SuperAdminDashboardPage() {
                     {s.status === "SUSPENDED" && (
                       <button
                         onClick={() => handleUpdateStatus(s.id, "APPROVED")}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 font-semibold text-[11px]"
+                        className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[#15803D] border border-emerald-500/20 font-semibold text-[11px]"
                       >
                         Activate
                       </button>

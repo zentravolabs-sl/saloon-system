@@ -43,16 +43,16 @@ export default function MyCommissionsPage() {
         {entries.length === 0 ? (
           <EmptyState icon={Award} text={t("my.noEarnings")} />
         ) : (
-          <ul className="divide-y divide-white/10">
+          <ul className="divide-y divide-[#E2E8F0]">
             {entries.map((e: any) => (
               <li key={e.id} className="py-3 flex justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-base font-semibold text-white truncate">{e.description}</p>
-                  <p className="text-sm text-[#9CA3AF]">{String(e.earnedAt).slice(0, 10)}</p>
+                  <p className="text-base font-semibold text-[#0F172A] truncate">{e.description}</p>
+                  <p className="text-sm text-[#64748B]">{String(e.earnedAt).slice(0, 10)}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-base font-bold text-white">{formatMoney(Number(e.amount), cur)}</p>
-                  <p className="text-sm text-[#D1D5DB]">
+                  <p className="text-base font-bold text-[#0F172A]">{formatMoney(Number(e.amount), cur)}</p>
+                  <p className="text-sm text-[#334155]">
                     {e.status === "PAID" ? t("dash.earnedPaid") : e.status === "APPROVED" ? t("dash.earnedApproved") : t("dash.earnedPending")}
                   </p>
                 </div>

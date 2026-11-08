@@ -143,7 +143,7 @@ export default function FinancialReportPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <TrendingUp className="w-7 h-7 text-[#8B5CF6]" />
             Financial & Profitability Reports
           </h1>
@@ -155,7 +155,7 @@ export default function FinancialReportPage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={handleExportCSV}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] transition-all flex items-center gap-1.5"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -164,7 +164,7 @@ export default function FinancialReportPage() {
       </div>
 
       {/* Filter Ribbon */}
-      <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-[var(--text-muted)] font-semibold">Quick Ranges:</span>
           {[
@@ -178,7 +178,7 @@ export default function FinancialReportPage() {
               onClick={() => {
                 setQuickRange(r.id as any);
               }}
-              className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 text-[var(--text-secondary)] hover:text-white hover:bg-white/10 transition-colors"
+              className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#F8FAFC] text-[var(--text-secondary)] hover:text-[#6D28D9] hover:bg-[#F8FAFC] transition-colors"
             >
               {r.label}
             </button>
@@ -192,27 +192,27 @@ export default function FinancialReportPage() {
               type="date"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white"
+              className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1.5 text-xs text-[#0F172A]"
             />
             <span className="text-xs text-[var(--text-muted)]">to</span>
             <input
               type="date"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white"
+              className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1.5 text-xs text-[#0F172A]"
             />
           </div>
 
           <div className="flex items-center gap-1.5">
-            <Building2 className="w-3.5 h-3.5 text-purple-400" />
+            <Building2 className="w-3.5 h-3.5 text-[#6D28D9]" />
             <select
               value={selectedBranchId}
               onChange={(e) => setSelectedBranchId(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none"
+              className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-1.5 text-xs text-[#0F172A] focus:outline-none"
             >
-              <option value="" className="bg-[#0C0E1A]">All Branches (Consolidated)</option>
+              <option value="" className="bg-white">All Branches (Consolidated)</option>
               {branches.map((b) => (
-                <option key={b.id} value={b.id} className="bg-[#0C0E1A]">{b.name}</option>
+                <option key={b.id} value={b.id} className="bg-white">{b.name}</option>
               ))}
             </select>
           </div>
@@ -227,12 +227,12 @@ export default function FinancialReportPage() {
       </div>
 
       {loading ? (
-        <div className="p-16 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+        <div className="p-16 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
           <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#8B5CF6] mb-3" />
           Computing financial analytics and P&L statements...
         </div>
       ) : !summary ? (
-        <div className="p-12 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+        <div className="p-12 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
           No financial records found for the selected time range.
         </div>
       ) : (
@@ -240,45 +240,45 @@ export default function FinancialReportPage() {
           {/* Executive KPI Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Total Revenue */}
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-2">
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-2">
               <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">
                 <span>Total Gross Revenue</span>
-                <DollarSign className="w-4 h-4 text-emerald-400" />
+                <DollarSign className="w-4 h-4 text-[#15803D]" />
               </div>
-              <div className="text-2xl font-black text-white font-mono">
+              <div className="text-2xl font-black text-[#0F172A] font-mono">
                 {formatLKR(summary.totalRevenue)}
               </div>
-              <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-between pt-1 border-t border-white/5">
+              <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-between pt-1 border-t border-[#E2E8F0]">
                 <span>Services: {formatLKR(summary.serviceRevenue)}</span>
                 <span>Retail: {formatLKR(summary.productRevenue)}</span>
               </div>
             </div>
 
             {/* Gross Profit & Margin */}
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-2">
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-2">
               <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">
                 <span>Gross Profit (After COGS)</span>
                 <Percent className="w-4 h-4 text-[#8B5CF6]" />
               </div>
-              <div className="text-2xl font-black text-[#A78BFA] font-mono">
+              <div className="text-2xl font-black text-[#6D28D9] font-mono">
                 {formatLKR(summary.grossProfit)}
               </div>
-              <div className="text-[11px] text-[#A78BFA] flex items-center justify-between pt-1 border-t border-white/5 font-semibold">
+              <div className="text-[11px] text-[#6D28D9] flex items-center justify-between pt-1 border-t border-[#E2E8F0] font-semibold">
                 <span>Gross Margin: {summary.grossMarginPercent}%</span>
                 <span>COGS: {formatLKR(summary.totalCogs)}</span>
               </div>
             </div>
 
             {/* Operating Overheads & Payroll */}
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-2">
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-2">
               <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">
                 <span>Total Operating Overhead</span>
-                <Wallet className="w-4 h-4 text-amber-400" />
+                <Wallet className="w-4 h-4 text-[#D97706]" />
               </div>
-              <div className="text-2xl font-black text-amber-300 font-mono">
+              <div className="text-2xl font-black text-[#D97706] font-mono">
                 {formatLKR(Number(summary.operatingExpenses) + Number(summary.staffSalaryExpense))}
               </div>
-              <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-between pt-1 border-t border-white/5">
+              <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-between pt-1 border-t border-[#E2E8F0]">
                 <span>OpEx: {formatLKR(summary.operatingExpenses)}</span>
                 <span>Payroll: {formatLKR(summary.staffSalaryExpense)}</span>
               </div>
@@ -292,24 +292,24 @@ export default function FinancialReportPage() {
                   : "bg-red-500/10 border-red-500/30"
               }`}
             >
-              <div className="flex items-center justify-between text-xs text-white/80">
+              <div className="flex items-center justify-between text-xs text-[#334155]">
                 <span>Net Operating Profit</span>
                 {isNetPositive ? (
-                  <TrendingUp className="w-4 h-4 text-emerald-400" />
+                  <TrendingUp className="w-4 h-4 text-[#15803D]" />
                 ) : (
-                  <TrendingDown className="w-4 h-4 text-red-400" />
+                  <TrendingDown className="w-4 h-4 text-[#B91C1C]" />
                 )}
               </div>
               <div
                 className={`text-2xl font-black font-mono ${
-                  isNetPositive ? "text-emerald-400" : "text-red-400"
+                  isNetPositive ? "text-[#15803D]" : "text-[#B91C1C]"
                 }`}
               >
                 {formatLKR(summary.netOperatingProfit)}
               </div>
               <div
-                className={`text-[11px] font-bold flex items-center justify-between pt-1 border-t border-white/10 ${
-                  isNetPositive ? "text-emerald-300" : "text-red-300"
+                className={`text-[11px] font-bold flex items-center justify-between pt-1 border-t border-[#E2E8F0] ${
+                  isNetPositive ? "text-[#15803D]" : "text-[#B91C1C]"
                 }`}
               >
                 <span>Net Margin: {summary.netMarginPercent}%</span>
@@ -321,101 +321,101 @@ export default function FinancialReportPage() {
           {/* Detailed Financial Breakdown Tables */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Revenue & COGS Structure */}
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-4">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Scissors className="w-4 h-4 text-[#8B5CF6]" />
                 Revenue & Cost of Goods Sold (COGS)
               </h3>
 
               <div className="space-y-3 text-xs">
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FAFC]">
                   <div>
-                    <div className="font-bold text-white">Service Revenue</div>
+                    <div className="font-bold text-[#0F172A]">Service Revenue</div>
                     <div className="text-[11px] text-[var(--text-muted)]">Completed salon appointments</div>
                   </div>
-                  <div className="font-mono font-bold text-sm text-white">
+                  <div className="font-mono font-bold text-sm text-[#0F172A]">
                     {formatLKR(summary.serviceRevenue)}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FAFC]">
                   <div>
-                    <div className="font-bold text-white">Retail Product Sales</div>
+                    <div className="font-bold text-[#0F172A]">Retail Product Sales</div>
                     <div className="text-[11px] text-[var(--text-muted)]">Point-of-sale merchandise</div>
                   </div>
-                  <div className="font-mono font-bold text-sm text-white">
+                  <div className="font-mono font-bold text-sm text-[#0F172A]">
                     {formatLKR(summary.productRevenue)}
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                   <div>
-                    <div className="font-bold text-purple-300">Total Gross Revenue</div>
+                    <div className="font-bold text-[#6D28D9]">Total Gross Revenue</div>
                   </div>
-                  <div className="font-mono font-bold text-sm text-purple-300">
+                  <div className="font-mono font-bold text-sm text-[#6D28D9]">
                     {formatLKR(summary.totalRevenue)}
                   </div>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-white/5">
+                <div className="space-y-2 pt-2 border-t border-[#E2E8F0]">
                   <div className="flex justify-between text-[var(--text-muted)]">
                     <span>Retail Merchandise Cost:</span>
-                    <span className="font-mono text-red-400">-{formatLKR(summary.retailCogs)}</span>
+                    <span className="font-mono text-[#B91C1C]">-{formatLKR(summary.retailCogs)}</span>
                   </div>
                   <div className="flex justify-between text-[var(--text-muted)]">
                     <span>Backbar Product Consumption:</span>
-                    <span className="font-mono text-red-400">-{formatLKR(summary.serviceCogs)}</span>
+                    <span className="font-mono text-[#B91C1C]">-{formatLKR(summary.serviceCogs)}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-white pt-1 border-t border-white/5">
+                  <div className="flex justify-between font-bold text-[#0F172A] pt-1 border-t border-[#E2E8F0]">
                     <span>Total Cost of Goods Sold (COGS):</span>
-                    <span className="font-mono text-red-400">-{formatLKR(summary.totalCogs)}</span>
+                    <span className="font-mono text-[#B91C1C]">-{formatLKR(summary.totalCogs)}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Overheads & Categories Breakdown */}
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-4">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                <Tag className="w-4 h-4 text-pink-400" />
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
+                <Tag className="w-4 h-4 text-[#DB2777]" />
                 Operating Overheads & Payroll
               </h3>
 
               <div className="space-y-3 text-xs">
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FAFC]">
                   <div>
-                    <div className="font-bold text-white">Staff Wages & Base Salaries</div>
+                    <div className="font-bold text-[#0F172A]">Staff Wages & Base Salaries</div>
                     <div className="text-[11px] text-[var(--text-muted)]">Approved and paid staff compensation</div>
                   </div>
-                  <div className="font-mono font-bold text-sm text-white">
+                  <div className="font-mono font-bold text-sm text-[#0F172A]">
                     {formatLKR(summary.staffSalaryExpense)}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FAFC]">
                   <div>
-                    <div className="font-bold text-white">Staff Commissions Disbursed</div>
+                    <div className="font-bold text-[#0F172A]">Staff Commissions Disbursed</div>
                     <div className="text-[11px] text-[var(--text-muted)]">Performance earnings included in payroll</div>
                   </div>
-                  <div className="font-mono font-bold text-sm text-white">
+                  <div className="font-mono font-bold text-sm text-[#0F172A]">
                     {formatLKR(summary.staffCommissionsPaid)}
                   </div>
                 </div>
 
                 {/* Categories */}
-                <div className="space-y-2 pt-2 border-t border-white/5">
+                <div className="space-y-2 pt-2 border-t border-[#E2E8F0]">
                   <div className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                     Expenses by Category:
                   </div>
                   {Object.entries(data.expensesByCategory).map(([id, cat]) => (
                     <div key={id} className="flex justify-between text-[var(--text-secondary)]">
                       <span>{cat.name}</span>
-                      <span className="font-mono text-white">{formatLKR(cat.amount)}</span>
+                      <span className="font-mono text-[#0F172A]">{formatLKR(cat.amount)}</span>
                     </div>
                   ))}
-                  <div className="flex justify-between font-bold text-white pt-2 border-t border-white/5">
+                  <div className="flex justify-between font-bold text-[#0F172A] pt-2 border-t border-[#E2E8F0]">
                     <span>Total Operating Expenses:</span>
-                    <span className="font-mono text-amber-400">{formatLKR(summary.operatingExpenses)}</span>
+                    <span className="font-mono text-[#D97706]">{formatLKR(summary.operatingExpenses)}</span>
                   </div>
                 </div>
               </div>
@@ -424,8 +424,8 @@ export default function FinancialReportPage() {
 
           {/* Multi-Branch Profitability Table */}
           {data.branchBreakdown && data.branchBreakdown.length > 0 && (
-            <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden space-y-3 p-5">
-              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+            <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden space-y-3 p-5">
+              <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-[#8B5CF6]" />
                 Branch Performance & Profitability Comparison
               </h3>
@@ -433,7 +433,7 @@ export default function FinancialReportPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 text-[var(--text-muted)]">
+                    <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)]">
                       <th className="pb-3 font-bold">Branch Location</th>
                       <th className="pb-3 font-bold text-right">Revenue</th>
                       <th className="pb-3 font-bold text-right">COGS</th>
@@ -442,27 +442,27 @@ export default function FinancialReportPage() {
                       <th className="pb-3 font-bold text-right">Net Profit</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[#E2E8F0]">
                     {data.branchBreakdown.map((b) => {
                       const net = Number(b.netProfit);
                       return (
-                        <tr key={b.branchId} className="hover:bg-white/[0.02]">
-                          <td className="py-3 font-bold text-white">{b.branchName}</td>
-                          <td className="py-3 text-right font-mono font-semibold text-white">
+                        <tr key={b.branchId} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                          <td className="py-3 font-bold text-[#0F172A]">{b.branchName}</td>
+                          <td className="py-3 text-right font-mono font-semibold text-[#0F172A]">
                             {formatLKR(b.revenue)}
                           </td>
-                          <td className="py-3 text-right font-mono text-red-400">
+                          <td className="py-3 text-right font-mono text-[#B91C1C]">
                             -{formatLKR(b.cogs)}
                           </td>
-                          <td className="py-3 text-right font-mono text-amber-400">
+                          <td className="py-3 text-right font-mono text-[#D97706]">
                             -{formatLKR(b.expenses)}
                           </td>
-                          <td className="py-3 text-right font-mono text-white/70">
+                          <td className="py-3 text-right font-mono text-[#334155]">
                             -{formatLKR(b.payroll)}
                           </td>
                           <td
                             className={`py-3 text-right font-mono font-bold ${
-                              net >= 0 ? "text-emerald-400" : "text-red-400"
+                              net >= 0 ? "text-[#15803D]" : "text-[#B91C1C]"
                             }`}
                           >
                             {formatLKR(b.netProfit)}
@@ -479,16 +479,16 @@ export default function FinancialReportPage() {
           {/* Accounts Receivable / Outstanding Balance Banner */}
           <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2.5">
-              <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+              <Clock className="w-4 h-4 text-[#D97706] shrink-0" />
               <div>
-                <span className="font-bold text-white">Accounts Receivable / Pending Payments:</span>
+                <span className="font-bold text-[#0F172A]">Accounts Receivable / Pending Payments:</span>
                 <p className="text-[11px] text-[var(--text-muted)]">
                   Uncollected balances from open booking appointments and credit sales.
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-base font-black text-amber-300 font-mono">
+              <div className="text-base font-black text-[#D97706] font-mono">
                 {formatLKR(summary.totalOutstanding)}
               </div>
             </div>

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import { route, parseBody, parseQuery, csvResponse } from "@/lib/ops/api";
-import { ApiError, allowedBranchIds, assertBranchAccess } from "@/lib/ops/access";
+import { ApiError, allowedBranchIds, assertBranchAccess, resolveStockBranchForProduct } from "@/lib/ops/access";
 import { audit } from "@/lib/ops/audit";
 import { getOpsSettings } from "@/lib/ops/settings";
 import { D, money, sum } from "@/lib/money";
@@ -91,33 +91,49 @@ export const GET = route({ permission: "inventory.view" }, async ({ ctx, req }) 
 /** Manual stock-in / stock-out / adjustment. Always writes a movement. */
 export const POST = route({ permission: "inventory.manage", write: true }, async ({ ctx, req }) => {
   const body = await parseBody(req, stockOperationSchema);
-  await assertBranchAccess(ctx, body.branchId);
   const product = await loadProduct(ctx, body.productId);
   if (product.archivedAt) throw new ApiError(409, "Product is archived");
+  const branchId = await resolveStockBranchForProduct(ctx, product.id, body.branchId);
   const settings = await getOpsSettings(ctx.salonId);
 
   await prisma.$transaction(
     async (tx) => {
       if (body.operation === "IN") {
-        if (body.supplierId) await loadSupplier(ctx, body.supplierId);
+        let supplierLabel: string | null = body.supplierName || null;
+        if (body.supplierId) {
+          const sup = await loadSupplier(ctx, body.supplierId);
+          supplierLabel = sup.name;
+        }
+        const unitCostDec = body.unitCost !== undefined ? D(body.unitCost) : D(product.costPrice);
+        const baseReason = body.reason || "New Purchase";
+        const fullReason = supplierLabel ? `${baseReason} (${supplierLabel})` : baseReason;
+
         await stockIn(tx, {
           salonId: ctx.salonId,
-          branchId: body.branchId,
+          branchId,
           productId: product.id,
           quantity: D(body.quantity),
-          unitCost: D(body.unitCost),
+          unitCost: unitCostDec,
           type: "MANUAL_IN",
           referenceType: "MANUAL",
-          reason: body.reason || "Manual stock-in",
+          reason: fullReason,
           userId: ctx.userId,
           batch: { batchNumber: body.batchNumber, expiryDate: body.expiryDate ? parseDay(body.expiryDate) : null },
         });
+
+        // Update product default costPrice if a positive purchase cost was entered
+        if (body.unitCost !== undefined && unitCostDec.greaterThan(0)) {
+          await tx.product.update({
+            where: { id: product.id },
+            data: { costPrice: money(unitCostDec) },
+          });
+        }
       } else if (body.operation === "OUT") {
         await stockOutMany(
           tx,
           {
             salonId: ctx.salonId,
-            branchId: body.branchId,
+            branchId,
             type: "MANUAL_OUT",
             referenceType: "MANUAL",
             reason: body.reason,
@@ -129,7 +145,7 @@ export const POST = route({ permission: "inventory.manage", write: true }, async
       } else {
         await adjustStockTo(tx, {
           salonId: ctx.salonId,
-          branchId: body.branchId,
+          branchId,
           productId: product.id,
           newQuantity: D(body.newQuantity),
           reason: body.reason,
@@ -139,7 +155,7 @@ export const POST = route({ permission: "inventory.manage", write: true }, async
       }
       await audit(tx, ctx, `STOCK_${body.operation}`, "Product", product.id, {
         metadata: {
-          branchId: body.branchId,
+          branchId,
           quantity: body.operation === "ADJUST" ? body.newQuantity : body.quantity,
           reason: body.reason ?? null,
         },
@@ -149,9 +165,11 @@ export const POST = route({ permission: "inventory.manage", write: true }, async
     { timeout: 30000 }
   );
 
-  const level = await prisma.stockLevel.findUnique({
-    where: { productId_branchId: { productId: product.id, branchId: body.branchId } },
+  const allBranchIds = await allowedBranchIds(ctx);
+  const levels = await prisma.stockLevel.findMany({
+    where: { productId: product.id, branchId: { in: allBranchIds } },
     select: { quantity: true },
   });
-  return { quantity: level ? D(level.quantity).toFixed(3) : "0.000" };
+  const totalQty = sum(levels.map((l) => l.quantity));
+  return { quantity: totalQty.toFixed(3) };
 });

@@ -299,7 +299,7 @@ export default function ProductPOSPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-[#0F172A] flex items-center gap-2">
             <ShoppingCart className="w-7 h-7 text-[#8B5CF6]" />
             Retail Point of Sale (POS)
           </h1>
@@ -314,7 +314,7 @@ export default function ProductPOSPage() {
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
               activeView === "pos"
                 ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white"
-                : "bg-white/5 text-[var(--text-secondary)] hover:text-white"
+                : "bg-[#F8FAFC] text-[var(--text-secondary)] hover:text-[#6D28D9]"
             }`}
           >
             Terminal Counter
@@ -327,7 +327,7 @@ export default function ProductPOSPage() {
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
               activeView === "history"
                 ? "bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white"
-                : "bg-white/5 text-[var(--text-secondary)] hover:text-white"
+                : "bg-[#F8FAFC] text-[var(--text-secondary)] hover:text-[#6D28D9]"
             }`}
           >
             Sales History & Refunds
@@ -339,7 +339,7 @@ export default function ProductPOSPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Column: Product Catalog & Search (7 Cols) */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="p-4 rounded-2xl bg-[#0C0E1A] border border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
               <div className="relative flex-1 min-w-[200px]">
                 <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
@@ -347,7 +347,7 @@ export default function ProductPOSPage() {
                   placeholder="Scan barcode or type name / SKU..."
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
+                  className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl pl-9 pr-3 py-1.5 text-xs text-[#0F172A] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#8B5CF6]"
                 />
               </div>
 
@@ -356,10 +356,10 @@ export default function ProductPOSPage() {
                 <select
                   value={selectedBranchId}
                   onChange={(e) => setSelectedBranchId(e.target.value)}
-                  className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8B5CF6]"
+                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-3 py-1.5 text-xs text-[#0F172A] focus:outline-none focus:border-[#8B5CF6]"
                 >
                   {branches.map((b) => (
-                    <option key={b.id} value={b.id} className="bg-[#0C0E1A]">
+                    <option key={b.id} value={b.id} className="bg-white">
                       {b.name}
                     </option>
                   ))}
@@ -375,7 +375,7 @@ export default function ProductPOSPage() {
                   Loading retail products...
                 </div>
               ) : filteredProducts.length === 0 ? (
-                <div className="col-span-full p-8 text-center text-[var(--text-muted)] bg-[#0C0E1A] rounded-2xl border border-white/10">
+                <div className="col-span-full p-8 text-center text-[var(--text-muted)] bg-white rounded-2xl border border-[#E2E8F0]">
                   No retail products found. Mark products as "Retail" in the Inventory page.
                 </div>
               ) : (
@@ -390,34 +390,34 @@ export default function ProductPOSPage() {
                       key={p.id}
                       onClick={() => !isOutOfStock && addToCart(p)}
                       disabled={isOutOfStock}
-                      className={`p-3.5 rounded-2xl bg-[#0C0E1A] border text-left transition-all flex flex-col justify-between h-36 ${
+                      className={`p-3.5 rounded-2xl bg-white border text-left transition-all flex flex-col justify-between h-36 ${
                         isOutOfStock
                           ? "border-red-500/20 opacity-50 cursor-not-allowed"
-                          : "border-white/10 hover:border-[#8B5CF6]/50 active:scale-[0.98]"
+                          : "border-[#E2E8F0] hover:border-[#8B5CF6]/50 active:scale-[0.98]"
                       }`}
                     >
                       <div>
-                        <div className="font-bold text-xs text-white line-clamp-2">{p.name}</div>
+                        <div className="font-bold text-xs text-[#0F172A] line-clamp-2">{p.name}</div>
                         <div className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">
                           {p.sku}
                         </div>
                       </div>
 
-                      <div className="flex items-end justify-between pt-2 border-t border-white/5">
+                      <div className="flex items-end justify-between pt-2 border-t border-[#E2E8F0]">
                         <div>
-                          <div className="font-bold text-xs text-emerald-400 font-mono">
+                          <div className="font-bold text-xs text-[#15803D] font-mono">
                             {formatLKR(p.sellingPrice)}
                           </div>
                           <div
                             className={`text-[10px] font-semibold ${
-                              isOutOfStock ? "text-red-400" : "text-white/60"
+                              isOutOfStock ? "text-[#B91C1C]" : "text-[#64748B]"
                             }`}
                           >
                             {isOutOfStock ? "Out of stock" : `${branchStock} ${p.unit} left`}
                           </div>
                         </div>
 
-                        <div className="p-1.5 rounded-lg bg-[#8B5CF6]/20 text-[#A78BFA]">
+                        <div className="p-1.5 rounded-lg bg-[#8B5CF6]/20 text-[#6D28D9]">
                           <Plus className="w-3.5 h-3.5" />
                         </div>
                       </div>
@@ -430,16 +430,16 @@ export default function ProductPOSPage() {
 
           {/* Right Column: Checkout Cart (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 sticky top-20">
-            <div className="p-5 rounded-2xl bg-[#0C0E1A] border border-white/10 space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 className="font-bold text-sm text-white flex items-center gap-2">
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4">
+              <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+                <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4 text-[#8B5CF6]" />
                   Active Cart ({cart.reduce((s, i) => s + i.quantity, 0)} items)
                 </h3>
                 {cart.length > 0 && (
                   <button
                     onClick={() => setCart([])}
-                    className="text-[11px] text-red-400 hover:underline"
+                    className="text-[11px] text-[#B91C1C] hover:underline"
                   >
                     Clear Cart
                   </button>
@@ -449,15 +449,15 @@ export default function ProductPOSPage() {
               {/* CRM & Staff Selection */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2">
-                  <User className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <User className="w-3.5 h-3.5 text-[#6D28D9] shrink-0" />
                   <select
                     value={selectedCustomerId}
                     onChange={(e) => setSelectedCustomerId(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1.5 text-xs text-[#0F172A] focus:outline-none"
                   >
-                    <option value="" className="bg-[#0C0E1A]">Walk-in Customer (Guest)</option>
+                    <option value="" className="bg-white">Walk-in Customer (Guest)</option>
                     {customers.map((c) => (
-                      <option key={c.id} value={c.id} className="bg-[#0C0E1A]">
+                      <option key={c.id} value={c.id} className="bg-white">
                         {c.name} {c.phone ? `(${c.phone})` : ""}
                       </option>
                     ))}
@@ -465,15 +465,15 @@ export default function ProductPOSPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Scissors className="w-3.5 h-3.5 text-pink-400 shrink-0" />
+                  <Scissors className="w-3.5 h-3.5 text-[#DB2777] shrink-0" />
                   <select
                     value={selectedStaffId}
                     onChange={(e) => setSelectedStaffId(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1.5 text-xs text-[#0F172A] focus:outline-none"
                   >
-                    <option value="" className="bg-[#0C0E1A]">Seller / Barber (Award Commission)</option>
+                    <option value="" className="bg-white">Seller / Barber (Award Commission)</option>
                     {staffList.map((s) => (
-                      <option key={s.id} value={s.id} className="bg-[#0C0E1A]">
+                      <option key={s.id} value={s.id} className="bg-white">
                         {s.name}
                       </option>
                     ))}
@@ -482,7 +482,7 @@ export default function ProductPOSPage() {
               </div>
 
               {/* Cart Items List */}
-              <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar border-y border-white/5 py-3">
+              <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar border-y border-[#E2E8F0] py-3">
                 {cart.length === 0 ? (
                   <div className="p-6 text-center text-xs text-[var(--text-muted)]">
                     No items in cart. Click any product from the catalog on the left.
@@ -491,11 +491,11 @@ export default function ProductPOSPage() {
                   cart.map((item) => (
                     <div
                       key={item.product.id}
-                      className="p-2.5 rounded-xl bg-white/5 flex items-center justify-between gap-2"
+                      className="p-2.5 rounded-xl bg-[#F8FAFC] flex items-center justify-between gap-2"
                     >
                       <div className="overflow-hidden flex-1">
-                        <div className="font-bold text-xs text-white truncate">{item.product.name}</div>
-                        <div className="text-[10px] text-emerald-400 font-mono">
+                        <div className="font-bold text-xs text-[#0F172A] truncate">{item.product.name}</div>
+                        <div className="text-[10px] text-[#15803D] font-mono">
                           {formatLKR(item.unitPrice)} each
                         </div>
                       </div>
@@ -503,22 +503,22 @@ export default function ProductPOSPage() {
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => updateCartQuantity(item.product.id, -1)}
-                          className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20"
+                          className="w-6 h-6 rounded-lg bg-[#F8FAFC] flex items-center justify-center text-[#0F172A] hover:bg-[#F8FAFC]"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="font-mono font-bold text-xs text-white w-6 text-center">
+                        <span className="font-mono font-bold text-xs text-[#0F172A] w-6 text-center">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateCartQuantity(item.product.id, 1)}
-                          className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20"
+                          className="w-6 h-6 rounded-lg bg-[#F8FAFC] flex items-center justify-center text-[#0F172A] hover:bg-[#F8FAFC]"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                         <button
                           onClick={() => removeFromCart(item.product.id)}
-                          className="p-1 rounded-lg text-red-400 hover:bg-red-500/10 ml-1"
+                          className="p-1 rounded-lg text-[#B91C1C] hover:bg-red-500/10 ml-1"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -532,12 +532,12 @@ export default function ProductPOSPage() {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between text-[var(--text-muted)]">
                   <span>Subtotal</span>
-                  <span className="font-mono text-white font-semibold">{formatLKR(subtotal)}</span>
+                  <span className="font-mono text-[#0F172A] font-semibold">{formatLKR(subtotal)}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-[var(--text-muted)] flex items-center gap-1">
-                    <Tag className="w-3 h-3 text-pink-400" />
+                    <Tag className="w-3 h-3 text-[#DB2777]" />
                     Discount (%)
                   </span>
                   <div className="flex items-center gap-1">
@@ -547,22 +547,22 @@ export default function ProductPOSPage() {
                       max="100"
                       value={discountPercent}
                       onChange={(e) => setDiscountPercent(Number(e.target.value))}
-                      className="w-16 bg-white/5 border border-white/10 rounded-lg px-2 py-0.5 text-right font-mono text-white"
+                      className="w-16 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg px-2 py-0.5 text-right font-mono text-[#0F172A]"
                     />
-                    <span className="text-white/60">%</span>
+                    <span className="text-[#64748B]">%</span>
                   </div>
                 </div>
 
                 {discountAmount > 0 && (
-                  <div className="flex items-center justify-between text-pink-400">
+                  <div className="flex items-center justify-between text-[#DB2777]">
                     <span>Discount Deduction</span>
                     <span className="font-mono">- {formatLKR(discountAmount)}</span>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-2 border-t border-white/10 text-sm">
-                  <span className="font-bold text-white">Net Total Payable:</span>
-                  <span className="font-mono font-black text-emerald-400 text-base">
+                <div className="flex items-center justify-between pt-2 border-t border-[#E2E8F0] text-sm">
+                  <span className="font-bold text-[#0F172A]">Net Total Payable:</span>
+                  <span className="font-mono font-black text-[#15803D] text-base">
                     {formatLKR(totalAmount)}
                   </span>
                 </div>
@@ -589,8 +589,8 @@ export default function ProductPOSPage() {
                         onClick={() => setPaymentMethod(m.id)}
                         className={`p-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all ${
                           isSel
-                            ? "bg-[#8B5CF6]/20 border-[#8B5CF6] text-white"
-                            : "bg-white/5 border-white/5 text-[var(--text-muted)] hover:text-white"
+                            ? "bg-[#8B5CF6]/20 border-[#8B5CF6] text-[#0F172A]"
+                            : "bg-[#F8FAFC] border-[#E2E8F0] text-[var(--text-muted)] hover:text-[#6D28D9]"
                         }`}
                       >
                         <Icon className="w-3.5 h-3.5 text-[#8B5CF6]" />
@@ -625,11 +625,11 @@ export default function ProductPOSPage() {
         </div>
       ) : (
         /* History & Refunds View */
-        <div className="rounded-2xl bg-[#0C0E1A] border border-white/10 overflow-hidden">
+        <div className="rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[var(--text-muted)] bg-white/[0.02]">
+                <tr className="border-b border-[#E2E8F0] text-[var(--text-muted)] bg-white/95 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
                   <th className="p-3.5 font-bold">Sale #</th>
                   <th className="p-3.5 font-bold">Date</th>
                   <th className="p-3.5 font-bold">Customer</th>
@@ -641,7 +641,7 @@ export default function ProductPOSPage() {
                   <th className="p-3.5 font-bold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E8F0]">
                 {recentSales.length === 0 ? (
                   <tr>
                     <td colSpan={9} className="p-8 text-center text-[var(--text-muted)]">
@@ -650,32 +650,32 @@ export default function ProductPOSPage() {
                   </tr>
                 ) : (
                   recentSales.map((s) => (
-                    <tr key={s.id} className="hover:bg-white/[0.02]">
-                      <td className="p-3.5 font-bold text-white font-mono">{s.saleNumber}</td>
+                    <tr key={s.id} className="hover:bg-[#F1F5F9] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+                      <td className="p-3.5 font-bold text-[#0F172A] font-mono">{s.saleNumber}</td>
                       <td className="p-3.5 text-[var(--text-secondary)]">
                         {new Date(s.createdAt).toLocaleString()}
                       </td>
-                      <td className="p-3.5 text-white">{s.customer?.name || "Walk-in Guest"}</td>
+                      <td className="p-3.5 text-[#0F172A]">{s.customer?.name || "Walk-in Guest"}</td>
                       <td className="p-3.5 text-[var(--text-secondary)]">{s.branch?.name}</td>
-                      <td className="p-3.5 text-purple-400 font-semibold">
+                      <td className="p-3.5 text-[#6D28D9] font-semibold">
                         {s.sellerStaff?.name || "—"}
                       </td>
-                      <td className="p-3.5 text-white">
+                      <td className="p-3.5 text-[#0F172A]">
                         {s.items.map((it, idx) => (
                           <div key={idx} className="text-[11px]">
                             {it.quantity} × {it.product.name}
                           </div>
                         ))}
                       </td>
-                      <td className="p-3.5 text-right font-bold text-emerald-400 font-mono">
+                      <td className="p-3.5 text-right font-bold text-[#15803D] font-mono">
                         {formatLKR(s.totalAmount)}
                       </td>
                       <td className="p-3.5 text-center">
                         <span
                           className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                             s.status === "COMPLETED"
-                              ? "bg-emerald-500/20 text-emerald-400"
-                              : "bg-red-500/20 text-red-400"
+                              ? "bg-emerald-500/20 text-[#15803D]"
+                              : "bg-red-500/20 text-[#B91C1C]"
                           }`}
                         >
                           {s.status}
@@ -688,7 +688,7 @@ export default function ProductPOSPage() {
                               href={`/admin/invoices/${s.invoice.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 rounded-lg bg-white/5 text-[#A78BFA] hover:bg-[#8B5CF6]/20 transition-colors"
+                              className="p-1.5 rounded-lg bg-[#F8FAFC] text-[#6D28D9] hover:bg-[#8B5CF6]/20 transition-colors"
                               title="Print Invoice"
                             >
                               <Printer className="w-3.5 h-3.5" />
@@ -700,7 +700,7 @@ export default function ProductPOSPage() {
                                 setRefundModalSale(s);
                                 setRefundReason("");
                               }}
-                              className="px-2 py-1 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 text-[11px] font-semibold flex items-center gap-1"
+                              className="px-2 py-1 rounded-lg bg-red-500/10 text-[#B91C1C] hover:bg-red-500/20 text-[11px] font-semibold flex items-center gap-1"
                               title="Refund"
                             >
                               <RotateCcw className="w-3 h-3" />
@@ -720,31 +720,31 @@ export default function ProductPOSPage() {
 
       {/* COMPLETED SALE MODAL */}
       {completedSale && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0C0E1A] border border-white/10 p-6 text-center space-y-4 shadow-2xl">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white border border-[#E2E8F0] p-6 text-center space-y-4 shadow-2xl">
+            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-[#15803D] flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-white">Sale Completed!</h3>
+              <h3 className="font-bold text-base text-[#0F172A]">Sale Completed!</h3>
               <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
                 Order #{completedSale.saleNumber}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-white/5 text-xs text-[var(--text-muted)] text-left space-y-1">
+            <div className="p-3 rounded-xl bg-[#F8FAFC] text-xs text-[var(--text-muted)] text-left space-y-1">
               <div className="flex justify-between">
                 <span>Total Received:</span>
-                <b className="text-emerald-400 font-mono">{formatLKR(completedSale.totalAmount)}</b>
+                <b className="text-[#15803D] font-mono">{formatLKR(completedSale.totalAmount)}</b>
               </div>
               <div className="flex justify-between">
                 <span>Inventory:</span>
-                <span className="text-white">Stock deducted successfully</span>
+                <span className="text-[#0F172A]">Stock deducted successfully</span>
               </div>
             </div>
             <div className="flex items-center gap-2 pt-2">
               <button
                 onClick={() => setCompletedSale(null)}
-                className="flex-1 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold text-xs"
+                className="flex-1 py-2 rounded-xl bg-[#F8FAFC] hover:bg-[#F8FAFC] text-[#0F172A] font-semibold text-xs"
               >
                 Close / New Sale
               </button>
@@ -766,9 +766,9 @@ export default function ProductPOSPage() {
 
       {/* REFUND MODAL */}
       {refundModalSale && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0C0E1A] border border-white/10 p-5 space-y-4 shadow-2xl">
-            <h3 className="font-bold text-sm text-white flex items-center gap-2 text-red-400">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white border border-[#E2E8F0] p-5 space-y-4 shadow-2xl">
+            <h3 className="font-bold text-sm text-[#0F172A] flex items-center gap-2 text-[#B91C1C]">
               <RotateCcw className="w-4 h-4" />
               Refund Sale {refundModalSale.saleNumber}
             </h3>
@@ -781,12 +781,12 @@ export default function ProductPOSPage() {
               placeholder="Reason for refund (e.g. Customer returned sealed item)..."
               value={refundReason}
               onChange={(e) => setRefundReason(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-red-500"
+              className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-3 text-xs text-[#0F172A] focus:outline-none focus:border-red-500"
             />
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 onClick={() => setRefundModalSale(null)}
-                className="px-3.5 py-1.5 rounded-xl bg-white/5 text-xs font-semibold text-white hover:bg-white/10"
+                className="px-3.5 py-1.5 rounded-xl bg-[#F8FAFC] text-xs font-semibold text-[#0F172A] hover:bg-[#F8FAFC]"
               >
                 Cancel
               </button>
