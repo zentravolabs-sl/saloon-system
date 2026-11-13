@@ -184,6 +184,7 @@ export const bookingCreateSchema = z.object({
   customerEmail: z.string().email().optional().or(z.literal("")),
   customerNotes: z.string().optional(),
   couponCode: z.string().optional(),
+  source: z.enum(["WALK_IN", "PHONE", "ONLINE", "ADMIN"]).optional(),
 });
 
 export const bookingStatusUpdateSchema = z.object({

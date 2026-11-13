@@ -34,6 +34,7 @@ export async function GET(req: Request) {
     const branchId = searchParams.get("branchId");
     const staffId = searchParams.get("staffId");
     const status = searchParams.get("status");
+    const source = searchParams.get("source");
     const date = searchParams.get("date");
     const search = searchParams.get("search");
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
@@ -56,6 +57,7 @@ export async function GET(req: Request) {
     if (branchId) where.branchId = branchId;
     if (staffId && scope?.role !== "STAFF") where.staffId = staffId;
     if (status) where.status = status;
+    if (source) where.source = source;
     if (date) {
       where.bookingDate = {
         gte: new Date(date + "T00:00:00.000Z"),
@@ -134,6 +136,7 @@ export async function POST(req: Request) {
       customerEmail,
       customerNotes,
       couponCode,
+      source,
     } = parsed.data;
 
     // 1. Get and verify the branch
@@ -159,6 +162,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: approvalCheck.error }, { status: 403 });
     }
 
+    const effectiveSource = source || (body.source as any) || "ONLINE";
+    const isAdminOrDirect =
+      !!callerScope || effectiveSource === "WALK_IN" || effectiveSource === "PHONE";
+
     // 3. Full server-side availability check (validates all 21 rules)
     const slotCheck = await isSlotAvailable({
       branchId,
@@ -166,6 +173,7 @@ export async function POST(req: Request) {
       serviceIds,
       date: bookingDate,
       startTime,
+      ignoreMinNotice: isAdminOrDirect,
     });
 
     if (!slotCheck.available) {
@@ -294,7 +302,7 @@ export async function POST(req: Request) {
           startTime,
           endTime,
           status: initialStatus as any,
-          source: (body.source as any) || "ONLINE",
+          source: effectiveSource as any,
           customerNotes,
           subtotal,
           discountAmount,

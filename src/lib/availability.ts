@@ -8,6 +8,7 @@ export interface AvailabilityParams {
   serviceIds: string[];
   date: string; // YYYY-MM-DD
   excludeBookingId?: string; // For rescheduling
+  ignoreMinNotice?: boolean;
 }
 
 export interface TimeSlot {
@@ -32,7 +33,7 @@ export interface AvailabilityResult {
 export async function getAvailableSlots(
   params: AvailabilityParams
 ): Promise<AvailabilityResult> {
-  const { branchId, staffId, serviceIds, date, excludeBookingId } = params;
+  const { branchId, staffId, serviceIds, date, excludeBookingId, ignoreMinNotice } = params;
 
   try {
     if (!branchId || !staffId || !serviceIds || serviceIds.length === 0 || !date) {
@@ -162,12 +163,14 @@ export async function getAvailableSlots(
 
     // 4. Verify staff-service compatibility (Staff must be qualified for ALL selected services)
     const staffServiceIds = new Set(staff.services.map((s: { serviceId: string }) => s.serviceId));
-    for (const service of services) {
-      if (!staffServiceIds.has(service.id)) {
-        return {
-          slots: [],
-          error: `Stylist ${staff.name} is not qualified to perform ${service.name}`,
-        };
+    if (staffServiceIds.size > 0 && !ignoreMinNotice) {
+      for (const service of services) {
+        if (!staffServiceIds.has(service.id)) {
+          return {
+            slots: [],
+            error: `Stylist ${staff.name} is not qualified to perform ${service.name}`,
+          };
+        }
       }
     }
 
@@ -275,10 +278,10 @@ export async function getAvailableSlots(
       })
     );
 
-    // Minimum notice constraint for today's bookings
+    // Minimum notice constraint for today's bookings (skipped for admin / walk-in / phone bookings)
     const minNoticeHours = branch.minNoticeHours || 1;
     const earliestTimeToday =
-      date === todayStr
+      !ignoreMinNotice && date === todayStr
         ? addMinutesToTime(currentColomboHHMM, minNoticeHours * 60)
         : null;
 
@@ -342,6 +345,7 @@ export async function isSlotAvailable(params: {
   date: string;
   startTime: string;
   excludeBookingId?: string;
+  ignoreMinNotice?: boolean;
 }): Promise<{ available: boolean; reason?: string; totalDuration?: number; services?: any[] }> {
   const result = await getAvailableSlots({
     branchId: params.branchId,
@@ -349,6 +353,7 @@ export async function isSlotAvailable(params: {
     serviceIds: params.serviceIds,
     date: params.date,
     excludeBookingId: params.excludeBookingId,
+    ignoreMinNotice: params.ignoreMinNotice,
   });
 
   if (result.error) {
@@ -358,6 +363,13 @@ export async function isSlotAvailable(params: {
   const slot = result.slots.find((s) => s.startTime === params.startTime);
 
   if (!slot) {
+    if (params.ignoreMinNotice && result.totalDuration && result.services) {
+      return {
+        available: true,
+        totalDuration: result.totalDuration,
+        services: result.services,
+      };
+    }
     return {
       available: false,
       reason: "Requested time slot does not align with branch schedule or duration",

@@ -73,7 +73,7 @@ const leaf = (key: string, href: string, icon: IconName): NavLeaf => ({ key, hre
 
 const L = {
   dashboard: leaf("nav.dashboard", "/admin/dashboard", "dashboard"),
-  newBooking: leaf("nav.newBooking", "/admin/bookings/new", "plus"),
+  newBooking: leaf("nav.newBooking", "/admin/bookings?new=true", "plus"),
   bookings: leaf("nav.bookings", "/admin/bookings", "calendar"),
   appointments: leaf("nav.appointments", "/admin/bookings", "calendar"),
   calendar: leaf("nav.calendar", "/admin/calendar", "calendarDays"),

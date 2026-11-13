@@ -12,6 +12,7 @@ export async function GET(req: Request) {
     const serviceIdsParam = searchParams.get("serviceIds");
     const date = searchParams.get("date");
     const excludeBookingId = searchParams.get("excludeBookingId") || undefined;
+    const ignoreMinNotice = searchParams.get("admin") === "true";
 
     if (!branchId || !staffId || !serviceIdsParam || !date) {
       return NextResponse.json(
@@ -38,6 +39,7 @@ export async function GET(req: Request) {
       serviceIds,
       date,
       excludeBookingId,
+      ignoreMinNotice,
     });
 
     return NextResponse.json(result);

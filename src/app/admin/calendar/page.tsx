@@ -46,6 +46,12 @@ export default function AdminCalendarPage() {
     fetchCalendarData();
   }, [selectedDate]);
 
+  useEffect(() => {
+    const onCreated = () => fetchCalendarData();
+    window.addEventListener("booking:created", onCreated);
+    return () => window.removeEventListener("booking:created", onCreated);
+  }, [selectedDate]);
+
   const changeDate = (days: number) => {
     const current = new Date(selectedDate);
     current.setDate(current.getDate() + days);

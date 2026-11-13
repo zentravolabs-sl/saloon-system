@@ -52,6 +52,7 @@ import { SalonStatusProvider, useSalonStatus } from "@/context/SalonStatusContex
 import { I18nProvider, useT } from "@/context/I18nContext";
 import { LOCALES, Locale, MessageKey } from "@/lib/i18n/messages";
 import { SalonApprovalBanner } from "@/components/admin/SalonApprovalBanner";
+import { NewBookingModal } from "@/components/admin/NewBookingModal";
 import { PRASANTHA_AVATAR_IMG } from "@/components/public/homeAssets";
 import { ADMIN_SIDEBAR_ITEMS } from "@/components/public/HomeDashboardClient";
 import {
@@ -169,6 +170,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [newBookingModalOpen, setNewBookingModalOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
   const role = session?.user?.role;
@@ -661,13 +663,14 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-3 sm:gap-3.5 shrink-0">
               {canCreateBooking &&
                 (isApproved ? (
-                  <Link
-                    href="/admin/bookings/new"
-                    className="hidden xl:inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_6px_16px_rgba(124,58,237,0.28)] hover:brightness-105 transition-all"
+                  <button
+                    type="button"
+                    onClick={() => setNewBookingModalOpen(true)}
+                    className="hidden xl:inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white shadow-[0_6px_16px_rgba(124,58,237,0.28)] hover:brightness-105 transition-all cursor-pointer"
                   >
                     <Plus className="w-4 h-4" aria-hidden />
                     <span>{t("nav.newBooking")}</span>
-                  </Link>
+                  </button>
                 ) : (
                   <button
                     disabled
@@ -805,6 +808,11 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
           <p>© 2026 Zentravo SaaS Platform. All rights reserved.</p>
         </footer>
       </div>
+
+      <NewBookingModal
+        open={newBookingModalOpen}
+        onClose={() => setNewBookingModalOpen(false)}
+      />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { normalizePhone, getPhoneVariants } from "@/lib/phone";
+import { customerSchema } from "@/lib/validations";
 
 export async function GET(req: Request) {
   try {
@@ -10,13 +12,21 @@ export async function GET(req: Request) {
     }
 
     const { searchParams } = new URL(req.url);
-    const search = searchParams.get("search") || "";
+    const search = (searchParams.get("search") || "").trim();
     const pageParam = searchParams.get("page");
     const limitParam = searchParams.get("limit");
 
     const isPaginated = pageParam !== null || limitParam !== null;
     const page = Math.max(1, parseInt(pageParam || "1", 10) || 1);
     const limit = Math.max(1, parseInt(limitParam || "7", 10) || 7);
+
+    const digitsOnly = search.replace(/\D/g, "");
+    const strippedZero = digitsOnly.startsWith("0")
+      ? digitsOnly.slice(1)
+      : digitsOnly.startsWith("94") && digitsOnly.length > 9
+      ? digitsOnly.slice(2)
+      : digitsOnly;
+    const phoneVariants = search ? getPhoneVariants(search) : [];
 
     const where = {
       salonId: session.user.salonId,
@@ -25,6 +35,12 @@ export async function GET(req: Request) {
             OR: [
               { name: { contains: search, mode: "insensitive" as const } },
               { phone: { contains: search, mode: "insensitive" as const } },
+              ...(strippedZero.length >= 3
+                ? [{ phone: { contains: strippedZero, mode: "insensitive" as const } }]
+                : []),
+              ...(phoneVariants.length > 0
+                ? [{ phone: { in: phoneVariants } }]
+                : []),
               { email: { contains: search, mode: "insensitive" as const } },
             ],
           }
@@ -93,5 +109,62 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error("Customers fetch error:", error);
     return NextResponse.json({ error: "Failed to fetch customers" }, { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const session = await auth();
+    if (!session || !session.user.salonId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const parsed = customerSchema.safeParse(body);
+    if (!parsed.success) {
+      const errorMsg = parsed.error.issues.map((i) => i.message).join(", ");
+      return NextResponse.json({ error: errorMsg || "Invalid customer details" }, { status: 400 });
+    }
+
+    const { name, phone, email, gender, notes } = parsed.data;
+    const salonId = session.user.salonId;
+    const canonicalPhone = normalizePhone(phone);
+    const variants = getPhoneVariants(phone);
+
+    let customer = await prisma.customer.findFirst({
+      where: {
+        salonId,
+        phone: { in: variants.length > 0 ? variants : [canonicalPhone, phone.trim()] },
+      },
+    });
+
+    if (customer) {
+      customer = await prisma.customer.update({
+        where: { id: customer.id },
+        data: {
+          name: name.trim(),
+          phone: canonicalPhone || phone.trim(),
+          ...(email ? { email } : {}),
+          ...(notes ? { notes } : {}),
+        },
+      });
+      return NextResponse.json({ customer, existing: true }, { status: 200 });
+    }
+
+    customer = await prisma.customer.create({
+      data: {
+        salonId,
+        name: name.trim(),
+        phone: canonicalPhone || phone.trim(),
+        email: email || null,
+        gender: gender || null,
+        notes: notes || null,
+      },
+    });
+
+    return NextResponse.json({ customer, existing: false }, { status: 201 });
+  } catch (error) {
+    console.error("Customer create error:", error);
+    return NextResponse.json({ error: "Failed to add customer" }, { status: 500 });
   }
 }
